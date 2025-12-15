@@ -7,7 +7,7 @@ import ToastProvider from "./components/notifications/ToastProvider";
 import RatingModalWrapper from "./components/RatingModalWrapper";
 import { AnimatePresence, motion } from "framer-motion";
 import ErrorBoundary from "./components/ErrorBoundary";
-import NotificationProvider from "./contexts/NotificationContext";
+import NotificationProvider, { useNotifications } from "./contexts/NotificationContext";
 import NotificationBanner from "./components/NotificationBanner";
 import NotificationCenter from "./components/NotificationCenter";
 import { springs, pageTransitions, shouldReduceMotion } from "./utils/animationUtils";
@@ -272,7 +272,7 @@ function LoggingWrapper() {
 }
 
 function NotificationManager() {
-  const { activeNotification, handleNotificationClick, dismissActiveNotification, isNotificationCenterOpen } = useContext(NotificationContext);
+  const { activeNotification, handleNotificationClick, dismissActiveNotification, isNotificationCenterOpen } = useNotifications();
 
   return (
     <>
