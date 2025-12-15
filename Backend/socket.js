@@ -107,21 +107,45 @@ function calculateBearing(lat1, lon1, lat2, lon2) {
 }
 
 function initializeSocket(server) {
-  // Configure CORS based on environment
-  const allowedOrigins = process.env.ENVIRONMENT === "production"
-    ? (process.env.CLIENT_URL || (() => {
-        console.error("CRITICAL: CLIENT_URL not set in production. Refusing to start.");
-        process.exit(1);
-      })()) // Only allow the specific client URL in production
-    : "*"; // Allow all in development for easier testing
+  // Configure CORS for Socket.io
+  const corsOrigin = process.env.ENVIRONMENT === "production"
+    ? function (origin, callback) {
+        if (!origin) return callback(null, true);
+        
+        const primaryDomain = process.env.CLIENT_URL;
+        if (!primaryDomain) {
+          console.error("CRITICAL: CLIENT_URL not set in production.");
+          process.exit(1);
+        }
+        
+        // Extract base domain for Vercel preview deployments
+        const domainMatch = primaryDomain.match(/https:\/\/([^.]+)\.vercel\.app/);
+        const baseDomain = domainMatch ? domainMatch[1] : null;
+        
+        const allowedPatterns = [
+          primaryDomain,
+          baseDomain ? new RegExp(`^https://${baseDomain}-[a-z0-9]+\\.vercel\\.app$`) : null
+        ].filter(Boolean);
+        
+        const isAllowed = allowedPatterns.some(pattern => 
+          typeof pattern === 'string' ? pattern === origin : pattern.test(origin)
+        );
+        
+        if (isAllowed) {
+          callback(null, true);
+        } else {
+          console.warn(`[Socket.io] CORS blocked origin: ${origin}`);
+          callback(new Error('Not allowed by CORS'));
+        }
+      }
+    : "*"; // Allow all in development
 
   io = new Server(server, {
     cors: {
-      origin: allowedOrigins,
+      origin: corsOrigin,
       methods: ["GET", "POST"],
-      credentials: true, // Allow credentials (cookies, authorization headers)
+      credentials: true,
     },
-    // Enable reconnection
     reconnection: true,
     reconnectionDelay: 1000,
     reconnectionDelayMax: 5000,
