@@ -4,7 +4,7 @@ const userModel = require("../models/user.model");
 const captainModel = require("../models/captain.model");
 const mapService = require("../services/map.service");
 const rideService = require("../services/ride.service");
-const { sendMessageToSocketId } = require("../config/socket");
+const { sendMessageToSocketId } = require("../socket");
 
 /**
  * Get active ride for the authenticated user
