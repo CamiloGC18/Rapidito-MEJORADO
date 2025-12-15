@@ -61,10 +61,40 @@ if (process.env.ENVIRONMENT == "production") {
 // Configure CORS based on environment
 const corsOptions = {
   origin: process.env.ENVIRONMENT === "production"
-    ? (process.env.CLIENT_URL || (() => {
-        console.error("CRITICAL: CLIENT_URL not set in production. Refusing to start.");
-        process.exit(1);
-      })()) // Only allow specific origin in production
+    ? function (origin, callback) {
+        // Allow requests with no origin (mobile apps, Postman, etc.)
+        if (!origin) return callback(null, true);
+        
+        // Primary production domain
+        const primaryDomain = process.env.CLIENT_URL;
+        
+        if (!primaryDomain) {
+          console.error("CRITICAL: CLIENT_URL not set in production. Refusing to start.");
+          process.exit(1);
+        }
+        
+        // Extract base domain for regex matching (e.g., "rapi-dito" from "https://rapi-dito.vercel.app")
+        const domainMatch = primaryDomain.match(/https:\/\/([^.]+)\.vercel\.app/);
+        const baseDomain = domainMatch ? domainMatch[1] : null;
+        
+        // Allowed origins: exact match OR Vercel preview deployments
+        const allowedPatterns = [
+          primaryDomain, // Exact production domain
+          baseDomain ? new RegExp(`^https://${baseDomain}-[a-z0-9]+\\.vercel\\.app$`) : null // Preview deployments
+        ].filter(Boolean);
+        
+        // Check if origin matches any allowed pattern
+        const isAllowed = allowedPatterns.some(pattern => 
+          typeof pattern === 'string' ? pattern === origin : pattern.test(origin)
+        );
+        
+        if (isAllowed) {
+          callback(null, true);
+        } else {
+          console.warn(`CORS blocked origin: ${origin}`);
+          callback(new Error('Not allowed by CORS'));
+        }
+      }
     : "*", // Allow all origins in development
   credentials: true, // Allow credentials (cookies, authorization headers)
   optionsSuccessStatus: 200
