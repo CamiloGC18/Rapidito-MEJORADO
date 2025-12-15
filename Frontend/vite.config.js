@@ -1,6 +1,6 @@
 import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react'
-import { VitePWA } from 'vite-plugin-pwa'
+// import { VitePWA } from 'vite-plugin-pwa'  // ← Comentar esta línea
 
 // https://vite.dev/config/
 // PERF-007: Optimized Vite configuration for better bundle splitting and performance
@@ -10,21 +10,17 @@ export default defineConfig({
     // VitePWA({ ... }) // PWA desactivado temporalmente
   ],
   build: {
-    // Enable CSS code splitting
     cssCodeSplit: true,
-    // Use terser for better minification
     minify: 'terser',
     terserOptions: {
       compress: {
-        drop_console: true, // Remove console.logs in production
+        drop_console: true,
         drop_debugger: true,
       },
     },
-    // Chunk splitting configuration
     rollupOptions: {
       output: {
         manualChunks: {
-          // Vendor chunks - separate heavy dependencies
           'vendor-react': ['react', 'react-dom', 'react-router-dom'],
           'vendor-maps': ['mapbox-gl'],
           'vendor-animation': ['framer-motion'],
@@ -33,10 +29,8 @@ export default defineConfig({
         },
       },
     },
-    // Reduce chunk size warning limit (opcional, pero recomendado mantenerlo bajo para detectar problemas)
     chunkSizeWarningLimit: 400,
   },
-  // Optimize dependencies
   optimizeDeps: {
     include: ['react', 'react-dom', 'react-router-dom', 'axios'],
   },
