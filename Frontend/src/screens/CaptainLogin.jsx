@@ -8,10 +8,12 @@ import Console from "../utils/console";
 import MembershipRequiredModal from "../components/MembershipRequiredModal";
 import Button from "../components/common/Button";
 import Input from "../components/common/Input";
+import { springConfig } from "../styles/designSystem";
 
 /**
- * CaptainLogin - Premium Uber-style Driver Login Screen
- * Clean, modern design with smooth animations
+ * CaptainLogin - Silicon Valley Luxury Driver Login Screen
+ * Ultra-Premium, Brutalist Minimalist, Liquid Glass aesthetic
+ * iOS native experience with spring physics
  */
 function CaptainLogin() {
   const [responseError, setResponseError] = useState("");
@@ -80,23 +82,22 @@ function CaptainLogin() {
 
   return (
     <div style={styles.container}>
-      {/* Green accent bar */}
-      <div style={styles.accentBar} />
-
-      {/* Header with back button */}
+      {/* Header with back button - Glass Island */}
       <motion.header
         initial={{ opacity: 0, y: -20 }}
         animate={{ opacity: mounted ? 1 : 0, y: mounted ? 0 : -20 }}
-        transition={{ duration: 0.4, ease: [0.22, 1, 0.36, 1] }}
+        transition={springConfig.panel}
         style={styles.header}
       >
-        <button
+        <motion.button
+          whileTap={{ scale: 0.95 }}
+          transition={springConfig.button}
           onClick={() => navigate("/")}
           style={styles.backButton}
           aria-label="Volver"
         >
-          <ArrowLeft size={24} color="#000" />
-        </button>
+          <ArrowLeft size={20} color="#000" strokeWidth={2.5} />
+        </motion.button>
       </motion.header>
 
       {/* Main content */}
@@ -105,11 +106,11 @@ function CaptainLogin() {
         <motion.div
           initial={{ opacity: 0, scale: 0.9 }}
           animate={{ opacity: mounted ? 1 : 0, scale: mounted ? 1 : 0.9 }}
-          transition={{ duration: 0.4, ease: [0.22, 1, 0.36, 1] }}
+          transition={springConfig.button}
           style={styles.badgeContainer}
         >
           <div style={styles.driverBadge}>
-            <Car size={16} color="#16A34A" strokeWidth={2.5} />
+            <Car size={14} color="#34C759" strokeWidth={2.5} />
             <span style={styles.badgeText}>CONDUCTOR</span>
           </div>
         </motion.div>
@@ -118,7 +119,7 @@ function CaptainLogin() {
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: mounted ? 1 : 0, y: mounted ? 0 : 20 }}
-          transition={{ duration: 0.5, delay: 0.1, ease: [0.22, 1, 0.36, 1] }}
+          transition={springConfig.panel}
           style={styles.titleSection}
         >
           <h1 style={styles.title}>Hola, conductor</h1>
@@ -128,8 +129,9 @@ function CaptainLogin() {
         {/* Error message */}
         {responseError && (
           <motion.div
-            initial={{ opacity: 0, y: -10 }}
-            animate={{ opacity: 1, y: 0 }}
+            initial={{ opacity: 0, y: -10, scale: 0.95 }}
+            animate={{ opacity: 1, y: 0, scale: 1 }}
+            transition={springConfig.button}
             style={styles.errorContainer}
           >
             <p style={styles.errorText}>{responseError}</p>
@@ -140,7 +142,7 @@ function CaptainLogin() {
         <motion.form
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: mounted ? 1 : 0, y: mounted ? 0 : 20 }}
-          transition={{ duration: 0.5, delay: 0.2, ease: [0.22, 1, 0.36, 1] }}
+          transition={{ ...springConfig.panel, delay: 0.1 }}
           onSubmit={handleSubmit(loginCaptain)}
           style={styles.form}
         >
@@ -170,7 +172,8 @@ function CaptainLogin() {
               floatingLabel
               clearable={false}
             />
-            <button
+            <motion.button
+              whileTap={{ scale: 0.9 }}
               type="button"
               onClick={() => setShowPassword(!showPassword)}
               style={styles.showPasswordButton}
@@ -179,11 +182,11 @@ function CaptainLogin() {
               }
             >
               {showPassword ? (
-                <EyeOff size={20} color="#6B7280" />
+                <EyeOff size={18} color="#8E8E93" />
               ) : (
-                <Eye size={20} color="#6B7280" />
+                <Eye size={18} color="#8E8E93" />
               )}
-            </button>
+            </motion.button>
           </div>
 
           {/* Forgot password link */}
@@ -214,7 +217,7 @@ function CaptainLogin() {
         <motion.div
           initial={{ opacity: 0 }}
           animate={{ opacity: mounted ? 1 : 0 }}
-          transition={{ duration: 0.5, delay: 0.3 }}
+          transition={{ ...springConfig.gentle, delay: 0.2 }}
           style={styles.divider}
         >
           <div style={styles.dividerLine} />
@@ -226,7 +229,7 @@ function CaptainLogin() {
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: mounted ? 1 : 0, y: mounted ? 0 : 20 }}
-          transition={{ duration: 0.5, delay: 0.4, ease: [0.22, 1, 0.36, 1] }}
+          transition={{ ...springConfig.panel, delay: 0.25 }}
         >
           <Button
             variant="secondary"
@@ -250,7 +253,7 @@ function CaptainLogin() {
         <motion.div
           initial={{ opacity: 0 }}
           animate={{ opacity: mounted ? 1 : 0 }}
-          transition={{ duration: 0.5, delay: 0.5 }}
+          transition={{ ...springConfig.gentle, delay: 0.3 }}
           style={styles.linksSection}
         >
           <p style={styles.signupText}>
@@ -272,7 +275,7 @@ function CaptainLogin() {
       <motion.footer
         initial={{ opacity: 0 }}
         animate={{ opacity: mounted ? 1 : 0 }}
-        transition={{ duration: 0.5, delay: 0.6 }}
+        transition={{ ...springConfig.gentle, delay: 0.35 }}
         style={styles.footer}
       >
         <div style={styles.footerLinks}>
@@ -303,18 +306,10 @@ const styles = {
   container: {
     minHeight: "100vh",
     width: "100%",
-    backgroundColor: "#FFFFFF",
+    backgroundColor: "#F2F2F7", // iOS System Gray 6
     display: "flex",
     flexDirection: "column",
     position: "relative",
-  },
-  accentBar: {
-    position: "absolute",
-    top: 0,
-    left: 0,
-    right: 0,
-    height: "4px",
-    background: "linear-gradient(90deg, #16A34A 0%, #22C55E 100%)",
   },
   header: {
     padding: "16px 24px",
@@ -322,16 +317,18 @@ const styles = {
     alignItems: "center",
   },
   backButton: {
-    width: "48px",
-    height: "48px",
+    width: "44px",
+    height: "44px",
     borderRadius: "50%",
     border: "none",
-    backgroundColor: "#F3F4F6",
+    backgroundColor: "rgba(255, 255, 255, 0.85)",
+    backdropFilter: "blur(20px)",
+    WebkitBackdropFilter: "blur(20px)",
+    boxShadow: "0 8px 32px rgba(0, 0, 0, 0.08)",
     display: "flex",
     alignItems: "center",
     justifyContent: "center",
     cursor: "pointer",
-    transition: "all 0.2s ease",
   },
   content: {
     flex: 1,
@@ -346,41 +343,45 @@ const styles = {
     display: "inline-flex",
     alignItems: "center",
     gap: "6px",
-    padding: "6px 12px",
-    backgroundColor: "#F0FDF4",
+    padding: "8px 14px",
+    backgroundColor: "rgba(52, 199, 89, 0.12)", // iOS Green with opacity
     borderRadius: "100px",
-    border: "1px solid #BBF7D0",
+    border: "1px solid rgba(52, 199, 89, 0.20)",
   },
   badgeText: {
-    fontSize: "12px",
+    fontSize: "11px",
     fontWeight: "700",
-    color: "#16A34A",
-    letterSpacing: "0.5px",
+    color: "#34C759", // iOS Green
+    letterSpacing: "0.06em",
   },
   titleSection: {
     marginBottom: "32px",
   },
   title: {
-    fontSize: "32px",
+    fontSize: "48px",
     fontWeight: "700",
     color: "#000000",
     marginBottom: "8px",
-    letterSpacing: "-0.5px",
+    letterSpacing: "-0.02em",
+    fontFamily: "-apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Inter', system-ui, sans-serif",
   },
   subtitle: {
-    fontSize: "16px",
-    color: "#6B7280",
+    fontSize: "17px",
+    color: "#8E8E93",
+    lineHeight: 1.5,
   },
   errorContainer: {
-    padding: "12px 16px",
-    backgroundColor: "#FEF2F2",
-    borderRadius: "12px",
+    padding: "16px 20px",
+    backgroundColor: "rgba(255, 59, 48, 0.12)",
+    borderRadius: "16px",
     marginBottom: "16px",
+    border: "1px solid rgba(255, 59, 48, 0.20)",
   },
   errorText: {
-    fontSize: "14px",
-    color: "#DC2626",
+    fontSize: "15px",
+    color: "#FF3B30",
     margin: 0,
+    fontWeight: "500",
   },
   form: {
     display: "flex",
@@ -391,7 +392,7 @@ const styles = {
   },
   showPasswordButton: {
     position: "absolute",
-    right: "12px",
+    right: "16px",
     top: "50%",
     transform: "translateY(-50%)",
     background: "none",
@@ -409,9 +410,9 @@ const styles = {
     marginBottom: "24px",
   },
   forgotPasswordLink: {
-    fontSize: "14px",
-    color: "#000000",
-    fontWeight: "500",
+    fontSize: "15px",
+    color: "#007AFF",
+    fontWeight: "600",
     textDecoration: "none",
   },
   buttonContainer: {
@@ -426,11 +427,13 @@ const styles = {
   dividerLine: {
     flex: 1,
     height: "1px",
-    backgroundColor: "#E5E7EB",
+    backgroundColor: "rgba(0, 0, 0, 0.10)",
   },
   dividerText: {
-    fontSize: "14px",
-    color: "#9CA3AF",
+    fontSize: "13px",
+    color: "#8E8E93",
+    textTransform: "uppercase",
+    letterSpacing: "0.04em",
   },
   linksSection: {
     textAlign: "center",
@@ -441,19 +444,19 @@ const styles = {
   },
   signupText: {
     fontSize: "15px",
-    color: "#6B7280",
+    color: "#8E8E93",
   },
   signupLink: {
-    color: "#000000",
+    color: "#007AFF",
     fontWeight: "600",
     textDecoration: "none",
   },
   switchText: {
     fontSize: "14px",
-    color: "#9CA3AF",
+    color: "#8E8E93",
   },
   switchLink: {
-    color: "#16A34A",
+    color: "#34C759", // iOS Green for driver
     fontWeight: "500",
     textDecoration: "none",
   },
@@ -468,12 +471,12 @@ const styles = {
     gap: "8px",
   },
   footerLink: {
-    fontSize: "14px",
-    color: "#6B7280",
+    fontSize: "13px",
+    color: "#8E8E93",
     textDecoration: "none",
   },
   footerDot: {
-    color: "#D1D5DB",
+    color: "#C7C7CC",
   },
 };
 

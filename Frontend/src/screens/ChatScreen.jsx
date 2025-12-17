@@ -6,7 +6,7 @@ import { SocketDataContext } from "../contexts/SocketContext";
 import Console from "../utils/console";
 import Loading from "./Loading";
 import { motion, AnimatePresence } from "framer-motion";
-import { colors, shadows, glassEffect, borderRadius } from "../styles/designSystem";
+import { springConfig } from "../styles/designSystem";
 import Button from "../components/common/Button";
 import Card from "../components/common/Card";
 import Badge from "../components/common/Badge";
@@ -320,7 +320,7 @@ function ChatScreen() {
                   />
                 ) : null}
                 <div 
-                  className={`w-10 h-10 rounded-full bg-gradient-to-br from-[${colors.accent}] to-[${colors.accent}]/70 flex items-center justify-center ${userData?.profileImage ? 'hidden' : 'flex'}`}
+                  className={`w-10 h-10 rounded-full bg-gradient-to-br from-ios-blue to-ios-blue/70 flex items-center justify-center ${userData?.profileImage ? 'hidden' : 'flex'}`}
                 >
                   <span className="text-sm font-bold text-white">
                     {userData?.fullname?.firstname?.[0]}
@@ -334,7 +334,7 @@ function ChatScreen() {
                   {userData?.fullname?.firstname} {userData?.fullname?.lastname}
                 </h1>
                 {isTyping ? (
-                  <p className="text-xs text-[#10B981] animate-pulse">escribiendo...</p>
+                  <p className="text-xs text-ios-green animate-pulse">escribiendo...</p>
                 ) : (
                   <p className="text-xs text-white/60">
                     {userType === "user" ? "Conductor" : "Pasajero"}

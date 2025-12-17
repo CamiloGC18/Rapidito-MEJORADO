@@ -1,22 +1,18 @@
 import { useEffect, useState } from "react";
 import { CheckCircle2, XCircle, AlertCircle, X } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
+import { springConfig } from "../styles/designSystem";
 
 /**
- * Swiss Minimalist Premium Alert Component
+ * 🏝️ SILICON VALLEY LUXURY ALERT
+ * Ultra-Premium Modal with Glassmorphism
  * 
- * Design Philosophy:
- * - Glassmorphism with backdrop-blur-xl
- * - Premium emerald gradient for success
- * - Smooth spring animations (framer-motion)
- * - Icon-driven visual hierarchy
- * - Dark mode support
- * 
- * @param {string} heading - Alert title
- * @param {string} text - Alert message
- * @param {boolean} isVisible - Controls visibility
- * @param {Function} onClose - Close callback
- * @param {string} type - "success" or "failure"
+ * Design DNA:
+ * - GLASS PANEL: bg-white/90 backdrop-blur-xl
+ * - ISLAND RADIUS: rounded-3xl (24px)
+ * - iOS COLORS: #34C759 success, #FF3B30 failure
+ * - SPRING PHYSICS: damping: 25, stiffness: 300
+ * - BRUTALIST BUTTON: Pure black, rounded-full
  */
 export const Alert = ({ heading, text, isVisible, onClose, type }) => {
   const [shouldRender, setShouldRender] = useState(false);
@@ -33,19 +29,21 @@ export const Alert = ({ heading, text, isVisible, onClose, type }) => {
     failure: XCircle,
   };
 
-  // Color schemes - Swiss Minimalist Premium
+  // Color schemes - Silicon Valley Luxury (iOS System Colors)
   const colorSchemes = {
     success: {
-      icon: "text-emerald-500 dark:text-emerald-400",
-      iconBg: "bg-emerald-500/20 dark:bg-emerald-400/20",
-      border: "border-emerald-500/30 dark:border-emerald-400/30",
-      button: "bg-gradient-to-r from-emerald-500 to-emerald-600 hover:from-emerald-600 hover:to-emerald-700 text-white shadow-lg shadow-emerald-500/30",
+      icon: "text-[#34C759]",
+      iconBg: "bg-[#34C759]/15",
+      border: "border-[#34C759]/20",
+      button: "bg-black dark:bg-white text-white dark:text-black",
+      accent: "#34C759",
     },
     failure: {
-      icon: "text-red-500 dark:text-red-400",
-      iconBg: "bg-red-500/20 dark:bg-red-400/20",
-      border: "border-red-500/30 dark:border-red-400/30",
-      button: "bg-gradient-to-r from-red-500 to-red-600 hover:from-red-600 hover:to-red-700 text-white shadow-lg shadow-red-500/30",
+      icon: "text-[#FF3B30]",
+      iconBg: "bg-[#FF3B30]/15",
+      border: "border-[#FF3B30]/20",
+      button: "bg-black dark:bg-white text-white dark:text-black",
+      accent: "#FF3B30",
     },
   };
 
@@ -80,23 +78,18 @@ export const Alert = ({ heading, text, isVisible, onClose, type }) => {
           }}
         >
           <motion.div
-            initial={prefersReducedMotion ? {} : { scale: 0.9, opacity: 0, y: 20 }}
+            initial={prefersReducedMotion ? {} : { scale: 0.95, opacity: 0, y: 40 }}
             animate={{ scale: 1, opacity: 1, y: 0 }}
-            exit={prefersReducedMotion ? {} : { scale: 0.95, opacity: 0, y: 10 }}
-            transition={{
-              type: "spring",
-              damping: 28,
-              stiffness: 350,
-              mass: 0.8,
-            }}
+            exit={prefersReducedMotion ? {} : { scale: 0.98, opacity: 0, y: 20 }}
+            transition={springConfig.panel}
             className={`
-              w-full max-w-md rounded-3xl overflow-hidden shadow-2xl border-2
-              ${colors.border}
+              w-full max-w-md rounded-3xl overflow-hidden shadow-island-xl border
+              mx-4 ${colors.border}
             `}
             style={{
-              background: 'rgba(255, 255, 255, 0.95)',
-              backdropFilter: 'blur(20px) saturate(180%)',
-              WebkitBackdropFilter: 'blur(20px) saturate(180%)',
+              background: 'rgba(255, 255, 255, 0.90)',
+              backdropFilter: 'blur(40px) saturate(200%)',
+              WebkitBackdropFilter: 'blur(40px) saturate(200%)',
             }}
           >
             {/* Subtle top accent line */}
@@ -155,21 +148,19 @@ export const Alert = ({ heading, text, isVisible, onClose, type }) => {
               transition={{ delay: 0.4, duration: 0.3 }}
               className="px-6 pb-6"
             >
-              <button
+              <motion.button
+                whileTap={{ scale: 0.95 }}
+                transition={springConfig.button}
                 onClick={onClose}
                 className={`
-                  w-full py-4 rounded-2xl font-bold text-base
-                  transition-all duration-200
-                  active:scale-95
-                  focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2
+                  w-full py-4 rounded-full font-semibold text-[17px]
+                  shadow-island
+                  focus:outline-none focus-visible:ring-2 focus-visible:ring-[#007AFF] focus-visible:ring-offset-2
                   ${colors.button}
-                  ${type === 'success' 
-                    ? 'focus-visible:ring-emerald-500' 
-                    : 'focus-visible:ring-red-500'}
                 `}
               >
                 Entendido
-              </button>
+              </motion.button>
             </motion.div>
           </motion.div>
         </motion.div>

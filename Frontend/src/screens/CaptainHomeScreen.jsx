@@ -32,7 +32,7 @@ import {
 } from "lucide-react";
 
 // Import design system components
-import { colors, shadows, glassEffect, borderRadius } from "../styles/designSystem";
+import { springConfig, colors } from "../styles/designSystem";
 import Button from "../components/common/Button";
 import Card from "../components/common/Card";
 import Input from "../components/common/Input";
@@ -154,39 +154,39 @@ function CaptainHomeScreen() {
     return window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   }, []);
 
-  // Animation variants with iOS spring physics
+  // Animation variants with iOS spring physics - Silicon Valley Luxury
   const staggerContainer = {
     initial: {},
     animate: {
       transition: {
-        staggerChildren: prefersReducedMotion ? 0 : 0.1,
-        delayChildren: prefersReducedMotion ? 0 : 0.2
+        staggerChildren: prefersReducedMotion ? 0 : 0.08,
+        delayChildren: prefersReducedMotion ? 0 : 0.1
       }
     }
   };
 
   const fadeInUp = {
-    initial: prefersReducedMotion ? {} : { opacity: 0, y: 40 },
+    initial: prefersReducedMotion ? {} : { opacity: 0, y: 30 },
     animate: prefersReducedMotion ? {} : { opacity: 1, y: 0 },
-    transition: { type: "spring", damping: 30, stiffness: 300, mass: 0.8 }
+    transition: springConfig.panel
   };
 
   const fadeInDown = {
-    initial: prefersReducedMotion ? {} : { opacity: 0, y: -40 },
+    initial: prefersReducedMotion ? {} : { opacity: 0, y: -30 },
     animate: prefersReducedMotion ? {} : { opacity: 1, y: 0 },
-    transition: { type: "spring", damping: 30, stiffness: 300, mass: 0.8 }
+    transition: springConfig.panel
   };
 
   const fadeInRight = {
-    initial: prefersReducedMotion ? {} : { opacity: 0, x: -40 },
+    initial: prefersReducedMotion ? {} : { opacity: 0, x: -30 },
     animate: prefersReducedMotion ? {} : { opacity: 1, x: 0 },
-    transition: { type: "spring", damping: 30, stiffness: 300, mass: 0.8 }
+    transition: springConfig.panel
   };
 
   const scaleIn = {
     initial: prefersReducedMotion ? {} : { opacity: 0, scale: 0.95 },
     animate: prefersReducedMotion ? {} : { opacity: 1, scale: 1 },
-    transition: { type: "spring", damping: 30, stiffness: 300, mass: 0.8 }
+    transition: springConfig.panel
   };
 
   const handleSidebarToggle = (isOpen) => {
@@ -723,16 +723,16 @@ function CaptainHomeScreen() {
               onClick={() => setIsSidebarOpen(true)}
               className="flex items-center gap-3 pl-2 pr-5 py-1 rounded-full"
             >
-              <div className={`w-10 h-10 rounded-full bg-gradient-to-br from-[${colors.accent}] to-[${colors.accent}]/70 flex items-center justify-center text-white font-bold text-sm ring-2 ring-white/10 shadow-lg`}>
+              <div className="w-10 h-10 rounded-full bg-ios-green flex items-center justify-center text-white font-bold text-sm ring-2 ring-white/10 shadow-lg">
                 {captainData?.fullname?.firstname?.[0]?.toUpperCase() || 'C'}
               </div>
               <div className="text-left">
-                <p className={`text-sm font-semibold text-[${colors.textPrimary}]`}>
+                <p className="text-sm font-semibold text-black dark:text-white">
                   {captainData?.fullname?.firstname || 'Conductor'}
                 </p>
                 <div className="flex items-center gap-1">
-                  <span className="w-1.5 h-1.5 rounded-full bg-green-500 animate-pulse"></span>
-                  <p className={`text-xs text-[${colors.textSecondary}]`}>En línea</p>
+                  <span className="w-1.5 h-1.5 rounded-full bg-ios-green animate-pulse"></span>
+                  <p className="text-xs text-ios-gray">En línea</p>
                 </div>
               </div>
             </Button>
@@ -807,8 +807,8 @@ function CaptainHomeScreen() {
             >
               {/* Today's Earnings - Hero Stat */}
               <div className="mb-6 text-center">
-                <p className={`text-sm text-[${colors.textSecondary}] mb-1`}>Hoy ganaste</p>
-                <p className={`text-5xl font-black text-[${colors.textPrimary}] tracking-tight`}>
+                <p className="text-sm text-ios-gray mb-1">Hoy ganaste</p>
+                <p className="text-5xl font-black text-black dark:text-white tracking-tight">
                   ${Math.round(earnings.today / 1000)}K
                 </p>
               </div>
@@ -817,33 +817,33 @@ function CaptainHomeScreen() {
               <div className="grid grid-cols-3 gap-3">
                 {/* Total Earnings */}
                 <Card variant="glass" borderRadius="large" className="p-3 text-center">
-                  <div className={`w-9 h-9 mx-auto mb-2 rounded-full bg-[${colors.accent}]/10 flex items-center justify-center text-[${colors.accent}]`}>
+                  <div className="w-9 h-9 mx-auto mb-2 rounded-full bg-ios-green/10 flex items-center justify-center text-ios-green">
                     <DollarSign size={18} />
                   </div>
-                  <p className={`text-xs text-[${colors.textSecondary}] mb-1`}>Total</p>
-                  <p className={`text-lg font-bold text-[${colors.textPrimary}]`}>
+                  <p className="text-xs text-ios-gray mb-1">Total</p>
+                  <p className="text-lg font-bold text-black dark:text-white">
                     ${Math.round(earnings.total / 1000)}K
                   </p>
                 </Card>
 
                 {/* Rides Today */}
                 <Card variant="glass" borderRadius="large" className="p-3 text-center">
-                  <div className="w-9 h-9 mx-auto mb-2 rounded-full bg-blue-500/10 flex items-center justify-center text-blue-500">
+                  <div className="w-9 h-9 mx-auto mb-2 rounded-full bg-ios-blue/10 flex items-center justify-center text-ios-blue">
                     <Activity size={18} />
                   </div>
-                  <p className={`text-xs text-[${colors.textSecondary}] mb-1`}>Viajes</p>
-                  <p className={`text-lg font-bold text-[${colors.textPrimary}]`}>
+                  <p className="text-xs text-ios-gray mb-1">Viajes</p>
+                  <p className="text-lg font-bold text-black dark:text-white">
                     {rides.accepted}
                   </p>
                 </Card>
 
                 {/* Distance */}
                 <Card variant="glass" borderRadius="large" className="p-3 text-center">
-                  <div className="w-9 h-9 mx-auto mb-2 rounded-full bg-purple-500/10 flex items-center justify-center text-purple-500">
+                  <div className="w-9 h-9 mx-auto mb-2 rounded-full bg-ios-purple/10 flex items-center justify-center text-ios-purple">
                     <TrendingUp size={18} />
                   </div>
-                  <p className={`text-xs text-[${colors.textSecondary}] mb-1`}>Distancia</p>
-                  <p className={`text-lg font-bold text-[${colors.textPrimary}]`}>
+                  <p className="text-xs text-ios-gray mb-1">Distancia</p>
+                  <p className="text-lg font-bold text-black dark:text-white">
                     {rides.distanceTravelled}km
                   </p>
                 </Card>
@@ -851,14 +851,14 @@ function CaptainHomeScreen() {
 
               {/* Rating if available */}
               {captain?.rating && (
-                <div className={`mt-4 pt-4 border-t border-[${colors.border}] flex items-center justify-center gap-2`}>
+                <div className="mt-4 pt-4 border-t border-white/10 flex items-center justify-center gap-2">
                   <div className="flex items-center gap-1">
                     <Star size={16} className="fill-yellow-400 text-yellow-400" />
-                    <span className={`text-sm font-semibold text-[${colors.textPrimary}]`}>
+                    <span className="text-sm font-semibold text-black dark:text-white">
                       {captain.rating.average.toFixed(1)}
                     </span>
                   </div>
-                  <span className={`text-xs text-[${colors.textSecondary}]`}>
+                  <span className="text-xs text-ios-gray">
                     ({captain.rating.count} calificaciones)
                   </span>
                 </div>
@@ -916,15 +916,15 @@ function CaptainHomeScreen() {
                   animate={{ scale: 1 }}
                   transition={{ type: "spring", stiffness: 200, damping: 15 }}
                 >
-                  <div className={`w-20 h-20 rounded-full bg-gradient-to-br from-[${colors.accent}] to-[${colors.accent}]/70 flex items-center justify-center shadow-lg`}>
+                  <div className="w-20 h-20 rounded-full bg-gradient-to-br from-ios-green to-ios-green/70 flex items-center justify-center shadow-lg">
                     <CheckCircle size={36} strokeWidth={2.5} className="text-white" />
                   </div>
                 </motion.div>
 
-                <h2 className={`text-2xl font-bold text-[${colors.textPrimary}] mb-2 text-center`}>
+                <h2 className="text-2xl font-bold text-black dark:text-white mb-2 text-center">
                   ¡Viaje completado!
                 </h2>
-                <p className={`text-center text-[${colors.textSecondary}] mb-6`}>
+                <p className="text-center text-ios-gray mb-6">
                   Has finalizado el viaje exitosamente
                 </p>
                 
@@ -935,14 +935,14 @@ function CaptainHomeScreen() {
                   className="p-5 mb-6"
                 >
                   <div className="flex items-center justify-center mb-2">
-                    <div className={`w-10 h-10 rounded-full bg-[${colors.accent}]/10 flex items-center justify-center text-[${colors.accent}]`}>
+                    <div className="w-10 h-10 rounded-full bg-ios-green/10 flex items-center justify-center text-ios-green">
                       <DollarSign size={20} />
                     </div>
                   </div>
-                  <p className={`text-sm text-[${colors.textSecondary}] text-center mb-1`}>
+                  <p className="text-sm text-ios-gray text-center mb-1">
                     Ganancia del viaje
                   </p>
-                  <p className={`text-4xl font-black text-center text-[${colors.accent}]`}>
+                  <p className="text-4xl font-black text-center text-ios-green">
                     ${completedRideData.fare?.toLocaleString('es-CO') || 0}
                   </p>
                 </Card>
@@ -951,8 +951,8 @@ function CaptainHomeScreen() {
                 <div className="flex justify-center mb-8">
                   <Badge variant="glass">
                     <div className="flex items-center gap-1.5 px-2 py-1">
-                      <MapPinned size={14} className={`text-[${colors.textSecondary}]`} />
-                      <span className={`text-sm text-[${colors.textSecondary}]`}>
+                      <MapPinned size={14} className="text-ios-gray" />
+                      <span className="text-sm text-ios-gray">
                         {Math.round((completedRideData.distance || 0) / 1000)} km
                       </span>
                     </div>

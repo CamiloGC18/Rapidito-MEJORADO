@@ -41,7 +41,7 @@ import LocationFavoritesPills from "../components/LocationFavoritesPills";
 import SaveLocationModal from "../components/SaveLocationModal";
 
 // Import design system components
-import { colors, shadows, glassEffect, borderRadius } from "../styles/designSystem";
+import { springConfig, colors } from "../styles/designSystem";
 import Button from "../components/common/Button";
 import Card from "../components/common/Card";
 import Input from "../components/common/Input";
@@ -138,39 +138,39 @@ function UserHomeScreen() {
     return window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   }, []);
 
-  // Animation variants with iOS spring physics
+  // Animation variants with iOS spring physics - Silicon Valley Luxury
   const staggerContainer = {
     initial: {},
     animate: {
       transition: {
-        staggerChildren: prefersReducedMotion ? 0 : 0.1,
-        delayChildren: prefersReducedMotion ? 0 : 0.2
+        staggerChildren: prefersReducedMotion ? 0 : 0.08,
+        delayChildren: prefersReducedMotion ? 0 : 0.1
       }
     }
   };
 
   const fadeInUp = {
-    initial: prefersReducedMotion ? {} : { opacity: 0, y: 40 },
+    initial: prefersReducedMotion ? {} : { opacity: 0, y: 30 },
     animate: prefersReducedMotion ? {} : { opacity: 1, y: 0 },
-    transition: { type: "spring", damping: 30, stiffness: 300, mass: 0.8 }
+    transition: springConfig.panel
   };
 
   const fadeInDown = {
-    initial: prefersReducedMotion ? {} : { opacity: 0, y: -40 },
+    initial: prefersReducedMotion ? {} : { opacity: 0, y: -30 },
     animate: prefersReducedMotion ? {} : { opacity: 1, y: 0 },
-    transition: { type: "spring", damping: 30, stiffness: 300, mass: 0.8 }
+    transition: springConfig.panel
   };
 
   const fadeInRight = {
-    initial: prefersReducedMotion ? {} : { opacity: 0, x: -40 },
+    initial: prefersReducedMotion ? {} : { opacity: 0, x: -30 },
     animate: prefersReducedMotion ? {} : { opacity: 1, x: 0 },
-    transition: { type: "spring", damping: 30, stiffness: 300, mass: 0.8 }
+    transition: springConfig.panel
   };
 
   const scaleIn = {
     initial: prefersReducedMotion ? {} : { opacity: 0, scale: 0.95 },
     animate: prefersReducedMotion ? {} : { opacity: 1, scale: 1 },
-    transition: { type: "spring", damping: 30, stiffness: 300, mass: 0.8 }
+    transition: springConfig.panel
   };
 
   // Handle sidebar toggle
@@ -804,16 +804,16 @@ function UserHomeScreen() {
               onClick={() => setIsSidebarOpen(true)}
               className="flex items-center gap-3 pl-2 pr-5 py-1 rounded-full"
             >
-              <div className={`w-10 h-10 rounded-full bg-gradient-to-br from-[${colors.accent}] to-[${colors.accent}]/70 flex items-center justify-center flex-shrink-0 text-[${colors.accent}]`}>
+              <div className="w-10 h-10 rounded-full bg-ios-blue flex items-center justify-center flex-shrink-0 text-white font-semibold">
                 {user?.fullname?.firstname?.[0]?.toUpperCase() || 'U'}
               </div>
               <div className="text-left">
-                <p className={`text-sm font-semibold text-[${colors.textPrimary}]`}>
+                <p className="text-sm font-semibold text-black dark:text-white">
                   {user?.fullname?.firstname || 'Usuario'}
                 </p>
                 <div className="flex items-center gap-1">
-                  <span className="w-1.5 h-1.5 rounded-full bg-green-500"></span>
-                  <p className={`text-xs text-[${colors.textSecondary}]`}>En línea</p>
+                  <span className="w-1.5 h-1.5 rounded-full bg-ios-green"></span>
+                  <p className="text-xs text-ios-gray">En línea</p>
                 </div>
               </div>
             </Button>
@@ -892,14 +892,14 @@ function UserHomeScreen() {
                 onClick={() => setShowSearchPanel(true)}
                 className="w-full p-6 flex items-center gap-4 bg-transparent"
               >
-                <div className={`w-12 h-12 rounded-full bg-[${colors.accent}]/10 flex items-center justify-center flex-shrink-0 text-[${colors.accent}]`}>
+                <div className="w-12 h-12 rounded-full bg-ios-blue/10 flex items-center justify-center flex-shrink-0 text-ios-blue">
                   <Search size={24} />
                 </div>
                 <div className="text-left flex-1">
-                  <p className={`text-lg font-semibold text-[${colors.textPrimary}]`}>
+                  <p className="text-lg font-semibold text-black dark:text-white">
                     ¿A dónde vamos?
                   </p>
-                  <p className={`text-sm text-[${colors.textSecondary}]`}>
+                  <p className="text-sm text-ios-gray">
                     Toca para buscar destino
                   </p>
                 </div>
@@ -1106,7 +1106,7 @@ function UserHomeScreen() {
                   animate={{ scale: [1, 1.1, 1] }}
                   transition={{ repeat: Infinity, duration: 2.5, ease: "easeInOut" }}
                 >
-                  <div className={`w-20 h-20 rounded-full bg-gradient-to-br from-[${colors.accent}] to-[${colors.accent}]/70 flex items-center justify-center relative`}>
+                  <div className="w-20 h-20 rounded-full bg-gradient-to-br from-ios-blue to-ios-blue/70 flex items-center justify-center relative">
                     {/* Inner pulse rings */}
                     <motion.div 
                       className="absolute inset-0 rounded-full border-4 border-white/20"
@@ -1117,10 +1117,10 @@ function UserHomeScreen() {
                   </div>
                 </motion.div>
 
-                <h2 className={`text-2xl font-bold text-[${colors.textPrimary}] mb-2 text-center`}>
+                <h2 className="text-2xl font-bold text-black dark:text-white mb-2 text-center">
                   Buscando conductor
                 </h2>
-                <p className={`text-[${colors.textSecondary}] mb-8 text-center`}>
+                <p className="text-ios-gray mb-8 text-center">
                   Conectando con conductores cercanos...
                 </p>
 

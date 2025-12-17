@@ -1,57 +1,25 @@
-import { useEffect, useState, useMemo } from "react";
+import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { Link, useNavigate } from "react-router-dom";
 import { Eye, EyeOff, ArrowLeft, Mail, Lock, User, Phone, UserPlus } from "lucide-react";
 import { motion } from "framer-motion";
 import axios from "axios";
 import Console from "../utils/console";
-
-// Import design system components
-import { colors, shadows, glassEffect, borderRadius } from "../styles/designSystem";
 import Button from "../components/common/Button";
-import Card from "../components/common/Card";
 import Input from "../components/common/Input";
-import Badge from "../components/common/Badge";
+import { springConfig } from "../styles/designSystem";
 
 /**
- * UserSignup - iOS Deluxe Floating Island Layout
- * Premium dark mode design with glassmorphism and depth layers
- * Multi-field signup form with iOS-style floating inputs
+ * UserSignup - Silicon Valley Luxury Signup Screen
+ * Ultra-Premium, Brutalist Minimalist, Liquid Glass aesthetic
+ * iOS native experience with spring physics
  */
 function UserSignup() {
   const [responseError, setResponseError] = useState("");
   const [loading, setLoading] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
   const [termsAccepted, setTermsAccepted] = useState(false);
-
-  // Check for reduced motion preference
-  const prefersReducedMotion = useMemo(() => {
-    if (typeof window === 'undefined') return false;
-    return window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-  }, []);
-
-  // Animation variants with iOS spring physics
-  const staggerContainer = {
-    initial: {},
-    animate: {
-      transition: {
-        staggerChildren: prefersReducedMotion ? 0 : 0.1,
-        delayChildren: prefersReducedMotion ? 0 : 0.2
-      }
-    }
-  };
-
-  const fadeInUp = {
-    initial: prefersReducedMotion ? {} : { opacity: 0, y: 40 },
-    animate: prefersReducedMotion ? {} : { opacity: 1, y: 0 },
-    transition: { type: "spring", damping: 30, stiffness: 300, mass: 0.8 }
-  };
-
-  const scaleIn = {
-    initial: prefersReducedMotion ? {} : { opacity: 0, scale: 0.95 },
-    animate: prefersReducedMotion ? {} : { opacity: 1, scale: 1 },
-    transition: { type: "spring", damping: 30, stiffness: 300, mass: 0.8, delay: 0.1 }
-  };
+  const [mounted, setMounted] = useState(false);
 
   const {
     handleSubmit,
@@ -60,6 +28,10 @@ function UserSignup() {
   } = useForm();
 
   const navigation = useNavigate();
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
   
   const signupUser = async (data) => {
     if (!termsAccepted) {
@@ -79,7 +51,7 @@ function UserSignup() {
 
     try {
       setLoading(true);
-      setResponseError(""); // Clear previous errors
+      setResponseError("");
       
       const response = await axios.post(
         `${import.meta.env.VITE_SERVER_URL}/user/register`,
@@ -92,7 +64,6 @@ function UserSignup() {
         data: response.data.user,
       }));
       
-      // Add a small delay for a smoother transition
       setTimeout(() => {
         navigation("/home");
       }, 300);
@@ -114,289 +85,436 @@ function UserSignup() {
   }, [responseError]);
 
   return (
-    <div className={`min-h-screen bg-[${colors.primary}] flex flex-col overflow-y-auto`}>
-      {/* Animated Gradient Background */}
-      <div className="absolute inset-0 bg-gradient-to-br from-[#0A0A0A] via-[#101010] to-[#080808] opacity-90" />
-      
-      {/* Subtle Mesh Gradient Overlay */}
-      <motion.div 
-        initial={{ opacity: 0 }} 
-        animate={{ opacity: 0.7 }}
-        transition={{ duration: 1 }}
-        className="absolute inset-0 bg-[url('/2.webp')] bg-cover bg-center opacity-30 mix-blend-overlay"
-        aria-hidden="true"
-      />
-      
-      {/* Back Button - Floating Glass Pill */}
-      <motion.div
-        initial={prefersReducedMotion ? {} : { opacity: 0, y: -20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ type: "spring", damping: 30, stiffness: 300, delay: 0.1 }}
-        className="absolute top-6 left-6 z-20"
+    <div style={styles.container}>
+      {/* Header with back button - Glass Island */}
+      <motion.header
+        initial={{ opacity: 0, y: -20 }}
+        animate={{ opacity: mounted ? 1 : 0, y: mounted ? 0 : -20 }}
+        transition={springConfig.panel}
+        style={styles.header}
       >
-        <Button
-          variant="glass"
-          size="small"
-          icon={<ArrowLeft size={18} />}
-          title="Volver"
-          onClick={() => navigation('/')}
-          fullWidth={false}
-        />
-      </motion.div>
-
-      {/* Content Wrapper - Centered Signup Island */}
-      <div className="relative z-10 flex-1 flex flex-col justify-center items-center px-6 py-10">
-        {/* Centered Floating Island Card */}
-        <motion.div
-          variants={scaleIn}
-          initial="initial"
-          animate="animate"
-          className="w-full max-w-md"
+        <motion.button
+          whileTap={{ scale: 0.95 }}
+          transition={springConfig.button}
+          onClick={() => navigation("/")}
+          style={styles.backButton}
+          aria-label="Volver"
         >
-          <Card 
-            variant="floating" 
-            borderRadius="xlarge"
-            className="py-10 px-8"
+          <ArrowLeft size={20} color="#000" strokeWidth={2.5} />
+        </motion.button>
+      </motion.header>
+
+      {/* Main content */}
+      <div style={styles.content}>
+        {/* Title section */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: mounted ? 1 : 0, y: mounted ? 0 : 20 }}
+          transition={springConfig.panel}
+          style={styles.titleSection}
+        >
+          <span style={styles.label}>NUEVO USUARIO</span>
+          <h1 style={styles.title}>Crear Cuenta</h1>
+          <p style={styles.subtitle}>
+            Comienza tu viaje con Rapidito
+          </p>
+        </motion.div>
+
+        {/* Error message */}
+        {responseError && (
+          <motion.div
+            initial={{ opacity: 0, y: -10, scale: 0.95 }}
+            animate={{ opacity: 1, y: 0, scale: 1 }}
+            transition={springConfig.button}
+            style={styles.errorContainer}
           >
-            {/* Header with Title */}
-            <div className="flex flex-col items-center mb-8">
-              <motion.div variants={fadeInUp} className="mb-4">
-                <Badge 
-                  variant="primary" 
-                  size="medium"
-                  icon={<UserPlus size={16} />}
-                  className="mb-3"
-                >
-                  NUEVO USUARIO
-                </Badge>
-              </motion.div>
-              
-              <motion.div variants={fadeInUp} className="text-center">
-                <h2 className={`text-[28px] font-bold tracking-tight text-[${colors.textPrimary}]`}>Crear Cuenta</h2>
-                <p className={`mt-2 text-[${colors.textSecondary}]`}>Comienza tu viaje con Rapidito</p>
-              </motion.div>
-            </div>
+            <p style={styles.errorText}>{responseError}</p>
+          </motion.div>
+        )}
 
-            {/* Error Message - iOS Style */}
-            {responseError && (
-              <motion.div
-                initial={{ opacity: 0, y: -10 }}
-                animate={{ opacity: 1, y: 0 }}
-                className={`mb-6 px-4 py-3 bg-[${colors.error}]/10 border border-[${colors.error}]/20 rounded-[${borderRadius.medium}] text-[${colors.error}] text-sm flex items-center gap-2`}
-                role="alert"
-              >
-                <span className="rounded-full bg-[${colors.error}]/20 p-1">
-                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M12 9v3.75m-9.303 3.376c-.866 1.5.217 3.374 1.948 3.374h14.71c1.73 0 2.813-1.874 1.948-3.374L13.949 3.378c-.866-1.5-3.032-1.5-3.898 0L2.697 16.126zM12 15.75h.007v.008H12v-.008z" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
-                  </svg>
-                </span>
-                {responseError}
-              </motion.div>
-            )}
+        {/* Google OAuth Button */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: mounted ? 1 : 0, y: mounted ? 0 : 20 }}
+          transition={{ ...springConfig.panel, delay: 0.1 }}
+          style={{ marginBottom: '16px' }}
+        >
+          <Button
+            variant="secondary"
+            size="large"
+            icon={<img src="/screens/google-logo.png" alt="Google" style={{ width: 20, height: 20 }} />}
+            title="Continuar con Google"
+            onClick={() => window.location.href = `${import.meta.env.VITE_SERVER_URL}/auth/google?userType=user`}
+            fullWidth
+          />
+        </motion.div>
 
-            {/* Google OAuth Button - iOS Glass Style */}
-            <motion.div variants={fadeInUp} className="mb-4">
-              <Button
-                variant="glass"
-                size="large"
-                icon={<img src="/screens/google-logo.png" alt="Google" className="w-5 h-5" />}
-                title="Continuar con Google"
-                onClick={() => window.location.href = `${import.meta.env.VITE_SERVER_URL}/auth/google?userType=user`}
-                fullWidth
-              />
-            </motion.div>
+        {/* Divider */}
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: mounted ? 1 : 0 }}
+          transition={{ ...springConfig.gentle, delay: 0.15 }}
+          style={styles.divider}
+        >
+          <div style={styles.dividerLine} />
+          <span style={styles.dividerText}>o registrarse con email</span>
+          <div style={styles.dividerLine} />
+        </motion.div>
 
-            {/* Divider with text */}
-            <motion.div variants={fadeInUp} className="flex items-center gap-4 my-6">
-              <div className={`h-px flex-1 bg-[${colors.border}]`}></div>
-              <span className={`text-[${colors.textSecondary}] text-sm`}>o registrarse con email</span>
-              <div className={`h-px flex-1 bg-[${colors.border}]`}></div>
-            </motion.div>
+        {/* Signup form */}
+        <motion.form
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: mounted ? 1 : 0, y: mounted ? 0 : 20 }}
+          transition={{ ...springConfig.panel, delay: 0.2 }}
+          onSubmit={handleSubmit(signupUser)}
+          style={styles.form}
+        >
+          {/* First Name */}
+          <Input
+            label="Nombre"
+            type="text"
+            name="firstname"
+            icon={User}
+            register={register}
+            error={errors.firstname && { message: "El nombre es requerido" }}
+            floatingLabel
+            clearable
+          />
 
-            {/* Form */}
-            <form onSubmit={handleSubmit(signupUser)} className="space-y-5">
-              {/* First Name Input - iOS Floating Label */}
-              <motion.div variants={fadeInUp}>
-                <Input
-                  label="Nombre"
-                  type="text"
-                  name="firstname"
-                  icon={User}
-                  register={register}
-                  error={errors.firstname && { message: "El nombre es requerido" }}
-                  floatingLabel
-                  clearable
+          {/* Last Name */}
+          <Input
+            label="Apellido"
+            type="text"
+            name="lastname"
+            icon={User}
+            register={register}
+            error={errors.lastname && { message: "El apellido es requerido" }}
+            floatingLabel
+            clearable
+          />
+
+          {/* Email */}
+          <Input
+            label="Correo electrónico"
+            type="email"
+            name="email"
+            icon={Mail}
+            register={register}
+            error={errors.email && { message: "El email es requerido" }}
+            floatingLabel
+            clearable
+          />
+
+          {/* Phone */}
+          <Input
+            label="Teléfono"
+            type="tel"
+            name="phone"
+            icon={Phone}
+            register={register}
+            error={errors.phone && { message: "El teléfono es requerido" }}
+            floatingLabel
+            clearable
+          />
+
+          {/* Password */}
+          <div style={styles.passwordContainer}>
+            <Input
+              label="Contraseña"
+              type={showPassword ? "text" : "password"}
+              name="password"
+              icon={Lock}
+              register={register}
+              error={errors.password && {
+                message: errors.password.type === "minLength"
+                  ? "La contraseña debe tener al menos 6 caracteres"
+                  : "La contraseña es requerida"
+              }}
+              floatingLabel
+              clearable={false}
+            />
+            <motion.button
+              whileTap={{ scale: 0.9 }}
+              type="button"
+              onClick={() => setShowPassword(!showPassword)}
+              style={styles.showPasswordButton}
+              aria-label={showPassword ? "Ocultar contraseña" : "Mostrar contraseña"}
+            >
+              {showPassword ? (
+                <EyeOff size={18} color="#8E8E93" />
+              ) : (
+                <Eye size={18} color="#8E8E93" />
+              )}
+            </motion.button>
+          </div>
+
+          {/* Terms Checkbox */}
+          <div style={styles.termsContainer}>
+            <label style={styles.termsLabel}>
+              <div style={styles.checkboxWrapper}>
+                <input
+                  type="checkbox"
+                  checked={termsAccepted}
+                  onChange={(e) => setTermsAccepted(e.target.checked)}
+                  style={styles.checkbox}
                 />
-              </motion.div>
-
-              {/* Last Name Input - iOS Floating Label */}
-              <motion.div variants={fadeInUp}>
-                <Input
-                  label="Apellido"
-                  type="text"
-                  name="lastname"
-                  icon={User}
-                  register={register}
-                  error={errors.lastname && { message: "El apellido es requerido" }}
-                  floatingLabel
-                  clearable
-                />
-              </motion.div>
-
-              {/* Email Input - iOS Floating Label */}
-              <motion.div variants={fadeInUp}>
-                <Input
-                  label="Correo electrónico"
-                  type="email"
-                  name="email"
-                  icon={Mail}
-                  register={register}
-                  error={errors.email && { message: "El email es requerido" }}
-                  floatingLabel
-                  clearable
-                />
-              </motion.div>
-
-              {/* Phone Input - iOS Floating Label */}
-              <motion.div variants={fadeInUp}>
-                <Input
-                  label="Teléfono"
-                  type="tel"
-                  name="phone"
-                  icon={Phone}
-                  register={register}
-                  error={errors.phone && { message: "El teléfono es requerido" }}
-                  floatingLabel
-                  clearable
-                />
-              </motion.div>
-
-              {/* Password Input - iOS Floating Label */}
-              {/* CRITICAL-FIX: Pass register function, not result of calling it */}
-              <motion.div variants={fadeInUp} className="relative">
-                <Input
-                  label="Contraseña"
-                  type={showPassword ? "text" : "password"}
-                  name="password"
-                  icon={Lock}
-                  register={register}
-                  error={errors.password && {
-                    message: errors.password.type === "minLength"
-                      ? "La contraseña debe tener al menos 6 caracteres"
-                      : "La contraseña es requerida"
-                  }}
-                  floatingLabel
-                  clearable={false}
-                />
-                
-                {/* Show/Hide Password Button */}
-                <div className="absolute right-4 top-1/2 -translate-y-1/2 z-10">
-                  <button
-                    type="button"
-                    onClick={() => setShowPassword(!showPassword)}
-                    className={`text-[${colors.textSecondary}] hover:text-[${colors.textPrimary}] p-1 rounded-full transition-colors`}
-                    aria-label={showPassword ? "Ocultar contraseña" : "Mostrar contraseña"}
-                  >
-                    {showPassword ? <EyeOff size={18} /> : <Eye size={18} />}
-                  </button>
-                </div>
-              </motion.div>
-
-              {/* Terms Checkbox - iOS Style */}
-              <motion.div variants={fadeInUp} className="mt-4">
-                <label className="flex items-center gap-3 cursor-pointer">
-                  <div className="relative flex items-center justify-center">
-                    <input
-                      type="checkbox"
-                      checked={termsAccepted}
-                      onChange={(e) => setTermsAccepted(e.target.checked)}
-                      className="peer appearance-none h-[22px] w-[22px] rounded-[6px] border border-[${colors.border}] bg-[${colors.card}] checked:bg-[${colors.accent}] checked:border-0 transition-all duration-200"
-                    />
-                    <svg
-                      className="absolute h-[14px] w-[14px] text-white opacity-0 peer-checked:opacity-100 transition-opacity"
-                      viewBox="0 0 24 24"
-                      fill="none"
-                      stroke="currentColor"
-                      strokeWidth="3"
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                    >
+                <div style={{
+                  ...styles.checkboxCustom,
+                  backgroundColor: termsAccepted ? '#007AFF' : 'transparent',
+                  borderColor: termsAccepted ? '#007AFF' : 'rgba(0, 0, 0, 0.15)',
+                }}>
+                  {termsAccepted && (
+                    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="3">
                       <polyline points="20 6 9 17 4 12" />
                     </svg>
-                  </div>
-                  <span className={`text-sm text-[${colors.textSecondary}]`}>
-                    Acepto los{' '}
-                    <Link to="/terms" className={`text-[${colors.accent}] hover:text-[${colors.accent}]/80 transition-colors`}>
-                      Términos y Condiciones
-                    </Link>
-                    {' '}y la{' '}
-                    <Link to="/privacy" className={`text-[${colors.accent}] hover:text-[${colors.accent}]/80 transition-colors`}>
-                      Política de Privacidad
-                    </Link>
-                  </span>
-                </label>
-              </motion.div>
-              
-              {/* Signup Button */}
-              <motion.div variants={fadeInUp} className="mt-8">
-                <Button
-                  variant="primary"
-                  size="large"
-                  title={loading ? "Creando cuenta..." : "Crear Cuenta"}
-                  icon={loading ? null : <UserPlus size={20} />}
-                  loading={loading}
-                  loadingMessage="Creando cuenta..."
-                  onClick={handleSubmit(signupUser)}
-                  fullWidth
-                />
-              </motion.div>
-              
-              {/* Login Link */}
-              <motion.div variants={fadeInUp} className="mt-6 text-center">
-                <p className={`text-[${colors.textSecondary}]`}>
-                  ¿Ya tienes cuenta?{" "}
-                  <Link 
-                    to="/login" 
-                    className={`font-semibold text-[${colors.textPrimary}] hover:text-[${colors.accent}] transition-colors`}
-                  >
-                    Inicia sesión
-                  </Link>
-                </p>
-              </motion.div>
-            </form>
+                  )}
+                </div>
+              </div>
+              <span style={styles.termsText}>
+                Acepto los{' '}
+                <Link to="/terms" style={styles.termsLink}>Términos</Link>
+                {' '}y la{' '}
+                <Link to="/privacy" style={styles.termsLink}>Privacidad</Link>
+              </span>
+            </label>
+          </div>
 
-          </Card>
+          {/* Submit button */}
+          <div style={styles.buttonContainer}>
+            <Button
+              type="submit"
+              variant="primary"
+              size="large"
+              title={loading ? "Creando cuenta..." : "Crear Cuenta"}
+              icon={loading ? null : <UserPlus size={20} />}
+              loading={loading}
+              loadingMessage="Creando cuenta..."
+              fullWidth
+            />
+          </div>
+        </motion.form>
+
+        {/* Login link */}
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: mounted ? 1 : 0 }}
+          transition={{ ...springConfig.gentle, delay: 0.3 }}
+          style={styles.loginContainer}
+        >
+          <p style={styles.loginText}>
+            ¿Ya tienes cuenta?{" "}
+            <Link to="/login" style={styles.loginLink}>
+              Inicia sesión
+            </Link>
+          </p>
         </motion.div>
       </div>
 
-      {/* Footer with Legal Links */}
+      {/* Footer */}
       <motion.footer
         initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ delay: 0.8, duration: 0.5 }}
-        className="relative z-10 mt-auto py-6 flex flex-col items-center"
+        animate={{ opacity: mounted ? 1 : 0 }}
+        transition={{ ...springConfig.gentle, delay: 0.35 }}
+        style={styles.footer}
       >
-        {/* Legal Links in Pills */}
-        <div className="flex flex-wrap justify-center gap-3">
-          <Badge variant="ghost">
-            <Link to="/privacy" className="px-1">
-              Privacidad
-            </Link>
-          </Badge>
-          <Badge variant="ghost">
-            <Link to="/terms" className="px-1">
-              Términos
-            </Link>
-          </Badge>
-          <Badge variant="ghost">
-            <Link to="/help" className="px-1">
-              Ayuda
-            </Link>
-          </Badge>
+        <div style={styles.footerLinks}>
+          <Link to="/terms" style={styles.footerLink}>Términos</Link>
+          <span style={styles.footerDot}>·</span>
+          <Link to="/privacy" style={styles.footerLink}>Privacidad</Link>
+          <span style={styles.footerDot}>·</span>
+          <Link to="/help" style={styles.footerLink}>Ayuda</Link>
         </div>
       </motion.footer>
     </div>
   );
 }
+
+const styles = {
+  container: {
+    minHeight: '100vh',
+    width: '100%',
+    backgroundColor: '#F2F2F7',
+    display: 'flex',
+    flexDirection: 'column',
+  },
+  header: {
+    padding: '16px 24px',
+    display: 'flex',
+    alignItems: 'center',
+  },
+  backButton: {
+    width: '44px',
+    height: '44px',
+    borderRadius: '50%',
+    border: 'none',
+    backgroundColor: 'rgba(255, 255, 255, 0.85)',
+    backdropFilter: 'blur(20px)',
+    WebkitBackdropFilter: 'blur(20px)',
+    boxShadow: '0 8px 32px rgba(0, 0, 0, 0.08)',
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+    cursor: 'pointer',
+  },
+  content: {
+    flex: 1,
+    padding: '0 24px',
+    display: 'flex',
+    flexDirection: 'column',
+    overflowY: 'auto',
+  },
+  titleSection: {
+    marginBottom: '24px',
+  },
+  label: {
+    fontSize: '11px',
+    fontWeight: '600',
+    color: '#8E8E93',
+    letterSpacing: '0.06em',
+    textTransform: 'uppercase',
+    marginBottom: '8px',
+    display: 'block',
+  },
+  title: {
+    fontSize: '48px',
+    fontWeight: '700',
+    color: '#000000',
+    marginBottom: '8px',
+    letterSpacing: '-0.02em',
+    fontFamily: "-apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Inter', system-ui, sans-serif",
+  },
+  subtitle: {
+    fontSize: '17px',
+    color: '#8E8E93',
+    lineHeight: 1.5,
+  },
+  errorContainer: {
+    padding: '16px 20px',
+    backgroundColor: 'rgba(255, 59, 48, 0.12)',
+    borderRadius: '16px',
+    marginBottom: '16px',
+    border: '1px solid rgba(255, 59, 48, 0.20)',
+  },
+  errorText: {
+    fontSize: '15px',
+    color: '#FF3B30',
+    margin: 0,
+    fontWeight: '500',
+  },
+  divider: {
+    display: 'flex',
+    alignItems: 'center',
+    gap: '16px',
+    margin: '16px 0',
+  },
+  dividerLine: {
+    flex: 1,
+    height: '1px',
+    backgroundColor: 'rgba(0, 0, 0, 0.10)',
+  },
+  dividerText: {
+    fontSize: '13px',
+    color: '#8E8E93',
+    whiteSpace: 'nowrap',
+  },
+  form: {
+    display: 'flex',
+    flexDirection: 'column',
+  },
+  passwordContainer: {
+    position: 'relative',
+  },
+  showPasswordButton: {
+    position: 'absolute',
+    right: '16px',
+    top: '50%',
+    transform: 'translateY(-50%)',
+    background: 'none',
+    border: 'none',
+    padding: '8px',
+    cursor: 'pointer',
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+    zIndex: 10,
+  },
+  termsContainer: {
+    marginTop: '16px',
+    marginBottom: '24px',
+  },
+  termsLabel: {
+    display: 'flex',
+    alignItems: 'flex-start',
+    gap: '12px',
+    cursor: 'pointer',
+  },
+  checkboxWrapper: {
+    position: 'relative',
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  checkbox: {
+    position: 'absolute',
+    opacity: 0,
+    width: '22px',
+    height: '22px',
+    cursor: 'pointer',
+  },
+  checkboxCustom: {
+    width: '22px',
+    height: '22px',
+    borderRadius: '6px',
+    border: '2px solid',
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+    transition: 'all 0.2s ease',
+  },
+  termsText: {
+    fontSize: '14px',
+    color: '#8E8E93',
+    lineHeight: 1.4,
+  },
+  termsLink: {
+    color: '#007AFF',
+    textDecoration: 'none',
+    fontWeight: '500',
+  },
+  buttonContainer: {
+    marginTop: '8px',
+  },
+  loginContainer: {
+    textAlign: 'center',
+    marginTop: '24px',
+  },
+  loginText: {
+    fontSize: '15px',
+    color: '#8E8E93',
+  },
+  loginLink: {
+    color: '#007AFF',
+    fontWeight: '600',
+    textDecoration: 'none',
+  },
+  footer: {
+    padding: '24px',
+    textAlign: 'center',
+  },
+  footerLinks: {
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+    gap: '8px',
+  },
+  footerLink: {
+    fontSize: '13px',
+    color: '#8E8E93',
+    textDecoration: 'none',
+  },
+  footerDot: {
+    color: '#C7C7CC',
+  },
+};
 
 export default UserSignup;

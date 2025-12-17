@@ -1,10 +1,12 @@
 /* ===== PREMIUM MOTION DESIGN SYSTEM ===== */
+/* Silicon Valley Luxury - Spring Physics & Liquid Motion */
 /*
  * Timing function reference:
  * - ease-premium:     cubic-bezier(0.4, 0, 0.2, 1)  - Standard smooth
  * - ease-decelerate:  cubic-bezier(0, 0, 0.2, 1)    - Entry animations
  * - ease-accelerate:  cubic-bezier(0.4, 0, 1, 1)    - Exit animations
  * - ease-spring:      cubic-bezier(0.34, 1.56, 0.64, 1) - Bouncy/tactile
+ * - ease-ios:         cubic-bezier(0.25, 0.1, 0.25, 1)  - iOS native feel
  */
 
 /* Enter/Exit animations for toasts - Premium timing */
@@ -225,6 +227,68 @@
 
 /* ===== PREMIUM UTILITY CLASSES ===== */
 
+/* ===== SILICON VALLEY LUXURY - ISLAND ANIMATIONS ===== */
+
+/* Island enter - Panels slide up with spring physics */
+@keyframes islandEnter {
+  0% {
+    opacity: 0;
+    transform: translateY(40px) scale(0.95);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+/* Island exit - Smooth fade out */
+@keyframes islandExit {
+  0% {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+  100% {
+    opacity: 0;
+    transform: translateY(20px) scale(0.98);
+  }
+}
+
+/* Float up - Full slide from bottom */
+@keyframes floatUp {
+  0% {
+    opacity: 0;
+    transform: translateY(100%);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-island-enter {
+  animation: islandEnter 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+}
+
+.animate-island-exit {
+  animation: islandExit 0.3s cubic-bezier(0.4, 0, 1, 1) forwards;
+}
+
+.animate-float-up {
+  animation: floatUp 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+/* ===== BUTTON TAP FEEDBACK ===== */
+/* Scale to 0.95 on tap - iOS native feel */
+
+.btn-tap {
+  transition: transform 150ms cubic-bezier(0.4, 0, 0.2, 1);
+  will-change: transform;
+}
+
+.btn-tap:active {
+  transform: scale(0.95);
+}
+
 /* Shimmer effect for loading states */
 @keyframes shimmer {
   0% {
@@ -240,15 +304,36 @@
   background-size: 200% 100%;
 }
 
+/* Premium shimmer for luxury buttons */
+@keyframes luxuryShimmer {
+  0% {
+    background-position: -200% 0;
+  }
+  100% {
+    background-position: 200% 0;
+  }
+}
+
+.shimmer-luxury {
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    rgba(255, 255, 255, 0.2) 50%,
+    transparent 100%
+  );
+  background-size: 200% 100%;
+  animation: luxuryShimmer 2s linear infinite;
+}
+
 /* Glow pulse for accents */
 @keyframes glow-pulse {
   0%, 100% {
     opacity: 0.4;
-    box-shadow: 0 0 10px rgba(52, 211, 153, 0.3);
+    box-shadow: 0 0 10px rgba(0, 122, 255, 0.3);
   }
   50% {
     opacity: 0.7;
-    box-shadow: 0 0 20px rgba(52, 211, 153, 0.5);
+    box-shadow: 0 0 20px rgba(0, 122, 255, 0.5);
   }
 }
 
@@ -267,13 +352,18 @@
   transition-duration: 400ms;
 }
 
-/* Scale interactions */
+.transition-ios {
+  transition-timing-function: cubic-bezier(0.25, 0.1, 0.25, 1);
+  transition-duration: 350ms;
+}
+
+/* Scale interactions - Button tap to 0.95 */
 .press-scale {
-  transition: transform 200ms cubic-bezier(0.4, 0, 0.2, 1);
+  transition: transform 150ms cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .press-scale:active {
-  transform: scale(0.97);
+  transform: scale(0.95);
 }
 
 /* Hover lift effect */

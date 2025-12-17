@@ -3,10 +3,18 @@ import { useNavigate, Link } from "react-router-dom";
 import { motion } from "framer-motion";
 import { ArrowRight, Car, User, Shield, Clock, MapPin } from "lucide-react";
 import Button from "../components/common/Button";
+import { springConfig } from "../styles/designSystem";
 
 /**
- * GetStarted - Premium Uber-style Landing Screen
- * Clean, modern design with bold typography and smooth animations
+ * 🏝️ SILICON VALLEY LUXURY - GET STARTED SCREEN
+ * Ultra-Premium Landing with Brutalist Typography
+ * 
+ * Design DNA:
+ * - BACKGROUND: #F2F2F7 (iOS System Gray 6)
+ * - TYPOGRAPHY: 48px+ bold headings, -0.02em tracking
+ * - CARDS: Glass islands with rounded-3xl
+ * - BUTTONS: Pure black, rounded-full
+ * - LABELS: 11px uppercase tracking-wider
  */
 function GetStarted() {
   const navigate = useNavigate();
@@ -39,16 +47,13 @@ function GetStarted() {
 
   return (
     <div style={styles.container}>
-      {/* Background gradient */}
-      <div style={styles.backgroundGradient} />
-
       {/* Main content */}
       <div style={styles.content}>
         {/* Header */}
         <motion.header
           initial={{ opacity: 0, y: -20 }}
           animate={{ opacity: mounted ? 1 : 0, y: mounted ? 0 : -20 }}
-          transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
+          transition={springConfig.panel}
           style={styles.header}
         >
           <div style={styles.logo}>
@@ -59,9 +64,9 @@ function GetStarted() {
         {/* Hero Section */}
         <div style={styles.heroSection}>
           <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: mounted ? 1 : 0, y: mounted ? 0 : 30 }}
-            transition={{ duration: 0.8, delay: 0.2, ease: [0.22, 1, 0.36, 1] }}
+            initial={{ opacity: 0, y: 40 }}
+            animate={{ opacity: mounted ? 1 : 0, y: mounted ? 0 : 40 }}
+            transition={{ ...springConfig.panel, delay: 0.1 }}
           >
             <h1 style={styles.heroTitle}>
               Tu viaje,{" "}
@@ -73,78 +78,64 @@ function GetStarted() {
             </p>
           </motion.div>
 
-          {/* Features */}
+          {/* Features - Pill badges */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: mounted ? 1 : 0, y: mounted ? 0 : 20 }}
-            transition={{ duration: 0.6, delay: 0.4, ease: [0.22, 1, 0.36, 1] }}
+            transition={{ ...springConfig.panel, delay: 0.2 }}
             style={styles.features}
           >
             {features.map((feature, index) => (
               <div key={index} style={styles.featureItem}>
-                <feature.icon size={18} color="#000" strokeWidth={2.5} />
+                <feature.icon size={16} color="#000" strokeWidth={2.5} />
                 <span style={styles.featureText}>{feature.text}</span>
               </div>
             ))}
           </motion.div>
         </div>
 
-        {/* Action Section */}
+        {/* Action Section - Glass Island */}
         <motion.div
-          initial={{ opacity: 0, y: 40 }}
-          animate={{ opacity: mounted ? 1 : 0, y: mounted ? 0 : 40 }}
-          transition={{ duration: 0.8, delay: 0.5, ease: [0.22, 1, 0.36, 1] }}
+          initial={{ opacity: 0, y: 60 }}
+          animate={{ opacity: mounted ? 1 : 0, y: mounted ? 0 : 60 }}
+          transition={{ ...springConfig.panel, delay: 0.3 }}
           style={styles.actionSection}
         >
           {/* User type selection */}
           <div style={styles.userTypeSection}>
-            <p style={styles.selectLabel}>Selecciona tu perfil</p>
+            <p style={styles.selectLabel}>SELECCIONA TU PERFIL</p>
 
-            {/* Rider option */}
-            <button
+            {/* Rider option - Glass Card */}
+            <motion.button
+              whileTap={{ scale: 0.98 }}
               style={styles.userTypeCard}
               onClick={() => navigate("/login")}
-              onMouseEnter={(e) => {
-                e.currentTarget.style.backgroundColor = '#F9FAFB';
-                e.currentTarget.style.transform = 'scale(1.01)';
-              }}
-              onMouseLeave={(e) => {
-                e.currentTarget.style.backgroundColor = '#FFFFFF';
-                e.currentTarget.style.transform = 'scale(1)';
-              }}
             >
               <div style={styles.userTypeIcon}>
-                <User size={24} color="#000" strokeWidth={2} />
+                <User size={22} color="#000" strokeWidth={2} />
               </div>
               <div style={styles.userTypeContent}>
                 <h3 style={styles.userTypeTitle}>Pasajero</h3>
                 <p style={styles.userTypeDesc}>Solicita un viaje ahora</p>
               </div>
-              <ArrowRight size={20} color="#9CA3AF" />
-            </button>
+              <ArrowRight size={18} color="#8E8E93" />
+            </motion.button>
 
-            {/* Driver option */}
-            <button
+            {/* Driver option - Glass Card */}
+            <motion.button
+              whileTap={{ scale: 0.98 }}
               style={styles.userTypeCard}
               onClick={() => navigate("/captain/login")}
-              onMouseEnter={(e) => {
-                e.currentTarget.style.backgroundColor = '#F9FAFB';
-                e.currentTarget.style.transform = 'scale(1.01)';
-              }}
-              onMouseLeave={(e) => {
-                e.currentTarget.style.backgroundColor = '#FFFFFF';
-                e.currentTarget.style.transform = 'scale(1)';
-              }}
             >
               <div style={styles.userTypeIcon}>
-                <Car size={24} color="#000" strokeWidth={2} />
+                <Car size={22} color="#000" strokeWidth={2} />
               </div>
               <div style={styles.userTypeContent}>
                 <h3 style={styles.userTypeTitle}>Conductor</h3>
                 <p style={styles.userTypeDesc}>Genera ingresos manejando</p>
               </div>
-              <ArrowRight size={20} color="#9CA3AF" />
-            </button>
+              <ArrowRight size={18} color="#8E8E93" />
+            </motion.button>
           </div>
 
           {/* Divider */}
@@ -177,7 +168,7 @@ function GetStarted() {
         <motion.footer
           initial={{ opacity: 0 }}
           animate={{ opacity: mounted ? 1 : 0 }}
-          transition={{ duration: 0.6, delay: 0.8 }}
+          transition={{ duration: 0.6, delay: 0.5 }}
           style={styles.footer}
         >
           <div style={styles.footerLinks}>
@@ -200,18 +191,9 @@ const styles = {
   container: {
     minHeight: '100vh',
     width: '100%',
-    backgroundColor: '#FFFFFF',
+    backgroundColor: '#F2F2F7', // iOS System Gray 6
     position: 'relative',
     overflow: 'hidden',
-  },
-  backgroundGradient: {
-    position: 'absolute',
-    top: 0,
-    left: 0,
-    right: 0,
-    height: '50%',
-    background: 'linear-gradient(180deg, #F0FDF4 0%, #FFFFFF 100%)',
-    zIndex: 0,
   },
   content: {
     position: 'relative',
@@ -233,10 +215,11 @@ const styles = {
     alignItems: 'center',
   },
   logoText: {
-    fontSize: '28px',
+    fontSize: '32px',
     fontWeight: '700',
     color: '#000000',
-    letterSpacing: '-0.5px',
+    letterSpacing: '-0.02em',
+    fontFamily: "-apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Inter', system-ui, sans-serif",
   },
   heroSection: {
     flex: 1,
@@ -246,19 +229,20 @@ const styles = {
     paddingBottom: '24px',
   },
   heroTitle: {
-    fontSize: '40px',
+    fontSize: '48px',
     fontWeight: '700',
     color: '#000000',
     lineHeight: 1.1,
     marginBottom: '16px',
-    letterSpacing: '-1px',
+    letterSpacing: '-0.02em',
+    fontFamily: "-apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Inter', system-ui, sans-serif",
   },
   heroHighlight: {
-    color: '#16A34A',
+    color: '#007AFF', // iOS Blue accent
   },
   heroSubtitle: {
-    fontSize: '18px',
-    color: '#6B7280',
+    fontSize: '17px',
+    color: '#8E8E93', // iOS Gray
     lineHeight: 1.5,
     marginBottom: '32px',
     maxWidth: '320px',
@@ -266,20 +250,23 @@ const styles = {
   features: {
     display: 'flex',
     flexWrap: 'wrap',
-    gap: '16px',
+    gap: '12px',
   },
   featureItem: {
     display: 'flex',
     alignItems: 'center',
     gap: '8px',
-    padding: '8px 16px',
-    backgroundColor: '#F3F4F6',
+    padding: '10px 16px',
+    backgroundColor: 'rgba(255, 255, 255, 0.80)',
+    backdropFilter: 'blur(20px)',
+    WebkitBackdropFilter: 'blur(20px)',
     borderRadius: '100px',
+    border: '1px solid rgba(255, 255, 255, 0.20)',
   },
   featureText: {
-    fontSize: '14px',
-    fontWeight: '500',
-    color: '#374151',
+    fontSize: '13px',
+    fontWeight: '600',
+    color: '#000000',
   },
   actionSection: {
     display: 'flex',
@@ -293,29 +280,34 @@ const styles = {
     gap: '12px',
   },
   selectLabel: {
-    fontSize: '14px',
+    fontSize: '11px',
     fontWeight: '600',
-    color: '#6B7280',
+    color: '#8E8E93',
     marginBottom: '4px',
+    letterSpacing: '0.06em',
+    textTransform: 'uppercase',
   },
   userTypeCard: {
     display: 'flex',
     alignItems: 'center',
     gap: '16px',
-    padding: '16px',
-    backgroundColor: '#FFFFFF',
-    border: '1px solid #E5E7EB',
-    borderRadius: '16px',
+    padding: '16px 20px',
+    backgroundColor: 'rgba(255, 255, 255, 0.85)',
+    backdropFilter: 'blur(20px)',
+    WebkitBackdropFilter: 'blur(20px)',
+    border: '1px solid rgba(255, 255, 255, 0.20)',
+    borderRadius: '24px',
     cursor: 'pointer',
     transition: 'all 0.2s ease',
     textAlign: 'left',
     width: '100%',
+    boxShadow: '0 8px 32px rgba(0, 0, 0, 0.08)',
   },
   userTypeIcon: {
     width: '48px',
     height: '48px',
-    borderRadius: '12px',
-    backgroundColor: '#F3F4F6',
+    borderRadius: '16px',
+    backgroundColor: 'rgba(0, 0, 0, 0.05)',
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'center',
@@ -325,14 +317,14 @@ const styles = {
     flex: 1,
   },
   userTypeTitle: {
-    fontSize: '16px',
+    fontSize: '17px',
     fontWeight: '600',
-    color: '#111827',
+    color: '#000000',
     marginBottom: '2px',
   },
   userTypeDesc: {
-    fontSize: '14px',
-    color: '#6B7280',
+    fontSize: '13px',
+    color: '#8E8E93',
   },
   divider: {
     display: 'flex',
@@ -343,11 +335,11 @@ const styles = {
   dividerLine: {
     flex: 1,
     height: '1px',
-    backgroundColor: '#E5E7EB',
+    backgroundColor: 'rgba(0, 0, 0, 0.10)',
   },
   dividerText: {
-    fontSize: '14px',
-    color: '#9CA3AF',
+    fontSize: '13px',
+    color: '#8E8E93',
   },
   footer: {
     textAlign: 'center',
@@ -361,16 +353,17 @@ const styles = {
     marginBottom: '12px',
   },
   footerLink: {
-    fontSize: '14px',
-    color: '#6B7280',
+    fontSize: '13px',
+    color: '#8E8E93',
     textDecoration: 'none',
   },
   footerDot: {
-    color: '#D1D5DB',
+    color: '#C7C7CC',
   },
   footerCopyright: {
-    fontSize: '12px',
-    color: '#9CA3AF',
+    fontSize: '11px',
+    color: '#8E8E93',
+    letterSpacing: '0.02em',
   },
 };
 

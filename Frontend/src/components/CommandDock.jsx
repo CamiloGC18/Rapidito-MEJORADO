@@ -13,50 +13,51 @@ import {
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useNotifications } from "../contexts/NotificationContext";
+import { springConfig } from "../styles/designSystem";
 
 /**
- * 🏆 TESLA MATTE PREMIUM - CommandDock Component
+ * 🏝️ SILICON VALLEY LUXURY - COMMAND DOCK
+ * Floating Island Navigation - Dynamic Island Inspired
  * 
- * Design System: $100K Premium UI
- * - Floating dock detached from bottom (16px)
- * - Matte Black pill shape (NO transparency)
- * - Monochromatic icons + emerald accent
- * - Physics-based hover/tap interactions
- * - Expandable quick actions
- * - Haptic feedback on interactions
- * 
- * Usage: Primary navigation dock for app
+ * Design DNA:
+ * - ISLAND ARCHITECTURE: Floating, never touch edges (mx-4, mb-4)
+ * - GLASSMORPHISM: bg-white/80 light, bg-black/80 dark
+ * - PILL SHAPE: rounded-[32px] for main dock
+ * - Z-INDEX: z-50 (Highest layer)
+ * - SPRING PHYSICS: type: spring, damping: 25, stiffness: 300
+ * - iOS COLORS: Accent blue #007AFF
  */
 
-// Tesla Matte Color System
-const TESLA_COLORS = {
-  bg: '#000000',
-  surface_1: '#0A0A0A',
-  surface_2: '#1C1C1E',
-  surface_3: '#2C2C2E',
-  text_primary: '#FFFFFF',
-  text_secondary: '#8E8E93',
-  text_tertiary: '#636366',
-  accent: '#10B981',
-  divider: '#38383A',
-};
-
-// Physics Spring Configuration
-const SPRING_CONFIG = {
-  type: "spring",
-  stiffness: 400,
-  damping: 30,
-  mass: 0.8,
+// Silicon Valley Luxury Color System
+const COLORS = {
+  // Light Mode
+  light: {
+    bg: 'rgba(255, 255, 255, 0.85)',
+    surface: 'rgba(0, 0, 0, 0.05)',
+    surfaceHover: 'rgba(0, 0, 0, 0.08)',
+    text: '#000000',
+    textSecondary: '#8E8E93',
+    border: 'rgba(0, 0, 0, 0.08)',
+    accent: '#007AFF',
+    accentGlow: 'rgba(0, 122, 255, 0.20)',
+  },
+  // Dark Mode
+  dark: {
+    bg: 'rgba(0, 0, 0, 0.85)',
+    surface: 'rgba(255, 255, 255, 0.08)',
+    surfaceHover: 'rgba(255, 255, 255, 0.12)',
+    text: '#FFFFFF',
+    textSecondary: '#8E8E93',
+    border: 'rgba(255, 255, 255, 0.10)',
+    accent: '#007AFF',
+    accentGlow: 'rgba(0, 122, 255, 0.30)',
+  },
 };
 
 // Haptic feedback
 const triggerHaptic = (intensity = 'light') => {
   if (navigator.vibrate) {
-    const patterns = {
-      light: [5],
-      medium: [10],
-      heavy: [15],
-    };
+    const patterns = { light: [5], medium: [10], heavy: [15] };
     navigator.vibrate(patterns[intensity]);
   }
 };
@@ -144,18 +145,20 @@ function CommandDock({
               style={{ background: 'rgba(0, 0, 0, 0.6)' }}
             />
 
-            {/* Quick Actions Menu - Floating above dock */}
+            {/* Quick Actions Menu - Glass Island */}
             <div className="absolute bottom-32 left-0 right-0 flex justify-center px-4">
               <motion.div
-                initial={prefersReducedMotion ? {} : { scale: 0.8, y: 20, opacity: 0 }}
+                initial={prefersReducedMotion ? {} : { scale: 0.9, y: 30, opacity: 0 }}
                 animate={{ scale: 1, y: 0, opacity: 1 }}
-                exit={prefersReducedMotion ? {} : { scale: 0.8, y: 20, opacity: 0 }}
-                transition={SPRING_CONFIG}
-                className="rounded-3xl p-4"
+                exit={prefersReducedMotion ? {} : { scale: 0.9, y: 30, opacity: 0 }}
+                transition={springConfig.panel}
+                className="rounded-3xl p-4 mx-4"
                 style={{
-                  background: TESLA_COLORS.surface_1,
-                  border: `1px solid ${TESLA_COLORS.divider}`,
-                  boxShadow: '0 16px 32px rgba(0, 0, 0, 0.8), 0 0 0 1px rgba(255, 255, 255, 0.06)',
+                  background: 'rgba(255, 255, 255, 0.90)',
+                  backdropFilter: 'blur(40px) saturate(200%)',
+                  WebkitBackdropFilter: 'blur(40px) saturate(200%)',
+                  border: '1px solid rgba(255, 255, 255, 0.20)',
+                  boxShadow: '0 16px 48px rgba(0, 0, 0, 0.12), 0 4px 16px rgba(0, 0, 0, 0.06)',
                   maxWidth: '320px',
                 }}
               >
@@ -178,22 +181,23 @@ function CommandDock({
         )}
       </AnimatePresence>
 
-      {/* Main Command Dock - Floating Island */}
+      {/* Main Command Dock - Glass Island */}
       <motion.div
-        initial={prefersReducedMotion ? {} : { y: 100, opacity: 0 }}
-        animate={{ y: 0, opacity: 1 }}
-        transition={SPRING_CONFIG}
+        initial={prefersReducedMotion ? {} : { y: 100, opacity: 0, scale: 0.95 }}
+        animate={{ y: 0, opacity: 1, scale: 1 }}
+        transition={springConfig.panel}
         className="fixed bottom-4 left-4 right-4 z-50 flex justify-center"
         style={{
           paddingBottom: 'max(0px, env(safe-area-inset-bottom))',
         }}
       >
         <div
-          className="rounded-[32px] px-6 py-4 flex items-center gap-2"
+          className="rounded-[32px] px-4 py-3 flex items-center gap-1 shadow-island dark:shadow-island-dark"
           style={{
-            background: TESLA_COLORS.surface_1,
-            border: `1px solid ${TESLA_COLORS.divider}`,
-            boxShadow: '0 8px 32px rgba(0, 0, 0, 0.8), 0 0 0 1px rgba(255, 255, 255, 0.06)',
+            background: 'rgba(255, 255, 255, 0.85)',
+            backdropFilter: 'blur(20px) saturate(180%)',
+            WebkitBackdropFilter: 'blur(20px) saturate(180%)',
+            border: '1px solid rgba(255, 255, 255, 0.20)',
           }}
         >
           {/* Main Navigation Items */}
@@ -213,21 +217,20 @@ function CommandDock({
 
           {/* Divider */}
           <div 
-            className="w-px h-10 mx-1"
-            style={{ background: TESLA_COLORS.divider }}
+            className="w-px h-8 mx-1 bg-black/10 dark:bg-white/10"
           />
 
           {/* Expand Button (Plus/X) */}
           <motion.button
-            whileHover={prefersReducedMotion ? {} : { scale: 1.1 }}
-            whileTap={prefersReducedMotion ? {} : { scale: 0.9 }}
+            whileHover={prefersReducedMotion ? {} : { scale: 1.05 }}
+            whileTap={prefersReducedMotion ? {} : { scale: 0.95 }}
             onTapStart={() => triggerHaptic('medium')}
             onClick={toggleExpanded}
-            className="relative w-12 h-12 rounded-2xl flex items-center justify-center"
+            className="relative w-11 h-11 rounded-full flex items-center justify-center"
             style={{
-              background: isExpanded ? TESLA_COLORS.accent : TESLA_COLORS.surface_2,
+              background: isExpanded ? '#007AFF' : 'rgba(0, 0, 0, 0.05)',
               boxShadow: isExpanded 
-                ? `0 4px 16px ${TESLA_COLORS.accent}40, 0 0 0 1px ${TESLA_COLORS.accent}`
+                ? '0 4px 16px rgba(0, 122, 255, 0.40)'
                 : 'none',
             }}
           >
@@ -238,9 +241,9 @@ function CommandDock({
                   initial={prefersReducedMotion ? {} : { rotate: -90, scale: 0 }}
                   animate={{ rotate: 0, scale: 1 }}
                   exit={prefersReducedMotion ? {} : { rotate: 90, scale: 0 }}
-                  transition={SPRING_CONFIG}
+                  transition={springConfig.button}
                 >
-                  <X size={20} style={{ color: TESLA_COLORS.text_primary }} />
+                  <X size={18} className="text-white" />
                 </motion.div>
               ) : (
                 <motion.div
@@ -248,9 +251,9 @@ function CommandDock({
                   initial={prefersReducedMotion ? {} : { rotate: 90, scale: 0 }}
                   animate={{ rotate: 0, scale: 1 }}
                   exit={prefersReducedMotion ? {} : { rotate: -90, scale: 0 }}
-                  transition={SPRING_CONFIG}
+                  transition={springConfig.button}
                 >
-                  <Plus size={20} style={{ color: TESLA_COLORS.text_secondary }} />
+                  <Plus size={18} className="text-[#8E8E93]" />
                 </motion.div>
               )}
             </AnimatePresence>
@@ -258,14 +261,13 @@ function CommandDock({
             {/* Pulse indicator when not expanded */}
             {!isExpanded && (
               <motion.div
-                className="absolute -top-1 -right-1 w-3 h-3 rounded-full"
+                className="absolute -top-0.5 -right-0.5 w-2.5 h-2.5 rounded-full bg-[#007AFF]"
                 style={{ 
-                  background: TESLA_COLORS.accent,
-                  boxShadow: `0 0 8px ${TESLA_COLORS.accent}80`,
+                  boxShadow: '0 0 8px rgba(0, 122, 255, 0.60)',
                 }}
                 animate={{
-                  scale: [1, 1.3, 1],
-                  opacity: [1, 0.6, 1],
+                  scale: [1, 1.2, 1],
+                  opacity: [1, 0.7, 1],
                 }}
                 transition={{
                   duration: 2,
@@ -282,7 +284,7 @@ function CommandDock({
 }
 
 /**
- * NavButton - Individual navigation button
+ * NavButton - Individual navigation button - Silicon Valley Luxury
  */
 function NavButton({ 
   item, 
@@ -304,12 +306,12 @@ function NavButton({
       onHoverEnd={onHoverEnd}
       onTapStart={() => triggerHaptic('light')}
       onClick={onClick}
-      className="relative flex flex-col items-center justify-center gap-1 min-w-[56px] py-2 px-3 rounded-2xl transition-colors"
+      className="relative flex flex-col items-center justify-center gap-0.5 min-w-[52px] py-2 px-2 rounded-2xl transition-colors"
       style={{
         background: isActive 
-          ? `linear-gradient(135deg, ${TESLA_COLORS.accent}15, ${TESLA_COLORS.accent}08)` 
+          ? 'rgba(0, 122, 255, 0.10)' 
           : isHovered 
-          ? TESLA_COLORS.surface_2 
+          ? 'rgba(0, 0, 0, 0.05)' 
           : 'transparent',
       }}
     >
@@ -319,7 +321,7 @@ function NavButton({
           size={22} 
           strokeWidth={isActive ? 2.5 : 2}
           style={{ 
-            color: isActive ? TESLA_COLORS.accent : TESLA_COLORS.text_secondary 
+            color: isActive ? '#007AFF' : '#8E8E93'
           }} 
         />
         
@@ -328,40 +330,38 @@ function NavButton({
           <motion.div
             initial={prefersReducedMotion ? {} : { scale: 0 }}
             animate={{ scale: 1 }}
-            className="absolute -top-1.5 -right-1.5 min-w-[18px] h-[18px] rounded-full flex items-center justify-center px-1"
+            className="absolute -top-1.5 -right-1.5 min-w-[16px] h-[16px] rounded-full flex items-center justify-center px-1 bg-[#FF3B30]"
             style={{
-              background: TESLA_COLORS.accent,
-              boxShadow: `0 2px 8px ${TESLA_COLORS.accent}60`,
+              boxShadow: '0 2px 6px rgba(255, 59, 48, 0.50)',
             }}
           >
-            <span className="text-[10px] font-black" style={{ color: TESLA_COLORS.text_primary }}>
+            <span className="text-[9px] font-bold text-white">
               {item.badge > 9 ? '9+' : item.badge}
             </span>
           </motion.div>
         )}
       </div>
 
-      {/* Label (optional) */}
+      {/* Label (optional) - Tiny uppercase */}
       {!hideLabel && (
         <motion.span
-          initial={prefersReducedMotion ? {} : { opacity: 0, y: 5 }}
+          initial={prefersReducedMotion ? {} : { opacity: 0, y: 3 }}
           animate={{ opacity: 1, y: 0 }}
-          className="text-[10px] font-bold tracking-wide"
+          className="text-[10px] font-semibold tracking-wide"
           style={{ 
-            color: isActive ? TESLA_COLORS.accent : TESLA_COLORS.text_tertiary 
+            color: isActive ? '#007AFF' : '#8E8E93'
           }}
         >
           {item.label}
         </motion.span>
       )}
 
-      {/* Active indicator line */}
+      {/* Active indicator dot */}
       {isActive && (
         <motion.div
           layoutId="activeTab"
-          className="absolute bottom-0 left-1/2 -translate-x-1/2 w-8 h-1 rounded-full"
-          style={{ background: TESLA_COLORS.accent }}
-          transition={SPRING_CONFIG}
+          className="absolute -bottom-0.5 w-1 h-1 rounded-full bg-[#007AFF]"
+          transition={springConfig.button}
         />
       )}
     </motion.button>
@@ -369,7 +369,7 @@ function NavButton({
 }
 
 /**
- * QuickActionButton - Button in expanded menu
+ * QuickActionButton - Button in expanded menu - Silicon Valley Luxury
  */
 function QuickActionButton({ action, onClick, delay, prefersReducedMotion, unreadCount }) {
   const Icon = action.icon;
@@ -383,30 +383,22 @@ function QuickActionButton({ action, onClick, delay, prefersReducedMotion, unrea
       initial={prefersReducedMotion ? {} : { scale: 0, opacity: 0 }}
       animate={{ scale: 1, opacity: 1 }}
       exit={prefersReducedMotion ? {} : { scale: 0, opacity: 0 }}
-      transition={{ ...SPRING_CONFIG, delay }}
-      whileHover={prefersReducedMotion ? {} : { scale: 1.05 }}
-      whileTap={prefersReducedMotion ? {} : { scale: 0.95 }}
+      transition={{ ...springConfig.panel, delay }}
+      whileHover={prefersReducedMotion ? {} : { scale: 1.03 }}
+      whileTap={prefersReducedMotion ? {} : { scale: 0.97 }}
       onTapStart={() => triggerHaptic('medium')}
       onClick={onClick}
-      className="relative flex flex-col items-center justify-center gap-2 py-4 rounded-2xl"
-      style={{
-        background: TESLA_COLORS.surface_2,
-        border: `1px solid ${TESLA_COLORS.divider}`,
-      }}
+      className="relative flex flex-col items-center justify-center gap-2 py-4 rounded-2xl bg-black/5 dark:bg-white/10"
     >
       {/* Icon */}
       <div 
-        className="w-12 h-12 rounded-2xl flex items-center justify-center"
-        style={{ background: TESLA_COLORS.surface_3 }}
+        className="w-11 h-11 rounded-full flex items-center justify-center bg-white dark:bg-white/10 shadow-sm"
       >
-        <Icon size={20} style={{ color: TESLA_COLORS.text_secondary }} />
+        <Icon size={20} className="text-[#8E8E93]" />
       </div>
 
-      {/* Label */}
-      <span 
-        className="text-[10px] font-bold tracking-wide px-2 text-center"
-        style={{ color: TESLA_COLORS.text_secondary }}
-      >
+      {/* Label - Tiny uppercase tracked */}
+      <span className="text-[10px] font-semibold tracking-wider uppercase text-[#8E8E93] px-2 text-center">
         {action.label}
       </span>
 
@@ -415,13 +407,12 @@ function QuickActionButton({ action, onClick, delay, prefersReducedMotion, unrea
         <motion.div
           initial={prefersReducedMotion ? {} : { scale: 0 }}
           animate={{ scale: 1 }}
-          className="absolute top-2 right-2 min-w-[20px] h-[20px] rounded-full flex items-center justify-center px-1.5"
+          className="absolute top-2 right-2 min-w-[18px] h-[18px] rounded-full flex items-center justify-center px-1 bg-[#FF3B30]"
           style={{
-            background: TESLA_COLORS.accent,
-            boxShadow: `0 2px 8px ${TESLA_COLORS.accent}60`,
+            boxShadow: '0 2px 6px rgba(255, 59, 48, 0.50)',
           }}
         >
-          <span className="text-[10px] font-black" style={{ color: TESLA_COLORS.text_primary }}>
+          <span className="text-[9px] font-bold text-white">
             {badgeCount > 9 ? '9+' : badgeCount}
           </span>
         </motion.div>

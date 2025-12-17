@@ -7,10 +7,12 @@ import axios from "axios";
 import Console from "../utils/console";
 import Button from "../components/common/Button";
 import Input from "../components/common/Input";
+import { springConfig } from "../styles/designSystem";
 
 /**
- * UserLogin - Premium Uber-style Login Screen
- * Clean, modern design with smooth animations
+ * UserLogin - Silicon Valley Luxury Login Screen
+ * Ultra-Premium, Brutalist Minimalist, Liquid Glass aesthetic
+ * iOS native experience with spring physics
  */
 function UserLogin() {
   const [responseError, setResponseError] = useState("");
@@ -71,20 +73,22 @@ function UserLogin() {
 
   return (
     <div style={styles.container}>
-      {/* Header with back button */}
+      {/* Header with back button - Glass Island */}
       <motion.header
         initial={{ opacity: 0, y: -20 }}
         animate={{ opacity: mounted ? 1 : 0, y: mounted ? 0 : -20 }}
-        transition={{ duration: 0.4, ease: [0.22, 1, 0.36, 1] }}
+        transition={springConfig.panel}
         style={styles.header}
       >
-        <button
+        <motion.button
+          whileTap={{ scale: 0.95 }}
+          transition={springConfig.button}
           onClick={() => navigate("/")}
           style={styles.backButton}
           aria-label="Volver"
         >
-          <ArrowLeft size={24} color="#000" />
-        </button>
+          <ArrowLeft size={20} color="#000" strokeWidth={2.5} />
+        </motion.button>
       </motion.header>
 
       {/* Main content */}
@@ -93,9 +97,10 @@ function UserLogin() {
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: mounted ? 1 : 0, y: mounted ? 0 : 20 }}
-          transition={{ duration: 0.5, delay: 0.1, ease: [0.22, 1, 0.36, 1] }}
+          transition={springConfig.panel}
           style={styles.titleSection}
         >
+          <span style={styles.label}>INICIAR SESIÓN</span>
           <h1 style={styles.title}>Bienvenido</h1>
           <p style={styles.subtitle}>
             Ingresa tus datos para continuar
@@ -105,19 +110,20 @@ function UserLogin() {
         {/* Error message */}
         {responseError && (
           <motion.div
-            initial={{ opacity: 0, y: -10 }}
-            animate={{ opacity: 1, y: 0 }}
+            initial={{ opacity: 0, y: -10, scale: 0.95 }}
+            animate={{ opacity: 1, y: 0, scale: 1 }}
+            transition={springConfig.button}
             style={styles.errorContainer}
           >
             <p style={styles.errorText}>{responseError}</p>
           </motion.div>
         )}
 
-        {/* Login form */}
+        {/* Login form - Glass Card */}
         <motion.form
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: mounted ? 1 : 0, y: mounted ? 0 : 20 }}
-          transition={{ duration: 0.5, delay: 0.2, ease: [0.22, 1, 0.36, 1] }}
+          transition={{ ...springConfig.panel, delay: 0.1 }}
           onSubmit={handleSubmit(loginUser)}
           style={styles.form}
         >
@@ -145,18 +151,19 @@ function UserLogin() {
               floatingLabel
               clearable={false}
             />
-            <button
+            <motion.button
+              whileTap={{ scale: 0.9 }}
               type="button"
               onClick={() => setShowPassword(!showPassword)}
               style={styles.showPasswordButton}
               aria-label={showPassword ? "Ocultar contraseña" : "Mostrar contraseña"}
             >
               {showPassword ? (
-                <EyeOff size={20} color="#6B7280" />
+                <EyeOff size={18} color="#8E8E93" />
               ) : (
-                <Eye size={20} color="#6B7280" />
+                <Eye size={18} color="#8E8E93" />
               )}
-            </button>
+            </motion.button>
           </div>
 
           {/* Forgot password link */}
@@ -184,7 +191,7 @@ function UserLogin() {
         <motion.div
           initial={{ opacity: 0 }}
           animate={{ opacity: mounted ? 1 : 0 }}
-          transition={{ duration: 0.5, delay: 0.3 }}
+          transition={{ ...springConfig.gentle, delay: 0.2 }}
           style={styles.divider}
         >
           <div style={styles.dividerLine} />
@@ -196,7 +203,7 @@ function UserLogin() {
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: mounted ? 1 : 0, y: mounted ? 0 : 20 }}
-          transition={{ duration: 0.5, delay: 0.4, ease: [0.22, 1, 0.36, 1] }}
+          transition={{ ...springConfig.panel, delay: 0.25 }}
         >
           <Button
             variant="secondary"
@@ -220,7 +227,7 @@ function UserLogin() {
         <motion.div
           initial={{ opacity: 0 }}
           animate={{ opacity: mounted ? 1 : 0 }}
-          transition={{ duration: 0.5, delay: 0.5 }}
+          transition={{ ...springConfig.gentle, delay: 0.3 }}
           style={styles.signupContainer}
         >
           <p style={styles.signupText}>
@@ -236,7 +243,7 @@ function UserLogin() {
       <motion.footer
         initial={{ opacity: 0 }}
         animate={{ opacity: mounted ? 1 : 0 }}
-        transition={{ duration: 0.5, delay: 0.6 }}
+        transition={{ ...springConfig.gentle, delay: 0.35 }}
         style={styles.footer}
       >
         <div style={styles.footerLinks}>
@@ -255,7 +262,7 @@ const styles = {
   container: {
     minHeight: '100vh',
     width: '100%',
-    backgroundColor: '#FFFFFF',
+    backgroundColor: '#F2F2F7', // iOS System Gray 6
     display: 'flex',
     flexDirection: 'column',
   },
@@ -265,16 +272,18 @@ const styles = {
     alignItems: 'center',
   },
   backButton: {
-    width: '48px',
-    height: '48px',
+    width: '44px',
+    height: '44px',
     borderRadius: '50%',
     border: 'none',
-    backgroundColor: '#F3F4F6',
+    backgroundColor: 'rgba(255, 255, 255, 0.85)',
+    backdropFilter: 'blur(20px)',
+    WebkitBackdropFilter: 'blur(20px)',
+    boxShadow: '0 8px 32px rgba(0, 0, 0, 0.08)',
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'center',
     cursor: 'pointer',
-    transition: 'all 0.2s ease',
   },
   content: {
     flex: 1,
@@ -285,27 +294,40 @@ const styles = {
   titleSection: {
     marginBottom: '32px',
   },
+  label: {
+    fontSize: '11px',
+    fontWeight: '600',
+    color: '#8E8E93',
+    letterSpacing: '0.06em',
+    textTransform: 'uppercase',
+    marginBottom: '8px',
+    display: 'block',
+  },
   title: {
-    fontSize: '32px',
+    fontSize: '48px',
     fontWeight: '700',
     color: '#000000',
     marginBottom: '8px',
-    letterSpacing: '-0.5px',
+    letterSpacing: '-0.02em',
+    fontFamily: "-apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Inter', system-ui, sans-serif",
   },
   subtitle: {
-    fontSize: '16px',
-    color: '#6B7280',
+    fontSize: '17px',
+    color: '#8E8E93',
+    lineHeight: 1.5,
   },
   errorContainer: {
-    padding: '12px 16px',
-    backgroundColor: '#FEF2F2',
-    borderRadius: '12px',
+    padding: '16px 20px',
+    backgroundColor: 'rgba(255, 59, 48, 0.12)', // iOS Red with opacity
+    borderRadius: '16px',
     marginBottom: '16px',
+    border: '1px solid rgba(255, 59, 48, 0.20)',
   },
   errorText: {
-    fontSize: '14px',
-    color: '#DC2626',
+    fontSize: '15px',
+    color: '#FF3B30', // iOS Red
     margin: 0,
+    fontWeight: '500',
   },
   form: {
     display: 'flex',
@@ -316,7 +338,7 @@ const styles = {
   },
   showPasswordButton: {
     position: 'absolute',
-    right: '12px',
+    right: '16px',
     top: '50%',
     transform: 'translateY(-50%)',
     background: 'none',
@@ -334,9 +356,9 @@ const styles = {
     marginBottom: '24px',
   },
   forgotPasswordLink: {
-    fontSize: '14px',
-    color: '#000000',
-    fontWeight: '500',
+    fontSize: '15px',
+    color: '#007AFF', // iOS Blue
+    fontWeight: '600',
     textDecoration: 'none',
   },
   buttonContainer: {
@@ -351,11 +373,13 @@ const styles = {
   dividerLine: {
     flex: 1,
     height: '1px',
-    backgroundColor: '#E5E7EB',
+    backgroundColor: 'rgba(0, 0, 0, 0.10)',
   },
   dividerText: {
-    fontSize: '14px',
-    color: '#9CA3AF',
+    fontSize: '13px',
+    color: '#8E8E93',
+    textTransform: 'uppercase',
+    letterSpacing: '0.04em',
   },
   signupContainer: {
     textAlign: 'center',
@@ -363,10 +387,10 @@ const styles = {
   },
   signupText: {
     fontSize: '15px',
-    color: '#6B7280',
+    color: '#8E8E93',
   },
   signupLink: {
-    color: '#000000',
+    color: '#007AFF', // iOS Blue
     fontWeight: '600',
     textDecoration: 'none',
   },
@@ -381,12 +405,12 @@ const styles = {
     gap: '8px',
   },
   footerLink: {
-    fontSize: '14px',
-    color: '#6B7280',
+    fontSize: '13px',
+    color: '#8E8E93',
     textDecoration: 'none',
   },
   footerDot: {
-    color: '#D1D5DB',
+    color: '#C7C7CC',
   },
 };
 

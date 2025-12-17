@@ -1,58 +1,67 @@
 import { Link } from "react-router-dom";
+import { motion } from "framer-motion";
 import Spinner from "./Spinner";
+import { springConfig, animation } from "../styles/designSystem";
 
 /**
- * Swiss Minimalist Luxury Button Component
+ * 🏝️ SILICON VALLEY LUXURY BUTTON
+ * Ultra-Premium, Brutalist Minimalist Design
  * 
- * Design Philosophy:
- * - NO BORDERS: Clean, borderless design
- * - PILL SHAPE: Fully rounded capsule design (rounded-full)
- * - VARIANTS: primary (Emerald Gradient), secondary (White/Black shadow), danger (Red Soft)
- * - TACTILE FEEDBACK: active:scale-95 transition-transform duration-200
- * - Minimum 56px touch target (Apple HIG standard)
+ * Design DNA:
+ * - PILL SHAPE: rounded-full (buttons & inputs)
+ * - BRUTALIST: Primary = Pure Black, Text = White
+ * - TACTILE: scale-0.95 on tap with spring physics
+ * - GLASS VARIANT: Glassmorphism for overlay buttons
+ * - Min 48px touch target (iOS HIG)
  * 
- * @param {string} path - Link destination (for type="link")
- * @param {string} title - Button text
- * @param {React.ReactNode} icon - Optional icon element
- * @param {string} type - "link", "submit", or button (default)
- * @param {string} variant - "primary" (default), "secondary", "danger"
- * @param {string} classes - Additional Tailwind classes
- * @param {function} fun - onClick handler
- * @param {boolean} loading - Loading state
- * @param {string} loadingMessage - Text to show when loading
- * @param {boolean} disabled - Disabled state
+ * Variants:
+ * - primary: Pure Black button, white text
+ * - secondary: Glass/transparent with border
+ * - accent: iOS Blue (#007AFF) for key CTAs
+ * - danger: iOS Red for destructive actions
+ * - ghost: Transparent with text only
  */
 
-// Swiss Minimalist Tactile Feedback - MUST include active:scale-95
-const TACTILE_FEEDBACK = "transition-transform duration-200 active:scale-95 hover:scale-[1.02]";
+// Spring physics for tap animation
+const tapSpring = springConfig.button;
 
-// Pill Shape - No borders
-const PILL_SHAPE = "rounded-full border-0";
-
-// Variant Styles
+// Variant Styles - Silicon Valley Luxury
 const VARIANTS = {
-  // Primary: Emerald Gradient - Premium CTA
+  // Primary: Pure Black - Brutalist Minimalist
   primary: [
-    "bg-gradient-to-r from-emerald-500 to-emerald-600",
-    "hover:from-emerald-600 hover:to-emerald-700",
-    "text-white font-semibold",
-    "shadow-lg hover:shadow-xl hover:shadow-emerald-500/25",
+    "bg-black dark:bg-white",
+    "text-white dark:text-black",
+    "shadow-island dark:shadow-island-dark",
   ].join(" "),
   
-  // Secondary: White/Black with shadow - Subtle actions
+  // Secondary: Glass effect - Floating feel
   secondary: [
-    "bg-white dark:bg-black",
-    "text-gray-900 dark:text-white",
-    "shadow-lg hover:shadow-xl",
-    "ring-1 ring-gray-200/50 dark:ring-white/10",
+    "bg-white/80 dark:bg-white/10",
+    "backdrop-blur-xl",
+    "text-black dark:text-white",
+    "border border-white/20 dark:border-white/10",
+    "shadow-glass",
   ].join(" "),
   
-  // Danger: Red Soft - Destructive actions
+  // Accent: iOS Blue - Interactive highlight
+  accent: [
+    "bg-[#007AFF]",
+    "text-white",
+    "shadow-glow-blue",
+  ].join(" "),
+  
+  // Danger: iOS Red - Destructive actions
   danger: [
-    "bg-red-50 dark:bg-red-900/30",
-    "text-red-600 dark:text-red-400",
-    "hover:bg-red-100 dark:hover:bg-red-900/50",
-    "shadow-sm hover:shadow-md",
+    "bg-[#FF3B30]",
+    "text-white",
+    "shadow-lg",
+  ].join(" "),
+  
+  // Ghost: Transparent - Subtle actions
+  ghost: [
+    "bg-transparent",
+    "text-black dark:text-white",
+    "hover:bg-black/5 dark:hover:bg-white/10",
   ].join(" "),
 };
 
@@ -71,41 +80,47 @@ function Button({
   // Get variant styles or fallback to primary
   const variantClasses = VARIANTS[variant] || VARIANTS.primary;
 
-  // Common classes - PILL SHAPE with generous padding
+  // Common classes - PILL SHAPE, premium typography
   const commonClasses = `
     flex justify-center items-center gap-3
-    py-4 px-8 font-semibold text-base w-full
-    ${PILL_SHAPE}
-    min-h-[56px]
-    ${TACTILE_FEEDBACK}
+    py-4 px-8 font-semibold text-[17px] w-full
+    rounded-full
+    min-h-[48px]
     ${variantClasses}
     ${classes || ''}
   `.trim().replace(/\s+/g, ' ');
 
+  // Motion props for tap feedback
+  const motionProps = {
+    whileTap: { scale: animation.tapScale },
+    transition: tapSpring,
+  };
+
   return (
     <>
       {type === "link" ? (
-        <Link
-          to={path}
-          className={commonClasses}
-          aria-label={title}
-        >
-          {icon && <span aria-hidden="true">{icon}</span>}
-          {title}
-        </Link>
+        <motion.div {...motionProps}>
+          <Link
+            to={path}
+            className={commonClasses}
+            aria-label={title}
+          >
+            {icon && <span aria-hidden="true">{icon}</span>}
+            {title}
+          </Link>
+        </motion.div>
       ) : (
-        <button
+        <motion.button
+          {...motionProps}
           type={type || "button"}
           className={`
             ${commonClasses}
             cursor-pointer
             disabled:opacity-50 
             disabled:cursor-not-allowed 
-            disabled:active:scale-100
-            disabled:hover:scale-100
             focus:outline-none 
             focus-visible:ring-2
-            focus-visible:ring-emerald-500
+            focus-visible:ring-[#007AFF]
             focus-visible:ring-offset-2
             ${loading ? "cursor-wait opacity-90" : ""}
           `.trim().replace(/\s+/g, ' ')}
@@ -125,7 +140,7 @@ function Button({
               <span className="tracking-wide">{title}</span>
             </>
           )}
-        </button>
+        </motion.button>
       )}
     </>
   );
