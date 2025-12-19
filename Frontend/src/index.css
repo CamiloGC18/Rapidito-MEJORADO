@@ -1,63 +1,101 @@
 @import url("https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900&display=swap");
-@import './styles/animations.css';
+@import url('https://fonts.googleapis.com/css2?family=SF+Pro+Display:wght@100;200;300;400;500;600;700;800;900&display=swap');
 
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
-/* ===== SILICON VALLEY LUXURY - TYPOGRAPHY SYSTEM ===== */
-/* SF Pro / Inter - Premium Native iOS Feel */
+/* 
+🌟 RAPIDITO BRUTAL LUXURY DESIGN SYSTEM 🌟
+Linear.app x Tesla x iOS 17 x Vercel
+Obsidian gradient backgrounds + floating glassmorphism
+*/
 
 @layer base {
-  html {
-    font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'SF Pro Text', 'Inter', system-ui, sans-serif;
-    background-color: #F2F2F7; /* iOS System Gray 6 */
+  * {
+    font-feature-settings: 'cv11', 'ss01';
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
   }
-  
-  html.dark {
-    background-color: #000000;
+
+  html {
+    font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Inter', system-ui, sans-serif;
+    /* Obsidian gradient background - Linear vibes */
+    background: linear-gradient(135deg, #0A0A0A 0%, #1A1A1A 100%);
+    color: #FAFAFA;
   }
   
   body {
-    font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'SF Pro Text', 'Inter', system-ui, sans-serif;
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
+    font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Inter', system-ui, sans-serif;
+    background: linear-gradient(135deg, #0A0A0A 0%, #1A1A1A 100%);
+    color: #FAFAFA;
+    min-height: 100vh;
     text-rendering: optimizeLegibility;
-    font-feature-settings: 'kern' 1, 'liga' 1;
+  }
+
+  /* BRUTAL TYPOGRAPHY SYSTEM - Massive contrast */
+  
+  /* Display: 64-72px - Hero statements */
+  .text-display, h1 {
+    font-size: clamp(48px, 8vw, 72px);
+    font-weight: 800;
+    line-height: 0.9;
+    letter-spacing: -0.04em;
+    color: #FAFAFA;
   }
   
-  /* Brutalist Typography - Huge Bold Headings */
-  h1, .text-display {
-    font-size: 48px;
+  /* Heading: 32-48px - Section titles */
+  .text-heading, h2 {
+    font-size: clamp(28px, 5vw, 48px);
     font-weight: 700;
     line-height: 1.1;
     letter-spacing: -0.02em;
+    color: #FAFAFA;
   }
   
-  h2, .text-heading {
-    font-size: 32px;
-    font-weight: 600;
-    line-height: 1.2;
-    letter-spacing: -0.01em;
+  /* Body: 16px - Readable content */
+  .text-body, p {
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 1.6;
+    color: #FAFAFA;
   }
   
-  /* Tiny Uppercase Tracked Labels */
-  .text-label {
+  /* Caption: 11px - Tiny uppercase labels */
+  .text-caption, .text-label {
     font-size: 11px;
     font-weight: 600;
     line-height: 1.3;
-    letter-spacing: 0.06em;
+    letter-spacing: 0.08em;
     text-transform: uppercase;
+    color: #999999;
+  }
+
+  /* Secondary text */
+  .text-secondary {
+    color: #999999;
+  }
+
+  /* Brand colors */
+  .text-primary {
+    color: #10B981;
+  }
+
+  .text-accent {
+    color: #F59E0B;
   }
 }
 
-/* ===== PREMIUM KEYFRAME ANIMATIONS ===== */
-/* Swiss Minimalist Luxury - Core Motion System */
+/* 
+🎬 BRUTAL LUXURY ANIMATIONS
+Linear.app meets Tesla - Premium micro-interactions
+Easing: cubic-bezier(0.4, 0, 0.2, 1) - Material Design 3 emphasis
+*/
 
-@keyframes swiss-slide-up {
+@keyframes brutal-fade-up {
   0% {
     opacity: 0;
-    transform: translateY(40px);
+    transform: translateY(32px);
   }
   100% {
     opacity: 1;
@@ -65,30 +103,10 @@
   }
 }
 
-@keyframes swiss-fade-in {
+@keyframes brutal-scale-in {
   0% {
     opacity: 0;
-  }
-  100% {
-    opacity: 1;
-  }
-}
-
-@keyframes pulse-ring {
-  0% {
-    transform: scale(0.5);
-    opacity: 1;
-  }
-  100% {
-    transform: scale(2.5);
-    opacity: 0;
-  }
-}
-
-@keyframes swiss-scale-in {
-  0% {
-    opacity: 0;
-    transform: scale(0.95);
+    transform: scale(0.92);
   }
   100% {
     opacity: 1;
@@ -96,178 +114,301 @@
   }
 }
 
-/* Swiss animation utility classes (prefixed to avoid conflicts) */
-.swiss-slide-up {
-  animation: swiss-slide-up 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+@keyframes brutal-glow-pulse {
+  0%, 100% {
+    opacity: 0.5;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1.05);
+  }
 }
 
-.swiss-fade-in {
-  animation: swiss-fade-in 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+@keyframes brutal-shimmer {
+  0% {
+    background-position: -200% 0;
+  }
+  100% {
+    background-position: 200% 0;
+  }
 }
 
-.swiss-pulse-ring {
-  animation: pulse-ring 2s cubic-bezier(0.16, 1, 0.3, 1) infinite;
+/* Utility classes for brutal animations */
+.animate-fade-up {
+  animation: brutal-fade-up 0.8s cubic-bezier(0.4, 0, 0.2, 1) forwards;
 }
 
-.swiss-scale-in {
-  animation: swiss-scale-in 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+.animate-scale-in {
+  animation: brutal-scale-in 0.6s cubic-bezier(0.4, 0, 0.2, 1) forwards;
 }
 
-/* Staggered animation delays */
+.animate-glow-pulse {
+  animation: brutal-glow-pulse 3s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+}
+
+.animate-shimmer {
+  background: linear-gradient(
+    90deg,
+    rgba(255, 255, 255, 0) 0%,
+    rgba(255, 255, 255, 0.1) 50%,
+    rgba(255, 255, 255, 0) 100%
+  );
+  background-size: 200% 100%;
+  animation: brutal-shimmer 2s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+}
+
+/* Staggered animation delays - 0.1s increments */
 .delay-0 { animation-delay: 0ms; }
 .delay-100 { animation-delay: 100ms; }
 .delay-200 { animation-delay: 200ms; }
 .delay-300 { animation-delay: 300ms; }
 .delay-400 { animation-delay: 400ms; }
 .delay-500 { animation-delay: 500ms; }
+.delay-600 { animation-delay: 600ms; }
+.delay-700 { animation-delay: 700ms; }
+
+/* Hover effects for buttons and cards */
+.hover-lift {
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.hover-lift:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 32px 64px rgba(0, 0, 0, 0.5);
+}
+
+.hover-scale {
+  transition: transform 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.hover-scale:hover {
+  transform: scale(1.02);
+}
+
+.active-scale:active {
+  transform: scale(0.98);
+}
 
 /* Reduced motion safety */
 @media (prefers-reduced-motion: reduce) {
-  .swiss-slide-up,
-  .swiss-fade-in,
-  .swiss-pulse-ring,
-  .swiss-scale-in {
+  .animate-fade-up,
+  .animate-scale-in,
+  .animate-glow-pulse,
+  .animate-shimmer,
+  .hover-lift,
+  .hover-scale {
     animation: none !important;
-    opacity: 1 !important;
     transform: none !important;
+    transition: none !important;
   }
 }
 
-/* ===== SWISS MINIMALIST LUXURY - DESIGN SYSTEM ===== */
-/* Process 2 - Phase 1: Global Styles & Atomic Components Foundation */
+/* 
+🏝️ FLOATING ISLANDS GLASSMORPHISM SYSTEM
+iOS 17 inspired - backdrop-blur with obsidian backgrounds
+All cards MUST be floating islands
+*/
 
-/* ===== SILICON VALLEY LUXURY - GLASSMORPHISM =====*/
-/* Liquid Glass Effect - iOS Native Aesthetic */
+@layer components {
+  /* Floating Island Base - The foundation of all UI */
+  .floating-island {
+    background: rgba(255, 255, 255, 0.08);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    border-radius: 24px;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.4);
+    position: relative;
+  }
 
-/* Standard glass panel - Light mode */
-.glass-panel {
-  background: rgba(255, 255, 255, 0.80);
-  backdrop-filter: blur(20px) saturate(180%);
-  -webkit-backdrop-filter: blur(20px) saturate(180%);
-  border: 1px solid rgba(255, 255, 255, 0.20);
-  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.08), 0 2px 8px rgba(0, 0, 0, 0.04);
+  /* Floating Island Intense - Hero sections */
+  .floating-island-intense {
+    background: rgba(255, 255, 255, 0.12);
+    backdrop-filter: blur(40px);
+    -webkit-backdrop-filter: blur(40px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 24px;
+    box-shadow: 0 32px 80px rgba(0, 0, 0, 0.5);
+  }
+
+  /* Floating Island Subtle - Supporting UI */
+  .floating-island-subtle {
+    background: rgba(255, 255, 255, 0.04);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 20px;
+    box-shadow: 0 16px 40px rgba(0, 0, 0, 0.3);
+  }
+
+  /* Floating Island HUD - Overlay UI like ActiveRideHUD */
+  .floating-island-hud {
+    background: rgba(10, 10, 10, 0.7);
+    backdrop-filter: blur(24px);
+    -webkit-backdrop-filter: blur(24px);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    border-radius: 20px;
+    box-shadow: 0 24px 60px rgba(0, 0, 0, 0.6);
+  }
+
+  /* Button Base - All buttons are floating islands */
+  .btn-base {
+    @apply floating-island hover-lift active-scale;
+    padding: 16px 32px;
+    border-radius: 9999px;
+    font-weight: 600;
+    font-size: 16px;
+    transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+    cursor: pointer;
+    min-height: 48px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+  }
+
+  /* Primary Button - Emerald gradient */
+  .btn-primary {
+    @apply btn-base;
+    background: linear-gradient(135deg, #10B981 0%, #059669 100%);
+    color: #FAFAFA;
+    box-shadow: 0 20px 60px rgba(16, 185, 129, 0.3);
+  }
+
+  .btn-primary:hover {
+    box-shadow: 0 32px 80px rgba(16, 185, 129, 0.4);
+  }
+
+  /* Secondary Button - Glass with emerald border */
+  .btn-secondary {
+    @apply btn-base;
+    background: rgba(255, 255, 255, 0.08);
+    color: #10B981;
+    border: 1px solid #10B981;
+  }
+
+  /* Accent Button - Amber gradient */
+  .btn-accent {
+    @apply btn-base;
+    background: linear-gradient(135deg, #F59E0B 0%, #D97706 100%);
+    color: #FAFAFA;
+    box-shadow: 0 20px 60px rgba(245, 158, 11, 0.3);
+  }
+
+  /* Ghost Button - Transparent with text only */
+  .btn-ghost {
+    @apply btn-base;
+    background: transparent;
+    color: #999999;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    box-shadow: none;
+  }
+
+  .btn-ghost:hover {
+    color: #FAFAFA;
+    background: rgba(255, 255, 255, 0.05);
+  }
+
+  /* Input Base - Glass inputs with focus glow */
+  .input-base {
+    @apply floating-island-subtle;
+    padding: 16px 24px;
+    border-radius: 20px;
+    background: rgba(255, 255, 255, 0.06);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    color: #FAFAFA;
+    font-size: 16px;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    outline: none;
+  }
+
+  .input-base::placeholder {
+    color: #666666;
+  }
+
+  .input-base:focus {
+    border-color: #10B981;
+    box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.1), 0 20px 60px rgba(0, 0, 0, 0.4);
+    background: rgba(255, 255, 255, 0.08);
+  }
+
+  /* Hero Gradient Overlay */
+  .hero-overlay {
+    background: linear-gradient(
+      135deg,
+      rgba(10, 10, 10, 0.8) 0%,
+      rgba(26, 26, 26, 0.6) 100%
+    );
+  }
 }
 
-/* Glass panel - Dark mode via class */
-.dark .glass-panel {
-  background: rgba(0, 0, 0, 0.80);
-  border: 1px solid rgba(255, 255, 255, 0.10);
-  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.40), 0 2px 8px rgba(0, 0, 0, 0.20);
-}
+/* 
+🎨 BRUTAL LUXURY UTILITIES
+Custom utilities for the premium design system
+*/
 
-/* Intense glass panel - Stronger blur for hero/main panels */
-.glass-panel-intense {
-  background: rgba(255, 255, 255, 0.90);
-  backdrop-filter: blur(40px) saturate(200%);
-  -webkit-backdrop-filter: blur(40px) saturate(200%);
-  border: 1px solid rgba(255, 255, 255, 0.30);
-  box-shadow: 0 16px 48px rgba(0, 0, 0, 0.12), 0 4px 16px rgba(0, 0, 0, 0.06);
-}
+@layer utilities {
+  /* Spacing System - 8pt grid */
+  .space-xs { gap: 4px; }
+  .space-sm { gap: 8px; }
+  .space-md { gap: 16px; }
+  .space-lg { gap: 24px; }
+  .space-xl { gap: 32px; }
+  .space-2xl { gap: 48px; }
+  .space-3xl { gap: 64px; }
 
-.dark .glass-panel-intense {
-  background: rgba(0, 0, 0, 0.90);
-  border: 1px solid rgba(255, 255, 255, 0.15);
-  box-shadow: 0 16px 48px rgba(0, 0, 0, 0.50), 0 4px 16px rgba(0, 0, 0, 0.25);
-}
+  /* Text Gradients - Premium brand colors */
+  .text-gradient-primary {
+    background: linear-gradient(135deg, #10B981 0%, #059669 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
 
-/* Dark glass panel - For driver/captain UI */
-.glass-panel-dark {
-  background: rgba(0, 0, 0, 0.85);
-  backdrop-filter: blur(24px) saturate(180%);
-  -webkit-backdrop-filter: blur(24px) saturate(180%);
-  border: 1px solid rgba(255, 255, 255, 0.10);
-  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.40);
-}
+  .text-gradient-accent {
+    background: linear-gradient(135deg, #F59E0B 0%, #D97706 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
 
-/* ===== SILICON VALLEY LUXURY - NEW GLASS VARIANTS ===== */
+  .text-gradient-white {
+    background: linear-gradient(135deg, #FAFAFA 0%, #E5E5E5 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
 
-/* Luxury glass - Premium elevated feel */
-.glass-luxury {
-  background: rgba(255, 255, 255, 0.85);
-  backdrop-filter: blur(40px) saturate(200%);
-  -webkit-backdrop-filter: blur(40px) saturate(200%);
-  border: 1px solid rgba(255, 255, 255, 0.25);
-  box-shadow: 
-    0 16px 48px rgba(0, 0, 0, 0.10),
-    0 4px 16px rgba(0, 0, 0, 0.05),
-    inset 0 1px 0 rgba(255, 255, 255, 0.5);
-}
+  /* Background Gradients */
+  .bg-obsidian {
+    background: linear-gradient(135deg, #0A0A0A 0%, #1A1A1A 100%);
+  }
 
-.dark .glass-luxury {
-  background: rgba(28, 28, 30, 0.85);
-  border: 1px solid rgba(255, 255, 255, 0.12);
-  box-shadow: 
-    0 16px 48px rgba(0, 0, 0, 0.50),
-    0 4px 16px rgba(0, 0, 0, 0.25),
-    inset 0 1px 0 rgba(255, 255, 255, 0.05);
-}
+  .bg-emerald-gradient {
+    background: linear-gradient(135deg, #10B981 0%, #059669 100%);
+  }
 
-/* ===== ISLAND ARCHITECTURE - Floating Panels ===== */
-/* Never touch screen edges: mx-4/mx-6, mb-6 */
+  .bg-amber-gradient {
+    background: linear-gradient(135deg, #F59E0B 0%, #D97706 100%);
+  }
 
-.island-panel {
-  background: rgba(255, 255, 255, 0.85);
-  backdrop-filter: blur(20px) saturate(180%);
-  -webkit-backdrop-filter: blur(20px) saturate(180%);
-  border: 1px solid rgba(255, 255, 255, 0.20);
-  border-radius: 24px;
-  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.08), 0 2px 8px rgba(0, 0, 0, 0.04);
-  margin-left: 16px;
-  margin-right: 16px;
-}
+  /* Custom shadows for floating islands */
+  .shadow-brutal {
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.4);
+  }
 
-.dark .island-panel {
-  background: rgba(0, 0, 0, 0.85);
-  border: 1px solid rgba(255, 255, 255, 0.10);
-  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.40), 0 2px 8px rgba(0, 0, 0, 0.20);
-}
+  .shadow-brutal-lg {
+    box-shadow: 0 32px 80px rgba(0, 0, 0, 0.5);
+  }
 
-/* Large island panel */
-.island-panel-lg {
-  background: rgba(255, 255, 255, 0.90);
-  backdrop-filter: blur(40px) saturate(200%);
-  -webkit-backdrop-filter: blur(40px) saturate(200%);
-  border: 1px solid rgba(255, 255, 255, 0.25);
-  border-radius: 32px;
-  box-shadow: 0 16px 48px rgba(0, 0, 0, 0.12), 0 4px 16px rgba(0, 0, 0, 0.06);
-  margin-left: 24px;
-  margin-right: 24px;
-  margin-bottom: 24px;
-}
+  .shadow-glow-emerald {
+    box-shadow: 0 20px 60px rgba(16, 185, 129, 0.3);
+  }
 
-.dark .island-panel-lg {
-  background: rgba(0, 0, 0, 0.90);
-  border: 1px solid rgba(255, 255, 255, 0.12);
-  box-shadow: 0 16px 48px rgba(0, 0, 0, 0.50), 0 4px 16px rgba(0, 0, 0, 0.25);
-}
-
-/* ===== TEXT GRADIENT UTILITIES ===== */
-
-/* Emerald gradient text */
-.text-gradient-emerald {
-  background: linear-gradient(135deg, #10B981 0%, #059669 100%);
-  -webkit-background-clip: text;
-  background-clip: text;
-  -webkit-text-fill-color: transparent;
-  color: transparent;
-}
-
-/* Primary green gradient text */
-.text-gradient-green {
-  background: linear-gradient(135deg, #22c55e 0%, #16a34a 100%);
-  -webkit-background-clip: text;
-  background-clip: text;
-  -webkit-text-fill-color: transparent;
-  color: transparent;
-}
-
-/* Premium dark gradient text */
-.text-gradient-dark {
-  background: linear-gradient(135deg, #1F2937 0%, #111827 100%);
-  -webkit-background-clip: text;
-  background-clip: text;
-  -webkit-text-fill-color: transparent;
-  color: transparent;
+  .shadow-glow-amber {
+    box-shadow: 0 20px 60px rgba(245, 158, 11, 0.3);
+  }
 }
 
 /* ===== SAFE AREA UTILITIES (iOS Notch/Dynamic Island) ===== */

@@ -21,16 +21,16 @@ import {
 } from "lucide-react";
 
 // Import design system components
-import { colors, shadows, glassEffect, borderRadius } from "../styles/designSystem";
+import { springConfig } from "../styles/designSystem";
 import Button from "../components/common/Button";
 import Card from "../components/common/Card";
 import Input from "../components/common/Input";
 import Badge from "../components/common/Badge";
 
 /**
- * CompleteProfile - iOS Deluxe Floating Island Layout
- * Premium dark mode design with glassmorphism and depth layers
- * Multi-step form with iOS-style floating inputs and progress indicators
+ * CompleteProfile - Silicon Valley Luxury Design
+ * Premium dual-mode design with liquid glass and depth layers
+ * Multi-step form with floating inputs and progress indicators
  */
 function CompleteProfile() {
   const navigate = useNavigate();
@@ -226,16 +226,16 @@ function CompleteProfile() {
   };
   
   return (
-    <div className={`min-h-screen bg-[${colors.primary}] flex flex-col items-center justify-center p-4 overflow-y-auto`}>
+    <div className="min-h-screen bg-ios-light dark:bg-black flex flex-col items-center justify-center p-4 overflow-y-auto">
       {/* Animated Gradient Background */}
-      <div className="absolute inset-0 bg-gradient-to-br from-[#0A0A0A] via-[#101010] to-[#080808] opacity-90" />
+      <div className="absolute inset-0 bg-gradient-to-br from-zinc-100 via-white to-zinc-50 dark:from-[#0A0A0A] dark:via-[#101010] dark:to-[#080808] opacity-90" />
       
       {/* Subtle Mesh Gradient Overlay */}
       <motion.div 
         initial={{ opacity: 0 }} 
         animate={{ opacity: 0.7 }}
         transition={{ duration: 1 }}
-        className="absolute inset-0 bg-[url('/2.webp')] bg-cover bg-center opacity-30 mix-blend-overlay"
+        className="absolute inset-0 bg-[url('/2.webp')] bg-cover bg-center opacity-30 mix-blend-overlay dark:opacity-30"
         aria-hidden="true"
       />
       
@@ -262,7 +262,7 @@ function CompleteProfile() {
                 className="mb-5"
               >
                 {userData?.profileImage ? (
-                  <div className={`w-[90px] h-[90px] rounded-full overflow-hidden border-2 border-[${colors.accent}] p-1 shadow-lg shadow-[${colors.accent}]/20`}>
+                  <div className="w-[90px] h-[90px] rounded-full overflow-hidden border-2 border-ios-blue p-1 shadow-lg shadow-ios-blue/20">
                     <img
                       src={userData.profileImage}
                       alt="Profile"
@@ -270,7 +270,7 @@ function CompleteProfile() {
                     />
                   </div>
                 ) : (
-                  <div className={`w-20 h-20 rounded-full bg-[${colors.accent}]/10 flex items-center justify-center text-[${colors.accent}]`}>
+                  <div className="w-20 h-20 rounded-full bg-ios-blue/10 flex items-center justify-center text-ios-blue">
                     <ShieldCheck size={36} />
                   </div>
                 )}
@@ -286,10 +286,10 @@ function CompleteProfile() {
               </Badge>
             </div>
             
-            <h2 className={`text-[28px] font-bold tracking-tight text-[${colors.textPrimary}]`}>
+            <h2 className="text-[28px] font-bold tracking-tight text-black dark:text-white">
               Completa tu perfil
             </h2>
-            <p className={`mt-2 text-[${colors.textSecondary}]`}>
+            <p className="mt-2 text-ios-gray">
               {userType === "captain"
                 ? "Necesitamos algunos datos adicionales para activar tu cuenta de conductor"
                 : "Agrega tu número de teléfono para continuar"}
@@ -304,38 +304,38 @@ function CompleteProfile() {
             >
               {/* Step 1 - Personal Info */}
               <div className="flex flex-col items-center">
-                <div className={`w-10 h-10 rounded-full ${currentStep === 1 ? `bg-[${colors.accent}]` : `bg-[${colors.accent}]/20`} flex items-center justify-center mb-2 transition-all duration-300 shadow-lg`}>
-                  <User className={`w-5 h-5 ${currentStep === 1 ? 'text-white' : `text-[${colors.accent}]`}`} />
+                <div className={`w-10 h-10 rounded-full ${currentStep === 1 ? 'bg-ios-blue' : 'bg-ios-blue/20'} flex items-center justify-center mb-2 transition-all duration-300 shadow-lg`}>
+                  <User className={`w-5 h-5 ${currentStep === 1 ? 'text-white' : 'text-ios-blue'}`} />
                 </div>
-                <span className={`text-xs ${currentStep === 1 ? `text-[${colors.textPrimary}]` : `text-[${colors.textSecondary}]`} font-medium`}>Personal</span>
+                <span className={`text-xs ${currentStep === 1 ? 'text-black dark:text-white' : 'text-ios-gray'} font-medium`}>Personal</span>
               </div>
               
               {/* Progress Line */}
-              <div className={`flex-1 h-[3px] relative overflow-hidden rounded-full bg-[${colors.border}]`}>
+              <div className="flex-1 h-[3px] relative overflow-hidden rounded-full bg-zinc-200 dark:bg-white/10">
                 <div 
-                  className={`absolute top-0 left-0 h-full bg-[${colors.accent}] transition-all duration-500 ease-out`}
+                  className="absolute top-0 left-0 h-full bg-ios-blue transition-all duration-500 ease-out"
                   style={{ width: currentStep > 1 ? '100%' : '0%' }}
                 />
               </div>
               
               {/* Step 2 - Vehicle Info */}
               <div className="flex flex-col items-center">
-                <div className={`w-10 h-10 rounded-full ${currentStep === 2 ? `bg-[${colors.accent}]` : `bg-[${colors.accent}]/10`} flex items-center justify-center mb-2 transition-all duration-300`}>
-                  <Car className={`w-5 h-5 ${currentStep === 2 ? 'text-white' : `text-[${colors.accent}]/70`}`} />
+                <div className={`w-10 h-10 rounded-full ${currentStep === 2 ? 'bg-ios-blue' : 'bg-ios-blue/10'} flex items-center justify-center mb-2 transition-all duration-300`}>
+                  <Car className={`w-5 h-5 ${currentStep === 2 ? 'text-white' : 'text-ios-blue/70'}`} />
                 </div>
-                <span className={`text-xs ${currentStep === 2 ? `text-[${colors.textPrimary}]` : `text-[${colors.textSecondary}]`} font-medium`}>Vehículo</span>
+                <span className={`text-xs ${currentStep === 2 ? 'text-black dark:text-white' : 'text-ios-gray'} font-medium`}>Vehículo</span>
               </div>
             </motion.div>
           )}
 
-          {/* Error Message - iOS Style */}
+          {/* Error Message */}
           {error && (
             <motion.div
               variants={fadeInUp}
-              className={`mb-6 px-4 py-3 bg-[${colors.error}]/10 border border-[${colors.error}]/20 rounded-[${borderRadius.medium}] text-[${colors.error}] text-sm flex items-center gap-2`}
+              className="mb-6 px-4 py-3 bg-ios-red/10 border border-ios-red/20 rounded-xl text-ios-red text-sm flex items-center gap-2"
               role="alert"
             >
-              <span className="rounded-full bg-[${colors.error}]/20 p-1">
+              <span className="rounded-full bg-ios-red/20 p-1">
                 <AlertCircle size={14} />
               </span>
               {error}
@@ -424,16 +424,16 @@ function CompleteProfile() {
                   {/* Vehicle Info Section */}
                   <motion.div variants={fadeInUp} className="mb-2">
                     <div className="flex items-center gap-3 mb-6">
-                      <div className={`p-2 rounded-full bg-[${colors.accent}]/10 text-[${colors.accent}]`}>
+                      <div className="p-2 rounded-full bg-ios-blue/10 text-ios-blue">
                         <Car size={20} />
                       </div>
-                      <h3 className={`text-lg font-semibold text-[${colors.textPrimary}]`}>Información del vehículo</h3>
+                      <h3 className="text-lg font-semibold text-black dark:text-white">Información del vehículo</h3>
                     </div>
                   </motion.div>
                   
                   {/* Vehicle Type Selection - iOS Style */}
                   <motion.div variants={fadeInUp} className="mb-5">
-                    <label className={`block text-sm font-medium text-[${colors.textSecondary}] mb-2 ml-1`}>
+                    <label className="block text-sm font-medium text-ios-gray mb-2 ml-1">
                       Tipo de Vehículo
                     </label>
                     <div className="grid grid-cols-2 gap-3">
@@ -442,9 +442,9 @@ function CompleteProfile() {
                         return (
                           <label
                             key={type.value}
-                            className={`flex items-center justify-center gap-2 p-4 rounded-[${borderRadius.large}] cursor-pointer transition-all duration-200 ${checked 
-                              ? `bg-[${colors.accent}]/10 border border-[${colors.accent}]/30 shadow-[0_0_0_1px_${colors.accent}30]` 
-                              : `bg-[${colors.card}]/50 border border-[${colors.border}]`}`}
+                            className={`flex items-center justify-center gap-2 p-4 rounded-2xl cursor-pointer transition-all duration-200 ${checked 
+                              ? 'bg-ios-blue/10 border border-ios-blue/30 shadow-[0_0_0_1px_rgba(0,122,255,0.3)]' 
+                              : 'bg-white/50 dark:bg-zinc-900/50 border border-zinc-200 dark:border-white/10'}`}
                           >
                             <input
                               type="radio"
@@ -455,7 +455,7 @@ function CompleteProfile() {
                               className="sr-only"
                             />
                             <span className="text-2xl">{type.icon}</span>
-                            <span className={`font-medium ${checked ? `text-[${colors.accent}]` : `text-[${colors.textPrimary}]`}`}>
+                            <span className={`font-medium ${checked ? 'text-ios-blue' : 'text-black dark:text-white'}`}>
                               {type.label}
                             </span>
                           </label>
@@ -463,7 +463,7 @@ function CompleteProfile() {
                       })}
                     </div>
                     {errors.vehicleType && (
-                      <p className={`mt-1 text-sm text-[${colors.error}] flex items-center gap-1 ml-1`}>
+                      <p className="mt-1 text-sm text-ios-red flex items-center gap-1 ml-1">
                         <AlertCircle size={14} />
                         {errors.vehicleType.message}
                       </p>
@@ -507,26 +507,26 @@ function CompleteProfile() {
 
                   {/* Capacity - iOS Style Select */}
                   <motion.div variants={fadeInUp} className="relative">
-                    <label className={`block text-sm font-medium text-[${colors.textSecondary}] mb-2 ml-1`}>
+                    <label className="block text-sm font-medium text-ios-gray mb-2 ml-1">
                       Capacidad de Pasajeros
                     </label>
-                    <div className={`relative rounded-[${borderRadius.medium}] border border-[${colors.border}] overflow-hidden`}>
+                    <div className="relative rounded-xl border border-zinc-200 dark:border-white/10 overflow-hidden">
                       <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
-                        <Users size={18} className={`text-[${colors.textSecondary}]`} />
+                        <Users size={18} className="text-ios-gray" />
                       </div>
                       <select
                         {...register("vehicleCapacity", {
                           required: "La capacidad es requerida",
                         })}
-                        className={`w-full bg-[${colors.card}] pl-12 pr-12 py-3.5 text-[${colors.textPrimary}] appearance-none cursor-pointer focus:outline-none focus:ring-1 focus:ring-[${colors.accent}] transition-all duration-200`}
+                        className="w-full bg-white dark:bg-zinc-900 pl-12 pr-12 py-3.5 text-black dark:text-white appearance-none cursor-pointer focus:outline-none focus:ring-1 focus:ring-ios-blue transition-all duration-200"
                       >
                         {[1, 2, 3, 4, 5, 6, 7, 8].map((num) => (
-                          <option key={num} value={num} className={`bg-[${colors.card}]`}>
+                          <option key={num} value={num} className="bg-white dark:bg-zinc-900">
                             {num} {num === 1 ? "pasajero" : "pasajeros"}
                           </option>
                         ))}
                       </select>
-                      <div className={`absolute right-3 top-1/2 -translate-y-1/2 p-1 rounded-full bg-[${colors.accent}]/10 text-[${colors.accent}] pointer-events-none`}>
+                      <div className="absolute right-3 top-1/2 -translate-y-1/2 p-1 rounded-full bg-ios-blue/10 text-ios-blue pointer-events-none">
                         <ChevronRight className="w-4 h-4 rotate-90" />
                       </div>
                     </div>
@@ -607,12 +607,12 @@ function CompleteProfile() {
             </div>
           </form>
           
-          {/* Logout option - iOS Style */}
+          {/* Logout option */}
           <motion.div
             variants={fadeInUp} 
             className="text-center mt-6"
           >
-            <p className={`text-sm text-[${colors.textSecondary}] mb-2`}>
+            <p className="text-sm text-ios-gray mb-2">
               ¿No quieres continuar?
             </p>
             <Button

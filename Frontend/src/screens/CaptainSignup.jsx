@@ -7,17 +7,16 @@ import axios from "axios";
 import Console from "../utils/console";
 
 // Import design system components
-import { colors, shadows, glassEffect, borderRadius } from "../styles/designSystem";
+import { springConfig } from "../styles/designSystem";
 import Button from "../components/common/Button";
 import Card from "../components/common/Card";
 import Input from "../components/common/Input";
 import Badge from "../components/common/Badge";
 
 /**
- * CaptainSignup - iOS Deluxe Floating Island Layout
- * Premium dark mode design with glassmorphism and depth layers
+ * CaptainSignup - Silicon Valley Luxury Design
+ * Premium dual-mode design with liquid glass and depth layers
  * Two-step form with floating inputs and spring animations
- * Personal info → Vehicle info
  */
 function CaptainSignup() {
   const [responseError, setResponseError] = useState("");
@@ -138,16 +137,16 @@ function CaptainSignup() {
   }, [responseError]);
 
   return (
-    <div className={`min-h-screen bg-[${colors.primary}] flex flex-col overflow-y-auto`}>
+    <div className="min-h-screen bg-ios-light dark:bg-black flex flex-col overflow-y-auto">
       {/* Animated Gradient Background */}
-      <div className="absolute inset-0 bg-gradient-to-br from-[#0A0A0A] via-[#101010] to-[#080808] opacity-90" />
+      <div className="absolute inset-0 bg-gradient-to-br from-zinc-100 via-white to-zinc-50 dark:from-[#0A0A0A] dark:via-[#101010] dark:to-[#080808] opacity-90" />
       
       {/* Subtle Mesh Gradient Overlay */}
       <motion.div 
         initial={{ opacity: 0 }} 
         animate={{ opacity: 0.7 }}
         transition={{ duration: 1 }}
-        className="absolute inset-0 bg-[url('/2.webp')] bg-cover bg-center opacity-30 mix-blend-overlay"
+        className="absolute inset-0 bg-[url('/2.webp')] bg-cover bg-center opacity-30 mix-blend-overlay dark:opacity-30"
         aria-hidden="true"
       />
 
@@ -196,8 +195,8 @@ function CaptainSignup() {
               </motion.div>
               
               <motion.div variants={fadeInUp} className="text-center">
-                <h2 className={`text-[28px] font-bold tracking-tight text-[${colors.textPrimary}]`}>Crear Cuenta</h2>
-                <p className={`mt-2 text-[${colors.textSecondary}]`}>Únete a Rapidito como conductor</p>
+                <h2 className="text-[28px] font-bold tracking-tight text-black dark:text-white">Crear Cuenta</h2>
+                <p className="mt-2 text-ios-gray">Únete a Rapidito como conductor</p>
               </motion.div>
             </div>
 
@@ -208,26 +207,26 @@ function CaptainSignup() {
             >
               {/* Step 1 - User Info */}
               <div className="flex flex-col items-center">
-                <div className={`w-10 h-10 rounded-full ${!showVehiclePanel ? `bg-[${colors.accent}]` : `bg-[${colors.accent}]/20`} flex items-center justify-center mb-2 transition-all duration-300 shadow-lg`}>
-                  <User className={`w-5 h-5 ${!showVehiclePanel ? 'text-white' : `text-[${colors.accent}]`}`} />
+                <div className={`w-10 h-10 rounded-full ${!showVehiclePanel ? 'bg-ios-blue' : 'bg-ios-blue/20'} flex items-center justify-center mb-2 transition-all duration-300 shadow-lg`}>
+                  <User className={`w-5 h-5 ${!showVehiclePanel ? 'text-white' : 'text-ios-blue'}`} />
                 </div>
-                <span className={`text-xs ${!showVehiclePanel ? `text-[${colors.textPrimary}]` : `text-[${colors.textSecondary}]`} font-medium`}>Personal</span>
+                <span className={`text-xs ${!showVehiclePanel ? 'text-black dark:text-white' : 'text-ios-gray'} font-medium`}>Personal</span>
               </div>
               
               {/* Progress Line */}
-              <div className={`flex-1 h-[3px] relative overflow-hidden rounded-full bg-[${colors.border}]`}>
+              <div className="flex-1 h-[3px] relative overflow-hidden rounded-full bg-zinc-200 dark:bg-white/10">
                 <div 
-                  className={`absolute top-0 left-0 h-full bg-[${colors.accent}] transition-all duration-500 ease-out`}
+                  className="absolute top-0 left-0 h-full bg-ios-blue transition-all duration-500 ease-out"
                   style={{ width: showVehiclePanel ? '100%' : '0%' }}
                 />
               </div>
               
               {/* Step 2 - Vehicle Info */}
               <div className="flex flex-col items-center">
-                <div className={`w-10 h-10 rounded-full ${showVehiclePanel ? `bg-[${colors.accent}]` : `bg-[${colors.accent}]/10`} flex items-center justify-center mb-2 transition-all duration-300`}>
-                  <Car className={`w-5 h-5 ${showVehiclePanel ? 'text-white' : `text-[${colors.accent}]/70`}`} />
+                <div className={`w-10 h-10 rounded-full ${showVehiclePanel ? 'bg-ios-blue' : 'bg-ios-blue/10'} flex items-center justify-center mb-2 transition-all duration-300`}>
+                  <Car className={`w-5 h-5 ${showVehiclePanel ? 'text-white' : 'text-ios-blue/70'}`} />
                 </div>
-                <span className={`text-xs ${showVehiclePanel ? `text-[${colors.textPrimary}]` : `text-[${colors.textSecondary}]`} font-medium`}>Vehículo</span>
+                <span className={`text-xs ${showVehiclePanel ? 'text-black dark:text-white' : 'text-ios-gray'} font-medium`}>Vehículo</span>
               </div>
             </motion.div>
             
@@ -247,21 +246,21 @@ function CaptainSignup() {
 
                 {/* Divider with text */}
                 <motion.div variants={fadeInUp} className="flex items-center gap-4 my-6">
-                  <div className={`h-px flex-1 bg-[${colors.border}]`}></div>
-                  <span className={`text-[${colors.textSecondary}] text-sm`}>o registrarse con email</span>
-                  <div className={`h-px flex-1 bg-[${colors.border}]`}></div>
+                  <div className="h-px flex-1 bg-zinc-200 dark:bg-white/10"></div>
+                  <span className="text-ios-gray text-sm">o registrarse con email</span>
+                  <div className="h-px flex-1 bg-zinc-200 dark:bg-white/10"></div>
                 </motion.div>
               </>
             )}
 
-            {/* Error Message - iOS Style */}
+            {/* Error Message */}
             {responseError && (
               <motion.div
                 variants={fadeInUp}
-                className={`mb-6 px-4 py-3 bg-[${colors.error}]/10 border border-[${colors.error}]/20 rounded-[${borderRadius.medium}] text-[${colors.error}] text-sm flex items-center gap-2`}
+                className="mb-6 px-4 py-3 bg-ios-red/10 border border-ios-red/20 rounded-xl text-ios-red text-sm flex items-center gap-2"
                 role="alert"
               >
-                <span className="rounded-full bg-[${colors.error}]/20 p-1">
+                <span className="rounded-full bg-ios-red/20 p-1">
                   <AlertCircle size={14} />
                 </span>
                 {responseError}
@@ -358,7 +357,7 @@ function CaptainSignup() {
                           <button
                             type="button"
                             onClick={() => setShowPassword(!showPassword)}
-                            className={`text-[${colors.textSecondary}] hover:text-[${colors.textPrimary}] p-1 rounded-full transition-colors`}
+                            className="text-ios-gray hover:text-black dark:hover:text-white p-1 rounded-full transition-colors"
                             aria-label={showPassword ? "Ocultar contraseña" : "Mostrar contraseña"}
                           >
                             {showPassword ? <EyeOff size={18} /> : <Eye size={18} />}
@@ -368,11 +367,11 @@ function CaptainSignup() {
                       
                       {/* Login Link */}
                       <motion.div variants={fadeInUp} className="mt-6 pt-2 text-center">
-                        <p className={`text-[${colors.textSecondary}]`}>
+                        <p className="text-ios-gray">
                           ¿Ya tienes cuenta?{" "}
                           <Link 
                             to="/captain/login" 
-                            className={`font-semibold text-[${colors.textPrimary}] hover:text-[${colors.accent}] transition-colors`}
+                            className="font-semibold text-black dark:text-white hover:text-ios-blue transition-colors"
                           >
                             Inicia sesión
                           </Link>
@@ -405,35 +404,35 @@ function CaptainSignup() {
                   <div className="space-y-5">
                     <motion.div variants={fadeInUp}>
                       <div className="flex items-center gap-3 mb-6">
-                        <div className={`p-2 rounded-full bg-[${colors.accent}]/10 text-[${colors.accent}]`}>
+                        <div className="p-2 rounded-full bg-ios-blue/10 text-ios-blue">
                           <Car size={20} />
                         </div>
-                        <h3 className={`text-lg font-semibold text-[${colors.textPrimary}]`}>Información del vehículo</h3>
+                        <h3 className="text-lg font-semibold text-black dark:text-white">Información del vehículo</h3>
                       </div>
                     </motion.div>
                     
                     {/* Vehicle Type - iOS Style Select */}
                     <motion.div variants={fadeInUp} className="relative">
-                      <div className={`relative rounded-[${borderRadius.medium}] border border-[${colors.border}] overflow-hidden`}>
+                      <div className="relative rounded-xl border border-zinc-200 dark:border-white/10 overflow-hidden">
                         <select
                           id="type"
                           {...register("type", { required: true })}
-                          className={`w-full bg-[${colors.card}] px-4 py-3.5 pr-12 text-[${colors.textPrimary}] appearance-none cursor-pointer focus:outline-none focus:ring-1 focus:ring-[${colors.accent}] transition-all duration-200`}
+                          className="w-full bg-white dark:bg-zinc-900 px-4 py-3.5 pr-12 text-black dark:text-white appearance-none cursor-pointer focus:outline-none focus:ring-1 focus:ring-ios-blue transition-all duration-200"
                           aria-describedby={errors.type ? "type-error" : undefined}
                           defaultValue=""
                         >
-                          <option value="" disabled className={`bg-[${colors.card}]`}>
+                          <option value="" disabled className="bg-white dark:bg-zinc-900">
                             Tipo de vehículo
                           </option>
-                          <option value="car" className={`bg-[${colors.card}]`}>Carro</option>
-                          <option value="bike" className={`bg-[${colors.card}]`}>Moto</option>
+                          <option value="car" className="bg-white dark:bg-zinc-900">Carro</option>
+                          <option value="bike" className="bg-white dark:bg-zinc-900">Moto</option>
                         </select>
-                        <div className={`absolute right-3 top-1/2 -translate-y-1/2 p-1 rounded-full bg-[${colors.accent}]/10 text-[${colors.accent}] pointer-events-none`}>
+                        <div className="absolute right-3 top-1/2 -translate-y-1/2 p-1 rounded-full bg-ios-blue/10 text-ios-blue pointer-events-none">
                           <ChevronRight className="w-4 h-4 rotate-90" />
                         </div>
                       </div>
                       {errors.type && (
-                        <p className={`mt-1 text-sm text-[${colors.error}]`} role="alert">
+                        <p className="mt-1 text-sm text-ios-red" role="alert">
                           El tipo es requerido
                         </p>
                       )}
@@ -513,7 +512,7 @@ function CaptainSignup() {
                             type="checkbox"
                             checked={termsAccepted}
                             onChange={(e) => setTermsAccepted(e.target.checked)}
-                            className={`peer appearance-none h-[22px] w-[22px] rounded-[6px] border border-[${colors.border}] bg-[${colors.card}] checked:bg-[${colors.accent}] checked:border-0 transition-all duration-200`}
+                            className="peer appearance-none h-[22px] w-[22px] rounded-[6px] border border-zinc-200 dark:border-white/10 bg-white dark:bg-zinc-900 checked:bg-ios-blue checked:border-0 transition-all duration-200"
                           />
                           <svg
                             className="absolute h-[14px] w-[14px] text-white opacity-0 peer-checked:opacity-100 transition-opacity"
@@ -527,13 +526,13 @@ function CaptainSignup() {
                             <polyline points="20 6 9 17 4 12" />
                           </svg>
                         </div>
-                        <span className={`text-sm text-[${colors.textSecondary}]`}>
+                        <span className="text-sm text-ios-gray">
                           Acepto los{' '}
-                          <Link to="/terms" className={`text-[${colors.accent}] hover:text-[${colors.accent}]/80 transition-colors`}>
+                          <Link to="/terms" className="text-ios-blue hover:text-ios-blue/80 transition-colors">
                             Términos y Condiciones
                           </Link>
                           {' '}y la{' '}
-                          <Link to="/privacy" className={`text-[${colors.accent}] hover:text-[${colors.accent}]/80 transition-colors`}>
+                          <Link to="/privacy" className="text-ios-blue hover:text-ios-blue/80 transition-colors">
                             Política de Privacidad
                           </Link>
                         </span>
@@ -542,8 +541,8 @@ function CaptainSignup() {
 
                     {/* Info Text - iOS Style */}
                     <motion.div variants={fadeInUp} className="mt-6">
-                      <div className={`flex items-center justify-center gap-2 p-3 rounded-[${borderRadius.medium}] bg-[${colors.accent}]/5 text-sm text-[${colors.textSecondary}]`}>
-                        <AlertCircle size={16} className={`text-[${colors.accent}]`} />
+                      <div className="flex items-center justify-center gap-2 p-3 rounded-xl bg-ios-blue/5 text-sm text-ios-gray">
+                        <AlertCircle size={16} className="text-ios-blue" />
                         <span>Revisaremos tu solicitud en 24-48 horas</span>
                       </div>
                     </motion.div>

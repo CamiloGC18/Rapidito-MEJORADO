@@ -31,12 +31,24 @@ import {
   User as UserIcon
 } from "lucide-react";
 
-// Import design system components
-import { springConfig, colors } from "../styles/designSystem";
-import Button from "../components/common/Button";
-import Card from "../components/common/Card";
-import Input from "../components/common/Input";
-import Badge from "../components/common/Badge";
+/**
+ * 🌟 RAPIDITO CAPTAIN HOME - BRUTAL LUXURY DASHBOARD
+ * Tesla Model S x Linear.app x iOS 17 - Professional Driver Edition
+ * 
+ * Design System:
+ * - FLOATING DASHBOARD ISLANDS: Cards flotan sobre mapa obsidian
+ * - AMBER ACCENT THEME: Professional driver color scheme
+ * - REAL-TIME STATS: Earnings, rides, ratings con brutal typography
+ * - GLASSMORPHISM HUD: Stats overlay con backdrop-blur
+ * - LUXURY MAP: Mapbox con controles floating pill
+ * - RIDE REQUEST TOASTS: Premium notification system
+ * 
+ * Captain Features:
+ * - Live Location Tracking
+ * - Earnings Dashboard  
+ * - Ride Request System
+ * - Performance Analytics
+ */
 
 // Coordenadas de San Antonio del Táchira
 const DEFAULT_LOCATION = {
@@ -678,7 +690,7 @@ function CaptainHomeScreen() {
   };
 
   return (
-    <div className={`relative w-full h-dvh overflow-hidden bg-[${colors.primary}]`}>
+    <div className="relative w-full h-dvh overflow-hidden obsidian-gradient">
       <Alert
         heading={alert.heading}
         text={alert.text}
@@ -688,182 +700,180 @@ function CaptainHomeScreen() {
       />
       <Sidebar onToggle={handleSidebarToggle} />
       
-      {/* Subtle Dark Gradient Background */}
-      <div className="absolute inset-0 bg-gradient-to-br from-[#0A0A0A] via-[#101010] to-[#080808] opacity-90" />
-      
-      {/* Map Container */}
-      <div className="absolute inset-0 z-0 rounded-xl overflow-hidden mx-4 my-4 shadow-2xl">
-        {/* Glass Overlay for Map */}
-        <div className="absolute inset-0 z-10 pointer-events-none" style={glassEffect}></div>
+      {/* Map Container - Brutal Luxury Style */}
+      <div className="absolute inset-0 z-0">
         <MapboxStaticMap
           latitude={mapCenter.lat}
           longitude={mapCenter.lng}
           zoom={mapZoom}
           interactive={true}
           showMarker={true}
-          markerColor="#10B981"
+          markerColor="#F59E0B"
           className="w-full h-full"
         />
+        {/* Obsidian overlay for professional look */}
+        <div className="absolute inset-0 bg-black/20" />
       </div>
 
-      {/* iOS Deluxe UI Layer */}
+      {/* Captain Dashboard UI */}
       {!isSidebarOpen && !showNewRidePanel && (
         <>
-          {/* Top Bar - Captain Profile Floating Island */}
+          {/* Top Header - Captain Profile Floating Island */}
           <motion.div
-            variants={fadeInDown}
-            initial="initial"
-            animate="animate"
-            className="absolute top-8 left-6 right-6 z-20 flex items-center justify-between"
+            initial={{ opacity: 0, y: -20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, ease: [0.4, 0, 0.2, 1] }}
+            className="absolute top-safe left-6 right-6 z-20 flex items-center justify-between"
           >
-            {/* Captain Profile Card - Floating Glass Pill */}
-            <Button
-              variant="glass"
-              size="custom"
+            {/* Captain Profile Card */}
+            <motion.button
+              whileHover={{ scale: 1.02 }}
+              whileTap={{ scale: 0.98 }}
               onClick={() => setIsSidebarOpen(true)}
-              className="flex items-center gap-3 pl-2 pr-5 py-1 rounded-full"
+              className="floating-island px-4 py-3 flex items-center space-md hover-lift"
             >
-              <div className="w-10 h-10 rounded-full bg-ios-green flex items-center justify-center text-white font-bold text-sm ring-2 ring-white/10 shadow-lg">
-                {captainData?.fullname?.firstname?.[0]?.toUpperCase() || 'C'}
+              <div className="w-10 h-10 rounded-full bg-amber-500 flex items-center justify-center text-black font-bold text-sm shadow-lg">
+                {captain?.fullname?.firstname?.[0]?.toUpperCase() || 'C'}
               </div>
               <div className="text-left">
-                <p className="text-sm font-semibold text-black dark:text-white">
-                  {captainData?.fullname?.firstname || 'Conductor'}
+                <p className="text-heading text-sm font-bold text-white">
+                  {captain?.fullname?.firstname || 'Conductor'}
                 </p>
-                <div className="flex items-center gap-1">
-                  <span className="w-1.5 h-1.5 rounded-full bg-ios-green animate-pulse"></span>
-                  <p className="text-xs text-ios-gray">En línea</p>
+                <div className="flex items-center space-sm">
+                  <div className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
+                  <p className="text-caption text-secondary">ACTIVO</p>
                 </div>
               </div>
-            </Button>
+            </motion.button>
 
             {/* Menu Button - Floating Glass */}
-            <Button
-              variant="glass"
-              size="icon"
-              icon={<Menu size={18} />}
+            {/* Menu Toggle */}
+            <motion.button
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
               onClick={() => setIsSidebarOpen(true)}
+              className="floating-island-subtle p-3 rounded-2xl hover-lift"
               aria-label="Abrir menú"
-            />
+            >
+              <Menu className="w-5 h-5 text-white" strokeWidth={1.5} />
+            </motion.button>
           </motion.div>
 
-          {/* Map Controls - Floating Glass Card */}
+          {/* Map Controls - Brutal Luxury Floating Controls */}
           <motion.div
-            variants={fadeInRight}
-            initial="initial"
-            animate="animate"
-            className="absolute right-6 top-24 z-20 flex flex-col gap-3"
+            initial={{ opacity: 0, x: 20 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ duration: 0.6, delay: 0.2 }}
+            className="absolute right-6 top-24 z-20 space-md"
           >
-            {/* Controls Card */}
-            <Card
-              variant="glass"
-              borderRadius="large"
-              className="p-3 flex flex-col gap-3"
-            >
+            {/* Controls Stack */}
+            <div className="floating-island p-3 space-sm">
               {/* Zoom In */}
-              <Button
-                variant="glass"
-                size="icon"
+              <motion.button
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
                 onClick={() => setMapZoom(prev => Math.min(prev + 1, 20))}
-                icon={<Plus size={18} />}
+                className="floating-island-subtle p-3 rounded-xl hover-lift w-full"
                 aria-label="Acercar mapa"
-              />
+              >
+                <Plus className="w-4 h-4 text-white mx-auto" strokeWidth={2} />
+              </motion.button>
               
               {/* Zoom Out */}
-              <Button
-                variant="glass"
-                size="icon"
+              <motion.button
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
                 onClick={() => setMapZoom(prev => Math.max(prev - 1, 1))}
-                icon={<Minus size={18} />}
+                className="floating-island-subtle p-3 rounded-xl hover-lift w-full"
                 aria-label="Alejar mapa"
-              />
+              >
+                <Minus className="w-4 h-4 text-white mx-auto" strokeWidth={2} />
+              </motion.button>
               
               {/* Recenter */}
-              <Button
-                variant="glass"
-                size="icon"
+              <motion.button
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
                 onClick={() => {
                   setIsLocating(true);
                   updateLocation();
                   setTimeout(() => setIsLocating(false), 1500);
                 }}
-                icon={<Target size={18} className={isLocating ? 'animate-spin' : ''} />}
+                className="floating-island-subtle p-3 rounded-xl hover-lift w-full"
                 aria-label="Mi ubicación"
-              />
-            </Card>
+              >
+                <Target className={`w-4 h-4 text-amber-400 mx-auto ${isLocating ? 'animate-spin' : ''}`} strokeWidth={2} />
+              </motion.button>
+            </div>
           </motion.div>
 
-          {/* Bottom Stats Dashboard - Floating Glass Island */}
+          {/* Bottom Stats Dashboard - Brutal Luxury HUD */}
           <motion.div
-            variants={fadeInUp}
-            initial="initial"
-            animate="animate"
-            className="absolute bottom-8 left-6 right-6 z-20"
+            initial={{ opacity: 0, y: 40 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, delay: 0.3 }}
+            className="absolute bottom-safe left-6 right-6 z-20"
           >
-            <Card
-              variant="floating"
-              borderRadius="xlarge"
-              className="p-6"
-            >
-              {/* Today's Earnings - Hero Stat */}
-              <div className="mb-6 text-center">
-                <p className="text-sm text-ios-gray mb-1">Hoy ganaste</p>
-                <p className="text-5xl font-black text-black dark:text-white tracking-tight">
-                  ${Math.round(earnings.today / 1000)}K
-                </p>
+            <div className="floating-island p-8 space-xl">
+              {/* Hero Earnings - Brutal Typography */}
+              <div className="text-center mb-8">
+                <p className="text-caption text-secondary mb-2">GANANCIA DE HOY</p>
+                <h1 className="text-display font-black text-amber-400 tracking-tight">
+                  ${Math.round(earnings.today).toLocaleString('es-CO')}
+                </h1>
               </div>
 
-              {/* Stats Grid */}
-              <div className="grid grid-cols-3 gap-3">
+              {/* Stats Grid - Professional */}
+              <div className="grid grid-cols-3 gap-4">
                 {/* Total Earnings */}
-                <Card variant="glass" borderRadius="large" className="p-3 text-center">
-                  <div className="w-9 h-9 mx-auto mb-2 rounded-full bg-ios-green/10 flex items-center justify-center text-ios-green">
-                    <DollarSign size={18} />
+                <div className="floating-island-subtle p-4 text-center hover-lift">
+                  <div className="w-10 h-10 mx-auto mb-3 rounded-2xl bg-emerald-500/10 flex items-center justify-center">
+                    <DollarSign className="w-5 h-5 text-emerald-400" strokeWidth={1.5} />
                   </div>
-                  <p className="text-xs text-ios-gray mb-1">Total</p>
-                  <p className="text-lg font-bold text-black dark:text-white">
-                    ${Math.round(earnings.total / 1000)}K
+                  <p className="text-caption text-secondary mb-1">TOTAL</p>
+                  <p className="text-heading text-lg font-bold text-white">
+                    ${Math.round(earnings.total).toLocaleString('es-CO')}
                   </p>
-                </Card>
+                </div>
 
                 {/* Rides Today */}
-                <Card variant="glass" borderRadius="large" className="p-3 text-center">
-                  <div className="w-9 h-9 mx-auto mb-2 rounded-full bg-ios-blue/10 flex items-center justify-center text-ios-blue">
-                    <Activity size={18} />
+                <div className="floating-island-subtle p-4 text-center hover-lift">
+                  <div className="w-10 h-10 mx-auto mb-3 rounded-2xl bg-blue-500/10 flex items-center justify-center">
+                    <Activity className="w-5 h-5 text-blue-400" strokeWidth={1.5} />
                   </div>
-                  <p className="text-xs text-ios-gray mb-1">Viajes</p>
-                  <p className="text-lg font-bold text-black dark:text-white">
+                  <p className="text-caption text-secondary mb-1">VIAJES</p>
+                  <p className="text-heading text-lg font-bold text-white">
                     {rides.accepted}
                   </p>
                 </Card>
 
                 {/* Distance */}
-                <Card variant="glass" borderRadius="large" className="p-3 text-center">
-                  <div className="w-9 h-9 mx-auto mb-2 rounded-full bg-ios-purple/10 flex items-center justify-center text-ios-purple">
-                    <TrendingUp size={18} />
+                <div className="floating-island-subtle p-4 text-center hover-lift">
+                  <div className="w-10 h-10 mx-auto mb-3 rounded-2xl bg-purple-500/10 flex items-center justify-center">
+                    <TrendingUp className="w-5 h-5 text-purple-400" strokeWidth={1.5} />
                   </div>
-                  <p className="text-xs text-ios-gray mb-1">Distancia</p>
-                  <p className="text-lg font-bold text-black dark:text-white">
+                  <p className="text-caption text-secondary mb-1">DISTANCIA</p>
+                  <p className="text-heading text-lg font-bold text-white">
                     {rides.distanceTravelled}km
                   </p>
-                </Card>
+                </div>
               </div>
 
-              {/* Rating if available */}
+              {/* Rating Display - Professional Badge */}
               {captain?.rating && (
-                <div className="mt-4 pt-4 border-t border-white/10 flex items-center justify-center gap-2">
-                  <div className="flex items-center gap-1">
-                    <Star size={16} className="fill-yellow-400 text-yellow-400" />
-                    <span className="text-sm font-semibold text-black dark:text-white">
+                <div className="mt-6 pt-6 border-t border-white/10 flex items-center justify-center space-md">
+                  <div className="floating-island-subtle px-4 py-2 rounded-xl flex items-center space-sm">
+                    <Star className="w-4 h-4 fill-amber-400 text-amber-400" strokeWidth={1.5} />
+                    <span className="text-body font-bold text-amber-400">
                       {captain.rating.average.toFixed(1)}
                     </span>
                   </div>
-                  <span className="text-xs text-ios-gray">
-                    ({captain.rating.count} calificaciones)
-                  </span>
+                  <p className="text-caption text-secondary">
+                    {captain.rating.count} calificaciones
+                  </p>
                 </div>
               )}
-            </Card>
+            </div>
           </motion.div>
         </>
       )}

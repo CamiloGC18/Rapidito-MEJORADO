@@ -4,7 +4,6 @@ import {
   LocationSuggestions,
   SelectVehicle,
   RideDetails,
-  Sidebar,
 } from "../components";
 import EliteTrackingMap from "../components/maps/EliteTrackingMap";
 import MapboxStaticMap from "../components/maps/MapboxStaticMap";
@@ -34,18 +33,28 @@ import {
   Home,
   Briefcase,
   Star,
-  AlertCircle
+  AlertCircle,
+  Zap,
+  Crown,
+  ArrowRight
 } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import LocationFavoritesPills from "../components/LocationFavoritesPills";
 import SaveLocationModal from "../components/SaveLocationModal";
+import Button from "../components/Button";
 
-// Import design system components
-import { springConfig, colors } from "../styles/designSystem";
-import Button from "../components/common/Button";
-import Card from "../components/common/Card";
-import Input from "../components/common/Input";
-import Badge from "../components/common/Badge";
+/**
+ * 🌟 RAPIDITO USER HOME - BRUTAL LUXURY DASHBOARD
+ * Tesla Model S x Linear.app x iOS 17 - Premium Map Interface
+ * 
+ * Design System:
+ * - FULLSCREEN MAP: No sidebars, pure map experience
+ * - FLOATING HUD ISLANDS: All UI floats over map with glassmorphism
+ * - EMERALD ACCENTS: Primary actions in emerald gradients
+ * - LOCATION SEARCH: Floating search bar at top
+ * - RIDE HUD: Bottom floating island for ride controls
+ * - NO GENERIC SIDEBARS: Everything is floating islands
+ */
 
 // Coordenadas de San Antonio del Táchira, Colombia (frontera)
 const DEFAULT_LOCATION = {
@@ -752,16 +761,9 @@ function UserHomeScreen() {
   };
 
   return (
-    <div className={`relative w-full h-dvh overflow-hidden bg-[${colors.primary}]`}>
-      <Sidebar onToggle={handleSidebarToggle} />
-      
-      {/* Subtle Dark Gradient Background */}
-      <div className="absolute inset-0 bg-gradient-to-br from-[#0A0A0A] via-[#101010] to-[#080808] opacity-90" />
-      
-      {/* Map Container */}
-      <div className="absolute inset-0 z-0 rounded-xl overflow-hidden mx-4 my-4 shadow-2xl">
-        {/* Glass Overlay for Map */}
-        <div className="absolute inset-0 z-10 pointer-events-none" style={glassEffect}></div>
+    <div className="relative w-full h-screen overflow-hidden bg-obsidian">
+      {/* Fullscreen Map - No sidebars, pure experience */}
+      <div className="absolute inset-0">
         {showEliteMap ? (
           <EliteTrackingMap
             driverLocation={driverLocation}
@@ -787,8 +789,59 @@ function UserHomeScreen() {
         )}
       </div>
 
-      {/* iOS Deluxe UI Layer */}
-      {!isSidebarOpen && !showSelectVehiclePanel && !showRideDetailsPanel && !rideCreated && (
+      {/* FLOATING HUD LAYER - All UI floats over map */}
+      <div className="absolute inset-0 pointer-events-none">
+        {/* Top Floating Header */}
+        <motion.div
+          initial={{ opacity: 0, y: -20 }}
+          animate={{ opacity: 1, y: 0 }}
+          className="pt-safe px-6 pt-6 pointer-events-auto"
+        >
+          <div className="floating-island-hud p-4">
+            <div className="flex items-center justify-between">
+              {/* User Profile Button */}
+              <motion.button
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
+                onClick={() => setIsSidebarOpen(true)}
+                className="floating-island-subtle p-3 rounded-2xl"
+              >
+                <UserIcon 
+                  className="w-5 h-5 text-emerald-400" 
+                  strokeWidth={1.5} 
+                />
+              </motion.button>
+
+              {/* Location Status */}
+              <div className="flex items-center space-sm">
+                <div className="floating-island-subtle p-2 rounded-xl">
+                  <Target 
+                    className="w-4 h-4 text-emerald-400" 
+                    strokeWidth={1.5} 
+                  />
+                </div>
+                <span className="text-sm font-medium text-white">
+                  {gettingLocation ? "Obteniendo ubicación..." : "San Antonio del Táchira"}
+                </span>
+              </div>
+
+              {/* Messages Button */}
+              <motion.button
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
+                className="floating-island-subtle p-3 rounded-2xl"
+              >
+                <MessageSquare 
+                  className="w-5 h-5 text-emerald-400" 
+                  strokeWidth={1.5} 
+                />
+              </motion.button>
+            </div>
+          </div>
+        </motion.div>
+
+        {/* Floating Search Bar */}
+        {!showSelectVehiclePanel && !showRideDetailsPanel && !rideCreated && (
         <>
           {/* Top Bar - User Profile Floating Island */}
           <motion.div

@@ -4,7 +4,7 @@ import "mapbox-gl/dist/mapbox-gl.css";
 import { SocketDataContext } from "../../contexts/SocketContext";
 import { cn } from "../../utils/cn";
 import { calculateDistance, calculateETA, formatDistance, formatDuration } from "../../utils/rideTracking";
-import { colors, shadows, glassEffect, borderRadius } from "../../styles/designSystem";
+import { springConfig } from "../../styles/designSystem";
 import { motion, AnimatePresence } from "framer-motion";
 
 // Set Mapbox access token

@@ -9,12 +9,12 @@ import { useAlert } from "../hooks/useAlert";
 import { Alert } from "../components";
 import StarRating from "../components/ui/StarRating";
 import { motion, AnimatePresence } from "framer-motion";
-import { colors, shadows, glassEffect, borderRadius } from "../styles/designSystem";
+import { springConfig } from "../styles/designSystem";
 import Button from "../components/common/Button";
 import Card from "../components/common/Card";
 import Badge from "../components/common/Badge";
 
-// Variantes de animación para iOS Deluxe
+// Animation variants for Silicon Valley Luxury
 const animationVariants = {
   fadeInDown: {
     initial: { opacity: 0, y: -20 },
@@ -245,7 +245,7 @@ function UserEditProfile() {
                     className="w-full h-full object-cover"
                   />
                 ) : (
-                  <div className="w-full h-full flex items-center justify-center bg-gradient-to-br from-[${colors.accent}] to-[${colors.accent}]/70">
+                  <div className="w-full h-full flex items-center justify-center bg-gradient-to-br from-ios-blue to-ios-blue/70">
                     <User size={48} className="text-white" />
                   </div>
                 )}

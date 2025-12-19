@@ -15,28 +15,22 @@ import {
 } from 'lucide-react';
 
 /**
- * ActiveRideHUD - Minimal Heads-Up Display for Active Rides
+ * 🌟 ACTIVE RIDE HUD - BRUTAL LUXURY
+ * Tesla Model S x Linear.app x iOS 17 - Professional HUD
  * 
- * Design Philosophy: Aviation HUD meets Tesla Dashboard
- * Core Principle: Critical info at a glance, minimal distraction
+ * Design System:
+ * - FLOATING TRANSLUCENT HUD: Glassmorphism overlay sobre mapa
+ * - AMBER PROFESSIONAL THEME: Driver-focused color scheme
+ * - BRUTAL TYPOGRAPHY: Critical info with massive contrast
+ * - MINIMAL DISTRACTION: Only essential ride data visible
+ * - REAL-TIME STATES: Pickup → OTP → Destination → Complete
  * 
- * States:
- * - NAVIGATING_TO_PICKUP: Show route to pickup, OTP input
- * - WAITING_FOR_PASSENGER: OTP verification
- * - IN_RIDE: Show route to destination, End Ride button
+ * HUD States:
+ * - NAVIGATING_TO_PICKUP: Route overlay + passenger info
+ * - WAITING_FOR_PASSENGER: OTP input floating island
+ * - IN_RIDE: Destination info + end ride controls
+ * - RIDE_COMPLETED: Rating prompt + earnings
  */
-
-const CAPTAIN_COLORS = {
-  background: '#000000',
-  surface: '#1A1A1A',
-  elevated: '#2A2A2A',
-  online: '#10B981',
-  offline: '#6B7280',
-  busy: '#F59E0B',
-  warning: '#EF4444',
-  glass: 'rgba(0, 0, 0, 0.9)',
-  glassBorder: 'rgba(255, 255, 255, 0.1)',
-};
 
 const RIDE_STATUS = {
   NAVIGATING_TO_PICKUP: 'navigating_to_pickup',
@@ -128,61 +122,49 @@ function ActiveRideHUD({
 
   return (
     <motion.div
-      initial={prefersReducedMotion ? {} : { y: 100, opacity: 0 }}
+      initial={{ y: 100, opacity: 0 }}
       animate={{ y: 0, opacity: 1 }}
-      exit={prefersReducedMotion ? {} : { y: 100, opacity: 0 }}
-      transition={springConfig}
-      className="fixed bottom-0 left-0 right-0 z-40"
-      style={{ paddingBottom: 'env(safe-area-inset-bottom, 0px)' }}
+      exit={{ y: 100, opacity: 0 }}
+      transition={{ duration: 0.4, ease: [0.4, 0, 0.2, 1] }}
+      className="fixed bottom-safe left-6 right-6 z-40"
     >
-      {/* Main HUD Container */}
-      <div 
-        className="mx-3 mb-3 rounded-[24px] overflow-hidden"
-        style={{
-          background: CAPTAIN_COLORS.glass,
-          backdropFilter: 'blur(40px) saturate(180%)',
-          WebkitBackdropFilter: 'blur(40px) saturate(180%)',
-          border: `1px solid ${CAPTAIN_COLORS.glassBorder}`,
-          boxShadow: '0 -4px 32px rgba(0, 0, 0, 0.5), inset 0 1px 0 rgba(255, 255, 255, 0.05)'
-        }}
-      >
-        {/* Status indicator bar at top */}
-        <div 
-          className="h-1"
-          style={{ background: `linear-gradient(90deg, ${statusContent.color}, ${statusContent.color}80)` }}
-        />
+      {/* HUD Container - Brutal Luxury Glass */}
+      <div className="floating-island overflow-hidden">
+        {/* Status Indicator - Amber Professional Theme */}
+        <div className="h-1 bg-gradient-to-r from-amber-500 to-amber-400" />
 
-        {/* Compact Header - Always visible */}
-        <div 
-          className="px-4 py-3 flex items-center justify-between cursor-pointer"
+        {/* Compact Header */}
+        <motion.div 
+          whileTap={{ scale: 0.98 }}
+          className="p-6 flex items-center justify-between cursor-pointer"
           onClick={() => setIsExpanded(!isExpanded)}
         >
-          <div className="flex items-center gap-3">
+          <div className="flex items-center space-lg">
             {/* Status Icon */}
-            <div 
-              className="w-10 h-10 rounded-xl flex items-center justify-center"
-              style={{ background: `${statusContent.color}20` }}
-            >
-              <statusContent.icon className="w-5 h-5" style={{ color: statusContent.color }} />
+            <div className="w-12 h-12 rounded-2xl bg-amber-500/10 flex items-center justify-center">
+              <statusContent.icon className="w-6 h-6 text-amber-400" strokeWidth={1.5} />
             </div>
 
-            {/* Status Text */}
+            {/* Status Info - Brutal Typography */}
             <div>
-              <p className="text-white font-bold">{statusContent.title}</p>
-              <p className="text-white/50 text-sm truncate max-w-[180px]">{statusContent.subtitle}</p>
+              <h3 className="text-heading text-lg font-bold text-white mb-1">
+                {statusContent.title}
+              </h3>
+              <p className="text-caption text-secondary truncate max-w-[200px]">
+                {statusContent.subtitle}
+              </p>
             </div>
           </div>
 
-          <div className="flex items-center gap-3">
-            {/* Fare Badge */}
-            <div 
-              className="px-3 py-1.5 rounded-full"
-              style={{ background: CAPTAIN_COLORS.surface }}
-            >
-              <span className="text-white font-bold text-sm">${Math.floor(rideData?.fare / 1000)}K</span>
+          <div className="flex items-center space-md">
+            {/* Fare Display - Emphasized */}
+            <div className="floating-island-subtle px-4 py-2 rounded-xl">
+              <span className="text-body font-black text-amber-400">
+                ${Math.floor(rideData?.fare / 1000)}K COP
+              </span>
             </div>
 
-            {/* Expand/Collapse Icon */}
+            {/* Expand Icon */}
             <motion.div
               animate={{ rotate: isExpanded ? 180 : 0 }}
               transition={{ duration: 0.2 }}

@@ -1,19 +1,32 @@
 import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { Link, useNavigate } from "react-router-dom";
-import { Eye, EyeOff, ArrowLeft, Mail, Lock, Car } from "lucide-react";
+import { 
+  Eye, 
+  EyeOff, 
+  ArrowLeft, 
+  Mail, 
+  Lock, 
+  Car,
+  Crown,
+  Zap
+} from "lucide-react";
 import { motion } from "framer-motion";
 import axios from "axios";
 import Console from "../utils/console";
 import MembershipRequiredModal from "../components/MembershipRequiredModal";
-import Button from "../components/common/Button";
-import Input from "../components/common/Input";
-import { springConfig } from "../styles/designSystem";
+import Button from "../components/Button";
 
 /**
- * CaptainLogin - Silicon Valley Luxury Driver Login Screen
- * Ultra-Premium, Brutalist Minimalist, Liquid Glass aesthetic
- * iOS native experience with spring physics
+ * 🌟 RAPIDITO CAPTAIN LOGIN - BRUTAL LUXURY
+ * Tesla Model S x Linear.app x iOS 17 - Driver Edition
+ * 
+ * Design System:
+ * - HERO BACKGROUND: Unsplash luxury driver with amber overlay
+ * - FLOATING FORM ISLAND: Glassmorphism with amber accents
+ * - INPUTS: Glass inputs with amber focus glow
+ * - TYPOGRAPHY: Massive 48px heading with conductor theme
+ * - ANIMATIONS: Staggered entrance with power driver vibes
  */
 function CaptainLogin() {
   const [responseError, setResponseError] = useState("");
@@ -81,228 +94,238 @@ function CaptainLogin() {
   };
 
   return (
-    <div style={styles.container}>
-      {/* Header with back button - Glass Island */}
+    <div className="min-h-screen bg-obsidian relative overflow-hidden">
+      {/* Hero Background Image with Amber Gradient Overlay */}
+      <div className="absolute inset-0">
+        <img 
+          src="https://images.unsplash.com/photo-1519641471654-76ce0107ad1b?w=1200&auto=format&fit=crop&q=80"
+          alt="Professional driver"
+          className="w-full h-full object-cover"
+        />
+        <div className="absolute inset-0 bg-gradient-to-br from-amber-900/70 via-black/60 to-black/80" />
+      </div>
+
+      {/* Floating Header */}
       <motion.header
         initial={{ opacity: 0, y: -20 }}
         animate={{ opacity: mounted ? 1 : 0, y: mounted ? 0 : -20 }}
-        transition={springConfig.panel}
-        style={styles.header}
+        transition={{ duration: 0.8, delay: 0.1 }}
+        className="relative z-10 pt-safe px-8 pt-8"
       >
         <motion.button
+          whileHover={{ scale: 1.05 }}
           whileTap={{ scale: 0.95 }}
-          transition={springConfig.button}
           onClick={() => navigate("/")}
-          style={styles.backButton}
+          className="floating-island-subtle p-4 rounded-2xl hover-lift"
           aria-label="Volver"
         >
-          <ArrowLeft size={20} color="#000" strokeWidth={2.5} />
+          <ArrowLeft 
+            className="text-white w-5 h-5" 
+            strokeWidth={1.5} 
+          />
         </motion.button>
       </motion.header>
 
-      {/* Main content */}
-      <div style={styles.content}>
-        {/* Driver badge */}
-        <motion.div
-          initial={{ opacity: 0, scale: 0.9 }}
-          animate={{ opacity: mounted ? 1 : 0, scale: mounted ? 1 : 0.9 }}
-          transition={springConfig.button}
-          style={styles.badgeContainer}
-        >
-          <div style={styles.driverBadge}>
-            <Car size={14} color="#34C759" strokeWidth={2.5} />
-            <span style={styles.badgeText}>CONDUCTOR</span>
-          </div>
-        </motion.div>
-
-        {/* Title section */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: mounted ? 1 : 0, y: mounted ? 0 : 20 }}
-          transition={springConfig.panel}
-          style={styles.titleSection}
-        >
-          <h1 style={styles.title}>Hola, conductor</h1>
-          <p style={styles.subtitle}>Inicia sesión para comenzar a ganar</p>
-        </motion.div>
-
-        {/* Error message */}
-        {responseError && (
+      {/* Main Content */}
+      <div className="relative z-10 flex flex-col min-h-screen">
+        <div className="flex-1 flex flex-col justify-center px-8 space-3xl">
+          {/* Title Section */}
           <motion.div
-            initial={{ opacity: 0, y: -10, scale: 0.95 }}
-            animate={{ opacity: 1, y: 0, scale: 1 }}
-            transition={springConfig.button}
-            style={styles.errorContainer}
+            initial={{ opacity: 0, y: 30 }}
+            animate={{ opacity: mounted ? 1 : 0, y: mounted ? 0 : 30 }}
+            transition={{ duration: 0.8, delay: 0.2 }}
+            className="space-lg"
           >
-            <p style={styles.errorText}>{responseError}</p>
+            {/* Driver Badge */}
+            <div className="flex items-center space-sm mb-4">
+              <div className="floating-island-subtle p-3 rounded-2xl">
+                <Crown 
+                  className="text-amber-400 w-6 h-6" 
+                  strokeWidth={1.5} 
+                />
+              </div>
+              <span className="text-caption text-secondary">
+                CONDUCTOR PREMIUM
+              </span>
+            </div>
+            
+            <h1 className="text-display font-extrabold">
+              Hola,{" "}
+              <span className="text-gradient-accent">
+                conductor
+              </span>
+            </h1>
+            
+            <p className="text-body text-secondary">
+              Inicia sesión para comenzar a generar ingresos premium
+            </p>
+          </motion.div>
+
+          {/* Error Message */}
+          {responseError && (
+            <motion.div
+              initial={{ opacity: 0, y: -10, scale: 0.95 }}
+              animate={{ opacity: 1, y: 0, scale: 1 }}
+              exit={{ opacity: 0, y: -10, scale: 0.95 }}
+              transition={{ duration: 0.3 }}
+              className="floating-island p-4 border-red-500/20 bg-red-500/10"
+            >
+              <p className="text-red-400 text-sm font-medium">
+                {responseError}
+              </p>
+            </motion.div>
+          )}
+
+          {/* Login Form - Floating Island */}
+          <motion.form
+            initial={{ opacity: 0, y: 40 }}
+            animate={{ opacity: mounted ? 1 : 0, y: mounted ? 0 : 40 }}
+            transition={{ duration: 0.8, delay: 0.3 }}
+            onSubmit={handleSubmit(loginCaptain)}
+            className="floating-island p-8 space-xl"
           </motion.div>
         )}
 
-        {/* Login form */}
-        <motion.form
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: mounted ? 1 : 0, y: mounted ? 0 : 20 }}
-          transition={{ ...springConfig.panel, delay: 0.1 }}
-          onSubmit={handleSubmit(loginCaptain)}
-          style={styles.form}
-        >
-          {/* Email input */}
-          <Input
-            label="Correo electrónico"
-            type="email"
-            name="email"
-            icon={Mail}
-            register={register}
-            error={errors.email && { message: "El email es requerido" }}
-            floatingLabel
-            clearable
-          />
-
-          {/* Password input */}
-          <div style={styles.passwordContainer}>
-            <Input
-              label="Contraseña"
-              type={showPassword ? "text" : "password"}
-              name="password"
-              icon={Lock}
-              register={register}
-              error={
-                errors.password && { message: "La contraseña es requerida" }
-              }
-              floatingLabel
-              clearable={false}
-            />
-            <motion.button
-              whileTap={{ scale: 0.9 }}
-              type="button"
-              onClick={() => setShowPassword(!showPassword)}
-              style={styles.showPasswordButton}
-              aria-label={
-                showPassword ? "Ocultar contraseña" : "Mostrar contraseña"
-              }
-            >
-              {showPassword ? (
-                <EyeOff size={18} color="#8E8E93" />
-              ) : (
-                <Eye size={18} color="#8E8E93" />
+          >
+            {/* Email Input */}
+            <div className="space-sm">
+              <label className="text-caption text-secondary block mb-2">
+                CORREO ELECTRÓNICO
+              </label>
+              <div className="relative">
+                <Mail 
+                  className="absolute left-4 top-1/2 transform -translate-y-1/2 text-secondary w-5 h-5" 
+                  strokeWidth={1.5}
+                />
+                <input
+                  type="email"
+                  {...register("email", { required: "El email es requerido" })}
+                  className="input-base pl-12 w-full focus:border-amber-500 focus:shadow-glow-amber"
+                  placeholder="conductor@email.com"
+                />
+              </div>
+              {errors.email && (
+                <p className="text-red-400 text-sm mt-1">
+                  {errors.email.message}
+                </p>
               )}
-            </motion.button>
-          </div>
+            </div>
 
-          {/* Forgot password link */}
-          <div style={styles.forgotPasswordContainer}>
-            <Link
-              to="/captain/forgot-password"
-              style={styles.forgotPasswordLink}
-            >
-              ¿Olvidaste tu contraseña?
-            </Link>
-          </div>
+            {/* Password Input */}
+            <div className="space-sm">
+              <label className="text-caption text-secondary block mb-2">
+                CONTRASEÑA
+              </label>
+              <div className="relative">
+                <Lock 
+                  className="absolute left-4 top-1/2 transform -translate-y-1/2 text-secondary w-5 h-5" 
+                  strokeWidth={1.5}
+                />
+                <input
+                  type={showPassword ? "text" : "password"}
+                  {...register("password", { required: "La contraseña es requerida" })}
+                  className="input-base pl-12 pr-12 w-full focus:border-amber-500 focus:shadow-glow-amber"
+                  placeholder="Tu contraseña"
+                />
+                <motion.button
+                  type="button"
+                  whileTap={{ scale: 0.95 }}
+                  onClick={() => setShowPassword(!showPassword)}
+                  className="absolute right-4 top-1/2 transform -translate-y-1/2 text-secondary hover:text-white transition-colors"
+                  aria-label={showPassword ? "Ocultar contraseña" : "Mostrar contraseña"}
+                >
+                  {showPassword ? (
+                    <EyeOff className="w-5 h-5" strokeWidth={1.5} />
+                  ) : (
+                    <Eye className="w-5 h-5" strokeWidth={1.5} />
+                  )}
+                </motion.button>
+              </div>
+              {errors.password && (
+                <p className="text-red-400 text-sm mt-1">
+                  {errors.password.message}
+                </p>
+              )}
+            </div>
 
-          {/* Submit button */}
-          <div style={styles.buttonContainer}>
+            {/* Forgot Password Link */}
+            <div className="text-center">
+              <Link 
+                to="/captain/forgot-password" 
+                className="text-sm text-secondary hover:text-amber-400 transition-colors"
+              >
+                ¿Olvidaste tu contraseña?
+              </Link>
+            </div>
+
+            {/* Submit Button - Accent variant for drivers */}
             <Button
               type="submit"
-              variant="primary"
-              size="large"
+              variant="accent"
               title={loading ? "Iniciando sesión..." : "Iniciar sesión"}
               loading={loading}
               loadingMessage="Iniciando..."
-              fullWidth
+              disabled={loading}
             />
+
+            {/* Divider */}
+            <div className="flex items-center space-md">
+              <div className="flex-1 h-px bg-white/10" />
+              <span className="text-caption text-secondary px-4">O</span>
+              <div className="flex-1 h-px bg-white/10" />
+            </div>
+
+            {/* Google Sign In */}
+            <Button
+              variant="secondary"
+              icon={
+                <img
+                  src="/screens/google-logo.png"
+                  alt="Google"
+                  className="w-5 h-5"
+                />
+              }
+              title="Continuar con Google"
+              fun={() => {
+                window.location.href = `${import.meta.env.VITE_SERVER_URL}/auth/google?userType=captain`;
+              }}
+            />
+          </motion.form>
+        </div>
+
+        {/* Bottom Section */}
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: mounted ? 1 : 0 }}
+          transition={{ duration: 0.6, delay: 0.5 }}
+          className="px-8 pb-safe pb-8"
+        >
+          <div className="floating-island-subtle p-6 text-center">
+            <p className="text-body text-secondary">
+              ¿No tienes cuenta de conductor?{" "}
+              <Link 
+                to="/captain/register" 
+                className="text-amber-400 font-semibold hover:text-amber-300 transition-colors"
+              >
+                Aplica aquí
+              </Link>
+            </p>
           </div>
-        </motion.form>
-
-        {/* Divider */}
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: mounted ? 1 : 0 }}
-          transition={{ ...springConfig.gentle, delay: 0.2 }}
-          style={styles.divider}
-        >
-          <div style={styles.dividerLine} />
-          <span style={styles.dividerText}>o</span>
-          <div style={styles.dividerLine} />
-        </motion.div>
-
-        {/* Google button */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: mounted ? 1 : 0, y: mounted ? 0 : 20 }}
-          transition={{ ...springConfig.panel, delay: 0.25 }}
-        >
-          <Button
-            variant="secondary"
-            size="large"
-            icon={
-              <img
-                src="/screens/google-logo.png"
-                alt="Google"
-                style={{ width: 20, height: 20 }}
-              />
-            }
-            title="Continuar con Google"
-            onClick={() => {
-              window.location.href = `${import.meta.env.VITE_SERVER_URL}/auth/google?userType=captain`;
-            }}
-            fullWidth
-          />
-        </motion.div>
-
-        {/* Links section */}
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: mounted ? 1 : 0 }}
-          transition={{ ...springConfig.gentle, delay: 0.3 }}
-          style={styles.linksSection}
-        >
-          <p style={styles.signupText}>
-            ¿No tienes cuenta?{" "}
-            <Link to="/captain/signup" style={styles.signupLink}>
-              Regístrate como conductor
-            </Link>
-          </p>
-          <p style={styles.switchText}>
-            ¿Quieres viajar?{" "}
-            <Link to="/login" style={styles.switchLink}>
-              Iniciar como pasajero
-            </Link>
-          </p>
         </motion.div>
       </div>
 
-      {/* Footer */}
-      <motion.footer
-        initial={{ opacity: 0 }}
-        animate={{ opacity: mounted ? 1 : 0 }}
-        transition={{ ...springConfig.gentle, delay: 0.35 }}
-        style={styles.footer}
-      >
-        <div style={styles.footerLinks}>
-          <Link to="/terms" style={styles.footerLink}>
-            Términos
-          </Link>
-          <span style={styles.footerDot}>·</span>
-          <Link to="/privacy" style={styles.footerLink}>
-            Privacidad
-          </Link>
-          <span style={styles.footerDot}>·</span>
-          <Link to="/help" style={styles.footerLink}>
-            Ayuda
-          </Link>
-        </div>
-      </motion.footer>
-
       {/* Membership Required Modal */}
-      <MembershipRequiredModal
-        isOpen={showMembershipModal}
-        onClose={() => setShowMembershipModal(false)}
-      />
+      {showMembershipModal && (
+        <MembershipRequiredModal
+          isOpen={showMembershipModal}
+          onClose={() => setShowMembershipModal(false)}
+        />
+      )}
     </div>
   );
 }
 
-const styles = {
+
   container: {
     minHeight: "100vh",
     width: "100%",

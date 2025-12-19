@@ -1,68 +1,49 @@
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
 import Spinner from "./Spinner";
-import { springConfig, animation } from "../styles/designSystem";
 
 /**
- * 🏝️ SILICON VALLEY LUXURY BUTTON
- * Ultra-Premium, Brutalist Minimalist Design
+ * 🌟 RAPIDITO BRUTAL LUXURY BUTTON SYSTEM
+ * Linear.app x Tesla x Apple - Floating island architecture
  * 
- * Design DNA:
- * - PILL SHAPE: rounded-full (buttons & inputs)
- * - BRUTALIST: Primary = Pure Black, Text = White
- * - TACTILE: scale-0.95 on tap with spring physics
- * - GLASS VARIANT: Glassmorphism for overlay buttons
- * - Min 48px touch target (iOS HIG)
+ * Design Philosophy:
+ * - ALL BUTTONS ARE FLOATING ISLANDS: glassmorphism + shadows
+ * - GRADIENT BACKGROUNDS: Emerald/Amber gradients, never flat colors
+ * - ROUNDED-FULL: Pure pill shapes, 48px+ touch targets
+ * - HOVER EFFECTS: translateY(-4px) + shadow increase
+ * - ACTIVE FEEDBACK: scale(0.98) with cubic-bezier
  * 
  * Variants:
- * - primary: Pure Black button, white text
- * - secondary: Glass/transparent with border
- * - accent: iOS Blue (#007AFF) for key CTAs
- * - danger: iOS Red for destructive actions
- * - ghost: Transparent with text only
+ * - primary: Emerald gradient with glow
+ * - secondary: Glass island with emerald border
+ * - accent: Amber gradient with glow
+ * - ghost: Transparent with subtle hover
+ * - danger: Red gradient for destructive actions
  */
 
-// Spring physics for tap animation
-const tapSpring = springConfig.button;
+// Brutal luxury animations
+const buttonMotion = {
+  whileHover: { y: -2, scale: 1.02 },
+  whileTap: { scale: 0.98 },
+  transition: { type: "spring", damping: 20, stiffness: 300 }
+};
 
-// Variant Styles - Silicon Valley Luxury
+// VARIANT SYSTEM - Floating island components
 const VARIANTS = {
-  // Primary: Pure Black - Brutalist Minimalist
-  primary: [
-    "bg-black dark:bg-white",
-    "text-white dark:text-black",
-    "shadow-island dark:shadow-island-dark",
-  ].join(" "),
+  // Primary: Emerald gradient with glow shadow
+  primary: "btn-primary",
   
-  // Secondary: Glass effect - Floating feel
-  secondary: [
-    "bg-white/80 dark:bg-white/10",
-    "backdrop-blur-xl",
-    "text-black dark:text-white",
-    "border border-white/20 dark:border-white/10",
-    "shadow-glass",
-  ].join(" "),
+  // Secondary: Glass island with emerald accent
+  secondary: "btn-secondary", 
   
-  // Accent: iOS Blue - Interactive highlight
-  accent: [
-    "bg-[#007AFF]",
-    "text-white",
-    "shadow-glow-blue",
-  ].join(" "),
+  // Accent: Amber gradient with warm glow
+  accent: "btn-accent",
   
-  // Danger: iOS Red - Destructive actions
-  danger: [
-    "bg-[#FF3B30]",
-    "text-white",
-    "shadow-lg",
-  ].join(" "),
+  // Ghost: Transparent with subtle interactions
+  ghost: "btn-ghost",
   
-  // Ghost: Transparent - Subtle actions
-  ghost: [
-    "bg-transparent",
-    "text-black dark:text-white",
-    "hover:bg-black/5 dark:hover:bg-white/10",
-  ].join(" "),
+  // Danger: Red gradient for destructive actions
+  danger: "bg-gradient-to-br from-red-500 to-red-600 text-white shadow-glow-red hover:shadow-glow-red-lg rounded-full px-8 py-4 hover-lift active-scale",
 };
 
 function Button({ 
@@ -75,74 +56,82 @@ function Button({
   fun, 
   loading, 
   loadingMessage, 
-  disabled 
+  disabled,
+  size = "default"
 }) {
-  // Get variant styles or fallback to primary
-  const variantClasses = VARIANTS[variant] || VARIANTS.primary;
+  // Get variant class from CSS system
+  const variantClass = VARIANTS[variant] || VARIANTS.primary;
+  
+  // Size variants for different use cases
+  const sizeClasses = {
+    sm: "px-6 py-3 text-sm min-h-[40px]",
+    default: "px-8 py-4 text-base min-h-[48px]", 
+    lg: "px-12 py-5 text-lg min-h-[56px]",
+    xl: "px-16 py-6 text-xl min-h-[64px]"
+  };
 
-  // Common classes - PILL SHAPE, premium typography
-  const commonClasses = `
-    flex justify-center items-center gap-3
-    py-4 px-8 font-semibold text-[17px] w-full
-    rounded-full
-    min-h-[48px]
-    ${variantClasses}
+  // Common base classes - Always floating islands
+  const baseClasses = `
+    relative flex items-center justify-center space-md
+    font-semibold tracking-tight w-full
+    transition-all duration-200 ease-out
+    outline-none focus-visible:ring-2 focus-visible:ring-emerald-500/50
+    disabled:opacity-40 disabled:cursor-not-allowed
+    ${sizeClasses[size]}
+    ${variantClass}
     ${classes || ''}
   `.trim().replace(/\s+/g, ' ');
 
-  // Motion props for tap feedback
-  const motionProps = {
-    whileTap: { scale: animation.tapScale },
-    transition: tapSpring,
-  };
-
-  return (
+  const ButtonContent = () => (
     <>
-      {type === "link" ? (
-        <motion.div {...motionProps}>
-          <Link
-            to={path}
-            className={commonClasses}
-            aria-label={title}
-          >
-            {icon && <span aria-hidden="true">{icon}</span>}
-            {title}
-          </Link>
-        </motion.div>
+      {loading ? (
+        <div className="flex items-center space-sm">
+          <Spinner size="sm" />
+          <span className="text-caption font-medium">
+            {loadingMessage || "CARGANDO..."}
+          </span>
+        </div>
       ) : (
-        <motion.button
-          {...motionProps}
-          type={type || "button"}
-          className={`
-            ${commonClasses}
-            cursor-pointer
-            disabled:opacity-50 
-            disabled:cursor-not-allowed 
-            focus:outline-none 
-            focus-visible:ring-2
-            focus-visible:ring-[#007AFF]
-            focus-visible:ring-offset-2
-            ${loading ? "cursor-wait opacity-90" : ""}
-          `.trim().replace(/\s+/g, ' ')}
-          onClick={fun}
-          disabled={loading || disabled}
-          aria-busy={loading}
-          aria-label={title}
-        >
-          {loading ? (
-            <span className="flex gap-3 items-center">
-              <Spinner size="sm" />
-              <span className="font-semibold">{loadingMessage || "Cargando..."}</span>
+        <>
+          {icon && (
+            <span className="flex items-center" aria-hidden="true">
+              {icon}
             </span>
-          ) : (
-            <>
-              {icon && <span aria-hidden="true">{icon}</span>}
-              <span className="tracking-wide">{title}</span>
-            </>
           )}
-        </motion.button>
+          <span className="font-semibold">{title}</span>
+        </>
       )}
     </>
+  );
+
+  // Link variant - For navigation
+  if (type === "link") {
+    return (
+      <motion.div className="inline-block w-full" {...buttonMotion}>
+        <Link
+          to={path}
+          className={baseClasses}
+          aria-label={title}
+        >
+          <ButtonContent />
+        </Link>
+      </motion.div>
+    );
+  }
+
+  // Button variant - For actions
+  return (
+    <motion.button
+      type={type || "button"}
+      className={baseClasses}
+      onClick={fun}
+      disabled={loading || disabled}
+      aria-busy={loading}
+      aria-label={title}
+      {...buttonMotion}
+    >
+      <ButtonContent />
+    </motion.button>
   );
 }
 
